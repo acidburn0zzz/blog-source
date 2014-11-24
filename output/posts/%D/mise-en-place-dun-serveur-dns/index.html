@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Mise en place d'un serveur DNS</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+			 			<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Mise en place d'un serveur DNS">Mise en place d'un serveur DNS</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2014-02-24T02:49:00+01:00">
+		<i class="icon-calendar"></i> Mon 24 February 2014
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Le DNS (Domain Name System) est le service permettant la résolution des noms de
+domaines en différentes informations : adresses IPv4, adresses IPv6, certificats
+DNSSEC ou IPsec, localisation géographique, ou encore texte. En général, le DNS
+est utilisé pour résoudre des noms de domaines en adresses IP, et ainsi pour
+simplifier la vie de tous les utilisateurs (je doute que tout le monde retienne
+de se connecter a <a href="http://173.194.45.66">http://173.194.45.66</a>, ou a 
+<a href="http://199.16.156.70">http://199.16.156.70</a>. Voire même a 
+<a href="http://5.39.76.46">http://5.39.76.46</a>).</p>
+<p>Cependant, le DNS est un système qui date de 1984, et les exigences de l'époque
+en termes d'expérience utilisateur n'étaient pas forcément aussi importantes que
+de nos jours. La configuration des serveurs DNS peut ainsi être assez
+contre intuitive.
+Cela étant dit, comprendre le fonctionnement de DNS et contrôler ses
+enregistrements est important.</p>
+<p>Tout d'abord, une petite explication théorique. Le DNS fonctionne de la même
+façon que le système de fichiers : en arborescence. Cependant, là ou la racine
+du FS est <code>/</code>, celle de DNS est <code>.</code>, et là ou il convient d'écrire, par exemple,
+<code>/usr/</code> et ou la progression se fait de gauche a droite pour le FS, pour DNS le
+<code>.</code> n'est pas obligatoire et la progression se fait de droite a gauche. Par
+exemple, le tld(top level domain, domaine de haut niveau) <code>com</code>, et le domaine
+<code>google.com</code> appartient a <code>com</code>, on écrit donc <code>google.com</code> sans écrire le point
+a la fin de façon courante.</p>
+<p>Le reverse DNS est une variante du DNS "classique" permettant de résoudre les
+adresses IP en nom de domaine. Ainsi, 5.39.46.76 a pour domaine wxcafe.net. 
+Cependant, le reverse DNS n'a, par définition, pas de TLD sur lequel se diriger
+quand on lui adresse une query. Les "adresses" que l'on query en reverse DNS
+sont donc constituées de l'adresse IP, <strong><em>dans le sens contraire a l'ordre
+habituel</em></strong>, et du faux domaine .in-addr.arpa
+Par exemple, pour connaitre le reverse de 5.39.46.76, il faudra faire <code>dig PTR
+76.46.39.5.in-addr.arpa</code>. La réponse sera, évidemment, <code>wxcafe.net</code></p>
+<p>Voyons maintenant comment mettre en place son propre serveur DNS. Tout d'abord,
+quelques informations. DNS fonctionne sur le port 53 en UDP, et la commande
+utilisée pour faire des tests DNS est <code>dig</code>. Le DNS fonctionne avec des
+"enregistrements", records en anglais. Par exemple, un record A indique une
+adresse IP, un record NS indique un Serveur de nom, etc. <code>dig</code> se base sur ces
+records : par défaut, il ira chercher le(s) record(s) A correspondant(s) au nom
+de domaine que vous donnez en argument, mais en précisant un autre type de
+record, vous pouvez obtenir n'importe quelle information : par exemple, <code>dig NS
+wxcafe.net</code> devrait vous renvoyer</p>
+<div class="highlight"><pre><span class="p">;</span> <span class="o">&lt;&lt;&gt;&gt;</span> DiG <span class="m">9.8.4</span><span class="o">-</span>rpz2<span class="o">+</span>rl005.12<span class="o">-</span>P1 <span class="o">&lt;&lt;&gt;&gt;</span> NS wxcafe.net
+<span class="p">;;</span> global options<span class="o">:</span> <span class="o">+</span>cmd
+<span class="p">;;</span> Got answer<span class="o">:</span>
+<span class="p">;;</span> <span class="o">-&gt;&gt;</span>HEADER<span class="o">&lt;&lt;-</span> opcode<span class="o">:</span> QUERY<span class="p">,</span> status<span class="o">:</span> NOERROR<span class="p">,</span> id<span class="o">:</span> <span class="m">13846</span>
+<span class="p">;;</span> flags<span class="o">:</span> qr rd ra<span class="p">;</span> QUERY<span class="o">:</span> <span class="m">1</span><span class="p">,</span> ANSWER<span class="o">:</span> <span class="m">2</span><span class="p">,</span> AUTHORITY<span class="o">:</span> <span class="m">0</span><span class="p">,</span> ADDITIONAL<span class="o">:</span> <span class="m">0</span>
+
+<span class="p">;;</span> QUESTION SECTION<span class="o">:</span>
+<span class="p">;</span>wxcafe.net.            IN  NS
+
+<span class="p">;;</span> ANSWER SECTION<span class="o">:</span>
+wxcafe.net.     <span class="m">3600</span>    IN  NS  ns.wxcafe.net.
+wxcafe.net.     <span class="m">3600</span>    IN  NS  ns.home.wxcafe.net.
+
+<span class="p">;;</span> Query time<span class="o">:</span> <span class="m">60</span> msec
+<span class="p">;;</span> SERVER<span class="o">:</span> <span class="m">10.0.42.1</span><span class="c1">#53(10.0.42.1)</span>
+<span class="p">;;</span> WHEN<span class="o">:</span> Tue Dec <span class="m">10</span> <span class="m">13</span><span class="o">:</span><span class="m">31</span><span class="o">:</span><span class="m">18</span> <span class="m">2013</span>
+<span class="p">;;</span> MSG SIZE  rcvd<span class="o">:</span> <span class="m">67</span>
+</pre></div>
+
+
+<p>Comme vous pouvez le voir, les serveurs DNS principaux pour 
+<a href="http://wxcafe.net">wxcafe.net</a> sont <code>ns.wxcafe.net</code> et <code>ns.home.wxcafe.net</code>,
+qui sont respectivement des alias pour <code>wxcafe.net</code> et <code>home.wxcafe.net</code>. Ainsi,
+chacun fait autorité pour lui même, et le problème évident est que le résolveur
+ne peut résoudre la query si il est renvoyé encore et encore vers le même
+serveur. Il convient donc de définir dans le même fichier de configuration
+l'adresse de ces deux serveurs. Ainsi, le résolveur, au bout de son deuxième
+loop, se rendra compte qu'il est en train de faire une boucle infinie et
+demandera l'adresse au serveur auquel il est connecté. La première indication de
+direction se fait grâce au serveur du TLD.</p>
+<p>La configuration de bind est assez simple dans le principe, le plus complexe
+étant en fait d'écrire les fichiers de zone.
+La configuration de bind sous debian se fait dans le dossier /etc/bind/. Il
+existe 4 fichiers de configuration principaux : <code>named.conf</code>,
+<code>named.conf.default-zones</code>, <code>named.conf.local</code> et <code>named.conf.options</code>. 
+<code>named.conf</code> contient les options par défaut de bind, <code>named.conf.default-zones</code>
+les déclarations des zones par défaut (auxquelles il vaut mieux ne pas toucher),
+<code>named.conf.local</code> contient les déclarations de vos zones, et
+named.conf.options contient les options que vous rajoutez pour changer le
+comportement de bind.</p>
+<p>Pour commencer, il convient de préciser que nous allons parler ici du cas dans
+lequel se trouve wxcafe.net: deux domaines dont nous voulons faire l'autorité,
+deux serveurs DNS, et un service de résolution récursive limitée a quelques IPs
+(notamment mon accès chez moi). </p>
+<p>Examinons tout d'abord les fichiers de configuration de named.
+<code>named.conf.local</code> contient les définitions des zones forward et reverse. 
+Sur wxcafe.net, les zones <code>wxcafe.net</code> et <code>76.46.39.5.in-addr.arpa</code> sont gérées
+en master, et les zones <code>home.wxcafe.net</code> et <code>103.177.67.80.in-addr.arpa</code> sont
+gérées en slave. Nous n'examinerons ici que les déclarations de zones sur ce
+serveur, et pas sur home., car elles sont sensiblement les mêmes. La différence
+principale étant que l'un héberge en slave les masters de l'autre.
+Le fichier <code>named.conf.local</code> sur wxcafe.net contient donc </p>
+<div class="highlight"><pre><span class="n">zone</span> <span class="s">&quot;wxcafe.net&quot;</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="n">master</span><span class="p">;</span>
+    <span class="n">file</span> <span class="s">&quot;/etc/bind/master/wxcafe.net&quot;</span><span class="p">;</span>
+    <span class="n">allow</span><span class="o">-</span><span class="n">transfer</span> <span class="p">{</span>
+        <span class="mf">80.67.177.103</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="n">zone</span> <span class="s">&quot;home.wxcafe.net&quot;</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="n">slave</span><span class="p">;</span>
+    <span class="n">file</span> <span class="s">&quot;/etc/bind/slave/home.wxcafe.net&quot;</span><span class="p">;</span>
+    <span class="n">masters</span> <span class="p">{</span>
+        <span class="mf">80.67.177.103</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="n">zone</span> <span class="s">&quot;46.76.39.5.in-addr.arpa&quot;</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="n">master</span><span class="p">;</span>
+    <span class="n">file</span> <span class="s">&quot;/etc/bind/master/46.76.39.5.in-addr.arpa&quot;</span><span class="p">;</span>
+    <span class="n">allow</span><span class="o">-</span><span class="n">transfer</span> <span class="p">{</span>
+        <span class="mf">80.67.177.103</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="n">zone</span> <span class="s">&quot;103.177.67.80.in-addr.arpa&quot;</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="n">slave</span><span class="p">;</span>
+    <span class="n">file</span> <span class="s">&quot;/etc/bind/slave/103.177.67.80.in-addr.arpa&quot;</span><span class="p">;</span>
+    <span class="n">masters</span> <span class="p">{</span>
+        <span class="mf">80.67.177.103</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>Cela devrait être relativement clair. Globalement, les zones master ont un
+fichier dans <code>/etc/bind/master/</code>, et les slaves un fichier dans
+<code>/etc/bind/slave/</code>, les masters autorisent le transfert vers home.wxcafe.net
+tandis que les slaves déclarent home.wxcafe.net comme master, et le reste est
+assez parlant.</p>
+<p>Voyons maintenant le fichier de zone concernant wxcafe.net, soit
+<code>/etc/bind/master/wxcafe.net</code> : </p>
+<div class="highlight"><pre><span class="err">$</span><span class="n">TTL</span> <span class="mi">3600</span>    <span class="p">;</span> <span class="mi">1</span> <span class="n">hour</span>
+<span class="err">@</span>               <span class="n">IN</span> <span class="n">SOA</span> <span class="n">ns</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span> <span class="n">wxcafe</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span> <span class="p">(</span>
+                        <span class="mi">2014011001</span>  <span class="p">;</span> <span class="n">serial</span>
+                        <span class="mi">3</span><span class="n">h</span>          <span class="p">;</span> <span class="n">refresh</span>  
+                        <span class="mi">1</span><span class="n">h</span>          <span class="p">;</span> <span class="n">retry</span>
+                        <span class="mi">168</span><span class="n">h</span>        <span class="p">;</span> <span class="n">expire</span>
+                        <span class="mi">300</span>         <span class="p">;</span> <span class="n">negative</span> <span class="n">response</span> <span class="n">ttl</span>
+                        <span class="p">)</span>
+
+<span class="p">;</span> <span class="n">Name</span> <span class="n">servers</span>
+                <span class="n">IN</span>  <span class="n">NS</span>      <span class="n">ns</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+                <span class="n">IN</span>  <span class="n">NS</span>      <span class="n">ns</span><span class="p">.</span><span class="n">home</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+
+<span class="p">;</span> <span class="n">Mail</span> <span class="n">exchangers</span>
+                <span class="n">IN</span>  <span class="n">MX</span>  <span class="mi">10</span>  <span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+                <span class="n">IN</span>  <span class="n">SPF</span> <span class="s">&quot;v=spf1 ip4:5.39.76.46 a -all&quot;</span>
+
+<span class="p">;</span> <span class="n">Main</span> <span class="n">A</span><span class="o">/</span><span class="n">AAAA</span> <span class="n">records</span>
+                <span class="n">IN</span>  <span class="n">A</span>       <span class="mf">5.39.76.46</span>
+<span class="n">ns</span>              <span class="n">IN</span>  <span class="n">A</span>       <span class="mf">5.39.76.46</span>
+
+<span class="p">;</span> <span class="n">Aliases</span>
+<span class="n">data</span>            <span class="n">IN</span>  <span class="n">CNAME</span>   <span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+<span class="p">;</span>        <span class="p">[...]</span>
+<span class="n">www</span>             <span class="n">IN</span>  <span class="n">CNAME</span>   <span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+
+
+<span class="p">;</span> <span class="n">home</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span> <span class="n">definition</span>
+<span class="err">$</span><span class="n">ORIGIN</span> <span class="n">home</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+<span class="err">@</span>               <span class="n">IN</span>  <span class="n">NS</span>      <span class="n">ns</span><span class="p">.</span><span class="n">home</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+                <span class="n">IN</span>  <span class="n">NS</span>      <span class="n">ns</span><span class="p">.</span><span class="n">wxcafe</span><span class="p">.</span><span class="n">net</span><span class="p">.</span>
+<span class="n">ns</span>              <span class="n">IN</span>  <span class="n">A</span>       <span class="mf">80.67.177.103</span>
+                <span class="n">IN</span>  <span class="n">A</span>       <span class="mf">80.67.177.103</span>
+</pre></div>
+
+
+<p>Alors. Expliquons ligne par ligne.<br />
+Tout d'abord, le TTL (time to live) est un paramètre définissant le temps
+pendant lequel les serveurs récursif (qui font un cache des données) doivent
+cacher ce fichier de zone. <br />
+Le @ est un raccourci pour exprimer le nom de domaine courant. Ici, donc,
+wxcafe.net. <br />
+Maintenant, nous arrivons a un record important : SOA (Start of Authority). 
+Ce record prend de nombreux arguments, dans l'ordre :<br />
+    - Le nameserver autoritaire pour le nom de domaine en question,<br />
+    - L'adresse email du responsable de cette zone, avec le premier point
+      remplacé par un @,   </p>
+<p>puis entre parenthèses :<br />
+    - Le numéro de série ("version" du fichier de zone, ici au format
+      YYYYMMDDNN) <br />
+    - La période de refresh, période entre chaque mise a jour du nameserver
+      authoritaire secondaire, <br />
+    - La période de retry, le temps entre chaque essai de mise a jour si le
+      nameserveur authoritaire primaire est indisponible, <br />
+    - La période d'expire, le temps qu'attendra le serveur autoritaire
+      secondaire avant de supprimer les informations de son cache si le primaire
+      reste indisponible, et enfin <br />
+    - La période de TTL négatif, le temps qu'attendra le serveur secondaire
+      avant de ne plus offrir les informations de cette zone si le serveur
+      primaire est injoignable.   </p>
+<p>Bon, tout ceci est peut-être un peu confus, mais ce n'est pas le record le plus
+important a lire (pour les humains en tout cas). Continuons :   </p>
+<p>NS (nameserver) permet de désigner les différents nameservers faisant autorité
+pour ce domaine.  </p>
+<p>MX permet d'indiquer ou il convient d'envoyer les emails pour ce domaine. 
+SPF est un record d'authentification pour les emails.
+Les records A désignent l'association entre un nom de domaine et une adresse
+IPv4. Les records AAAA font de même pour les IPv6, mais malheureusement ce site
+n'est pas encore en IPv6.</p>
+<p>Les CNAME (canonical name) sont en quelque sorte des alias, ils permettent de
+mettre en place des domaines exactement semblables a d'autre (ce qui permet par
+exemple de filtrer ensuite avec les Virtual Hosts d'Apache, pour le web)</p>
+<p>Enfin, la partie qui suit commence avec une déclaration $ORIGIN, ce qui permet
+de changer la valeur du @ et des noms de domaine non complets (qui ne se
+terminent pas avec un .). Ainsi, la partie suivant définit les nameservers et
+l'adresse IP principale de home.wxcafe.net et de ns.home.wxcafe.net. Comme on
+l'a vu, étant donné que ce nom de domaine est géré par un autre serveur DNS,
+cela permet de rediriger les requêtes nous parvenant et demandant un domaine se
+trouvant sous home.wxcafe.net.</p>
+<p>Les autres fichiers de zone sont sensiblement similaires, avec les quelques
+différences n'étant en fin de compte que des différences de valeurs (dues au
+fait que, eh bah, c'est pas les mêmes domaines...).</p>
+<p>Voila donc une courte explication de ce qu'est le DNS. Bien entendu, tout n'est
+pas expliqué ici, je ne suis passé que sur ce qui est en place au niveau de
+wxcafe.net, et encore, rapidement. Si vous voulez en savoir plus, vous pouvez
+aller vous renseigner directement a la source : le <a href="https://www.ietf.org/rfc/rfc1034.txt">RFC
+1034</a> et le 
+<a href="https://www.ietf.org/rfc/rfc1035.txt">RFC 1035</a>. Dans un autre style (bien plus
+avancé) le blog de <a href="http://bortzmeyer.org">Stéphane Bortzmeyer</a> est interessant
+aussi.</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

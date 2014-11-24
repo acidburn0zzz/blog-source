@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wxcafé</title><link>//wxcafe.net/</link><description></description><atom:link href="//wxcafe.net/feeds/feed.rss.oses.xml" rel="self"></atom:link><lastBuildDate>Mon, 09 Sep 2013 11:17:00 +0200</lastBuildDate><item><title>Plan9 from whichever space</title><link>//wxcafe.net/posts/%D/plan-9-from-whichever-space/</link><description>&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Plan_9_from_Outer_Space"&gt;&lt;strong&gt;Plan 9 from Outer Space&lt;/strong&gt;&lt;/a&gt; est un film de série Z, produit en 1959 par Edward D. 
+Wood. Il est assez connu comme étant l'un des pires films jamais sortis. Rempli
+d'erreur de montage, d'effets spéciaux au rabais, et ayant même connu la mort
+d'un acteur, il a ainsi atteint le statut de film culte grâce a sa médiocrité.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://plan9.bell-labs.com/plan9/"&gt;&lt;strong&gt;Plan 9 from Bell Labs&lt;/strong&gt;&lt;/a&gt; est un OS venant de Bell Labs (comme son nom l'indique),
+et qui a été pensé comme le successeur d'Unix. Il est conçu comme une poursuite
+des concepts unixiens jusqu'à leur but naturel. Ainsi, c'est Plan9 qui a
+introduit le concept d'UnionFS, le protocole 9P qui permet d'acceder a des
+ressources appartenant a d'autres ordinateurs a distance, un support de
+l'unicode par défaut et sur tout le système (a l'inverse d'Unix, qui fonctionne
+a la base en ASCII), un support de ProcFS amélioré, une interface graphique par
+défaut, et d'autres améliorations sur les thèmes de base que propose Unix. &lt;/p&gt;
+&lt;p&gt;Cependant, Plan9 n'a jamais été véritablement utilisé pour quoi que ce soit
+d'autre que la recherche en systèmes, et c'est dommage, parce que Plan9 a
+quelque chose de très intéressant à proposer. En effet, en ces jours d'intérêt
+grandissant pour le klaoude et la délocalisation a la fois du processing et des
+données, et bien que Plan9 ait été créé bien avant que le terme "cloud
+computing" n'apparaisse pour la première fois, il semble que ce système ait été
+conçu pour apporter cette délocalisation tant rêvée.&lt;/p&gt;
+&lt;p&gt;En effet, même si l'on considère que les nouveautés qu'il apporte par rapport a 
+Unix ne sont pas extraordinaires en soit (alors qu'elles sont déjà
+conséquentes), lorsqu'on les prend ensemble, elles font de Plan9 le système
+d'exploitation ultime en terme de partage de ressources et de données. 
+Ainsi, le fait que 9P permette de considérer toutes les ressources d'un système
+distant comme n'étant qu'une poignée de fichiers permet de le monter comme
+n'importe quel système de fichier. Le fait que chaque utilisateur puisse accéder
+a plusieurs namespaces de façon transparente (et donc de démarrer, arrêter et 
+gérer des processus sur chacun de ces namespaces) et que chaque namespace puisse
+interagir avec les autres, même s'ils sont hétérogènes (c'est a dire provenant
+de machines différentes), permet d'utiliser les ressources d'une machine
+distante comme si elle était présente localement. Le mécanisme d'UnionFS permet
+de rendre tout ça utilisable, en montant plusieurs systèmes de fichiers sur le
+même point de montage, en même temps, et de pouvoir ainsi accéder aux fichiers
+de plusieurs machines a la fois (ce qui permet une délocalisation des données
+bien plus poussée que Dropbox ou Google Drive, et ce en kernelspace).&lt;/p&gt;
+&lt;p&gt;Le réseau fait donc partie intégrante de Plan9, et il devient plus difficile de
+parler d'ordinateur lorsque le concept même du système est d'être composé de 
+clusters eux mêmes composés de machines hétérogènes. Le système de fichier
+virtuel /net fourni par le kernel de Plan9 permet d'implémenter très facilement
+différents concepts réseaux : en montant le /net d'un ordinateur du réseau local
+sur celui servant de gateway vers l'internet, on crée un NAT vers cet ordinateur
+du réseau local. En montant le /net d'un ordinateur distant sur un ordinateur
+local via le protocole 9P sécurisé, on crée un VPN : les connections locales se
+font en utilisant l'accès de l'ordinateur distant, et les connections entre les
+deux sont chiffrées. &lt;/p&gt;
+&lt;p&gt;Bref, bien avant les clusters de Raspberry Pi qui utilisent une api python pour
+partager leur "puissance" de calcul en userspace, des superordinateurs pour
+lesquels le noyau Linux s'est doté du support de jusqu'à 4096 CPUs, des OS tels
+JoliOS qui promettent une integration du klaoude alors qu'ils ne sont en fait
+que des navigateurs web a peine améliorés et des services de stockage en ligne
+qui promettent un accès universel a toutes nos données alors qu'ils ne proposent
+que de les garder a disposition par le web, Plan9 promettait une technologie de 
+partage des ressources système et de données, une intégration du réseau dans le
+système particulièrement poussée, un environnement graphique supporté par le
+basesystem et non greffé par dessus comme l'a été X11, et de nombreuses autres 
+améliorations sur Unix.&lt;/p&gt;
+&lt;p&gt;Malheureusement, il n'a jamais été adopté de façon véritablement significative,
+et ce pour une raison très Unixiènne : "worse is better". En effet, le parc de
+machines Unix déjà installées était suffisamment performant et fonctionnel pour
+que des solutions soient développées au dessus du système pour remplir les 
+mêmes fonctions que remplit Plan9 &lt;em&gt;via&lt;/em&gt; son kernel, tels le nouveau ProcFS de
+Linux, FUSE, etc...&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Mon, 09 Sep 2013 11:17:00 +0200</pubDate><guid>tag:wxcafe.net,2013-09-09:posts/%D/plan-9-from-whichever-space/</guid></item><item><title>Archlinux made simple</title><link>//wxcafe.net/posts/%D/archlinux-made-simple/</link><description>&lt;p&gt;Archlinux est réputée être une distribution Linux très complexe a
+installer et a maintenir.&lt;/p&gt;
+&lt;p&gt;Je vais tenter ici de vous convaincre que ce n'est pas le cas, et
+qu'elle peut se monter très intéressante et très instructive a installer
+tout autant qu'a utiliser.&lt;/p&gt;
+&lt;p&gt;Il convient tout d'abord de rappeler a quels principes obéit Arch:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Le KISS : Keep It Simple and Stupid, Archlinux tente de faire des
+    programmes simples et utilisables par tous. Avec comme base de
+    simplicité les utilisateurs de LFS... Mais il n'empêche qu'avec un peu
+    de bonne volonté, la configuration n'est pas si compliquée!&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;La philosophie UNIX : chaque programme est prévu pour ne remplir
+    qu'une seule tâche. Bien entendu, cela ne concerne que les programmes
+    conçus pour s’insérer dans la philosophie UNIX, et les installations de
+    dépendances avec le gestionnaire de paquet d'Arch fonctionnent
+    superbement bien.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;De plus, posons les bases d'Arch : le gestionnaire de paquets s'appelle
+pacman, et les commandes de base sont :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;recherche d'un paquet :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Ss&lt;/span&gt; &lt;span class="n"&gt;paquet&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;installation d'un paquet :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;paquet&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;désinstallation d'un paquet :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="n"&gt;paquet&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;mise a jour de tous les paquets installés :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Syu&lt;/span&gt; &lt;span class="n"&gt;paquet&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Archlinux est une distribution dite "rolling release", ce qui signifie
+qu'il n'y a pas de version a proprement dites, et que les paquets se
+mettent a jour en permanence, sans jamais changer la "version" d'Arch.
+Il n'y a d'ailleurs qu'une seule version de l'installeur sur le site,
+puisqu'une version plus ancienne n'aurait aucun sens.&lt;/p&gt;
+&lt;p&gt;Arch n'offre pas d'interface graphique par défaut : après avoir installé
+le système, vous n'aurez qu'une invite de commande. Heureusement, je
+vais ici vous guider a travers l'installation d'une interface graphique
+(mate, le fork de gnome 2)&lt;/p&gt;
+&lt;p&gt;L'installation d'Arch se fait par le réseau, veillez a avoir une
+connection WiFi ou filaire a proximité avant de suivre ce guide.&lt;/p&gt;
+&lt;p&gt;Ce guide utilise SystemV, alors qu'Arch va prochainement passer sous
+systemd. N'ayant pas encore eu le temps d’expérimenter assez avec ce
+dernier, je ferais un tutoriel pour passer votre Arch a systemd bientôt.&lt;/p&gt;
+&lt;p&gt;Bon, passons a l'explication de l'installation proprement dite :&lt;/p&gt;
+&lt;p&gt;Tout d'abord, téléchargeons l'iso d'arch la plus récente :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//mir.archlinux.fr/iso/2012.09.07/archlinux-2012.09.07-dual.iso&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ensuite, gravons cette image sur un disque USB :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;dd&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;archlinux&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2012.09.07&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dual&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iso&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sdX&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Après reboot de la machine sur l'iso en question et choix de
+l'architecture, nous sommes accueillis par un shell root.&lt;/p&gt;
+&lt;p&gt;La première chose a faire est de paramétrer le clavier :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;loadkeys&lt;/span&gt; &lt;span class="n"&gt;fr&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Puis nous pouvons passer a l'installation proprement dite.
+Partitionnement :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cfdisk&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;cfdisk&lt;/span&gt; &lt;span class="n"&gt;est&lt;/span&gt; &lt;span class="n"&gt;suffisamment&lt;/span&gt; &lt;span class="n"&gt;clair&lt;/span&gt; &lt;span class="n"&gt;pour&lt;/span&gt; &lt;span class="n"&gt;ne&lt;/span&gt; &lt;span class="n"&gt;pas&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;é&lt;/span&gt;&lt;span class="n"&gt;cessiter&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;explications&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;formatage des partitions :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkfs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ext4&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda1&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;partition&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;
+
+&lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Syu&lt;/span&gt; &lt;span class="n"&gt;btrfs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;progs&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;mkfs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;btrfs&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda2&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;partition&lt;/span&gt; &lt;span class="n"&gt;home&lt;/span&gt;
+
+&lt;span class="n"&gt;mkswap&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda3&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;swapon&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda3&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;partition&lt;/span&gt; &lt;span class="n"&gt;de&lt;/span&gt; &lt;span class="n"&gt;swap&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Montons les partitions nouvellement créées, puis installons le système :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda1&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;
+
+&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;mount&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda2&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;
+
+&lt;span class="n"&gt;dhclient&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;si&lt;/span&gt; &lt;span class="n"&gt;vous&lt;/span&gt; &lt;span class="n"&gt;utilisez&lt;/span&gt; &lt;span class="n"&gt;une&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="n"&gt;filaire&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sinon&lt;/span&gt; &lt;span class="n"&gt;voire&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//wiki.archlinux.fr/Wifi#Configuration&lt;/span&gt;
+
+&lt;span class="n"&gt;pacstrap&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt; &lt;span class="n"&gt;base&lt;/span&gt; &lt;span class="n"&gt;base&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
+
+&lt;span class="n"&gt;genfstab&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;fstab&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Allons prendre un café le temps que ça charge, puis installons les
+quelques paquets nécessaires a notre installation et au premier
+démarrage:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pacstrap&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt; &lt;span class="n"&gt;syslinux&lt;/span&gt; &lt;span class="n"&gt;btrfs&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;progs&lt;/span&gt; &lt;span class="n"&gt;wireless_tools&lt;/span&gt; &lt;span class="n"&gt;dhclient&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Maintenant, passons sur notre install toute fraîche d'Arch :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;arch&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;chroot&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;configurons les bases :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="n"&gt;HOSTNAME&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;
+
+&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;zoneinfo&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Europe&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Paris&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;localtime&lt;/span&gt;
+
+&lt;span class="n"&gt;date&lt;/span&gt; &lt;span class="n"&gt;MMJJhhmmAAAA&lt;/span&gt;
+
+&lt;span class="n"&gt;hwclock&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;systohc&lt;/span&gt;
+
+&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gen&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;D&lt;/span&gt;&lt;span class="err"&gt;é&lt;/span&gt;&lt;span class="n"&gt;commentez&lt;/span&gt; &lt;span class="n"&gt;les&lt;/span&gt; &lt;span class="n"&gt;lignes&lt;/span&gt; &lt;span class="n"&gt;correspondant&lt;/span&gt; &lt;span class="n"&gt;au&lt;/span&gt; &lt;span class="n"&gt;fran&lt;/span&gt;&lt;span class="err"&gt;ç&lt;/span&gt;&lt;span class="n"&gt;ais&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;fr_FR&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;UTF&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;et&lt;/span&gt; &lt;span class="n"&gt;fr_FR&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ISO&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8859&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="n"&gt;echo&lt;/span&gt;  &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;fr_FR.UTF-8&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+
+&lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gen&lt;/span&gt;
+
+&lt;span class="n"&gt;mkinitcpio&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="n"&gt;linux&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enfin, vérifions que syslinux est correctement configuré :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;boot&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;syslinux&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;syslinux&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cfg&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;il&lt;/span&gt; &lt;span class="n"&gt;devrait&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;avoir&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;append root=/dev/sda1&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Si tout est correct, installons syslinux, et paramétrons un mot de passe
+root :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;syslinux&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;install_update&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mia&lt;/span&gt;
+
+&lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Et voila, l'installation est terminée! Plus qu'a quitter la session et a
+redémarrer l'ordinateur!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="n"&gt;exit&lt;/span&gt;
+&lt;span class="n"&gt;umount&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt; 
+&lt;span class="n"&gt;umount&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mnt&lt;/span&gt;
+&lt;span class="n"&gt;reboot&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Fini!&lt;/p&gt;
+&lt;p&gt;Prenons une petite pause. La partie suivante de ce tutoriel consister en
+un paramétrage des principaux services nécessaires a l'utilisation d'un
+OS, disons, moyen :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Installation de MATE, le gestionnaire de bureau (voir
+&lt;a href="http://mate-desktop.org/"&gt;http://mate-desktop.org/&lt;/a&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Installation de sudo et de networkmanager pour faire fonctionner les
+composants essentiels du système sans avoir a tout activer a la main a
+chaque démarrage&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Installation de SLiM comme gestionnaire de login graphique, pour
+présenter une interface plus accueillante que la console, et
+configuration de celui-ci&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Installation des principaux logiciels utiles non inclus dans mate ni
+base (yaourt, chromium, thunderbird, etc...).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ce guide est bien sur optionnel, si vous souhaitez utiliser Arch avec un
+gestionnaire de bureau autre que mate, ou sans, vous pouvez vous arrêter
+ici.&lt;/p&gt;
+&lt;p&gt;Bon, reprenons.&lt;/p&gt;
+&lt;p&gt;Nous sommes donc sur une demande de mot de passe. Entrez donc le mot de
+passe paramétré plus haut pour le root, puis retapez la commande
+utilisée plus tôt pour vous connecter a internet.&lt;/p&gt;
+&lt;p&gt;Il convient d'ajouter le dépôt de MATE pour installer ce dernier, puis
+d'effectuer l'action en question :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pacman&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ici, ajoutez les lignes suivantes :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[mate]&lt;/span&gt;
+&lt;span class="na"&gt;Server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://repo.mate-desktop.org/archlinux/$arch&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Installons maintenant les paquets :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Syu&lt;/span&gt; &lt;span class="n"&gt;mate&lt;/span&gt; &lt;span class="n"&gt;mate&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;extras&lt;/span&gt; &lt;span class="n"&gt;dbus&lt;/span&gt; &lt;span class="n"&gt;dbus&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt; &lt;span class="n"&gt;alsa&lt;/span&gt; &lt;span class="n"&gt;networkmanager&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ajoutons un compte utilisateur pour utiliser les composants du système
+sans tout crasher a chaque fois :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;useradd&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;users&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt; &lt;span class="n"&gt;wheel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;optical&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;lp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;scanner&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;power&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;floppy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;games&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;video&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;votrenom&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;votrenom&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="n"&gt;su&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;votrenom&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Il faut maintenant éditer le fichier \~/.xinitrc pour préciser a X.org
+ce que l'on veut utiliser :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;exec ck-launch-session mate-session&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xinitrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Profitons en pour ajouter les démons système au lancement :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ajoutez donc &lt;code&gt;dbus, alsa. hwclock&lt;/code&gt; et &lt;code&gt;networkmanager&lt;/code&gt; dans la section
+DAEMONS (entre les parenthèses, après crond normalement)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;DAEMONS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;syslog&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ng&lt;/span&gt; &lt;span class="n"&gt;network&lt;/span&gt; &lt;span class="n"&gt;crond&lt;/span&gt; &lt;span class="n"&gt;dbus&lt;/span&gt; &lt;span class="n"&gt;alsa&lt;/span&gt; &lt;span class="n"&gt;hwclock&lt;/span&gt; &lt;span class="n"&gt;networkmanager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pour éviter un reboot, il est ici possible de faire un&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;su&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Puis un&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dbus&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;alsa&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;networkmanager&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sinon, il est possible de juste redémarrer.&lt;br /&gt;
+Une fois cela fait, profitez de ce moment pour vous autoriser vous même
+a utiliser sudo. Loggez vous en root, et :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sudoers&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Décommentez la ligne qui commence par # %wheel ALL=(ALL)&lt;br /&gt;
+Sauvegardez le fichier, puis, après un &lt;code&gt;su *votrenom*&lt;/code&gt;, tentez de faire
+un sudo ls /&lt;br /&gt;
+Normalement, vous devriez avoir un listing du dossier /&lt;br /&gt;
+Bon, maintenant, pourquoi ne pas tenter de lancer MATE?&lt;br /&gt;
+C'est simple comme bonjour :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="n"&gt;startx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Et PAF! Voila un MATE desktop flambant neuf a configurer!&lt;br /&gt;
+Avant de faire ça, retournez sur un TTY (CTRL+ALT+Fx), loggez vous,
+puis installez SLiM (&lt;code&gt;sudo pacman -Syu slim&lt;/code&gt;).&lt;br /&gt;
+Configurons le:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;exec dbus-launch mate-session&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xinitrc&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;slim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Éditez la ligne
+"&lt;code&gt;sessions            xfce4,icewm-session,wmaker,blackbox&lt;/code&gt;" de facon a
+ce qu'elle ressemble a "&lt;code&gt;sessions            mate-session&lt;/code&gt;"&lt;br /&gt;
+Puis ajoutez slim dans /etc/rc.conf, dans la section DAEMONS.&lt;br /&gt;
+Normalement, tout devrait fonctionner!&lt;br /&gt;
+Ah oui, et pour installer thunderbird, firefox, chromium, etc...&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Syu&lt;/span&gt; &lt;span class="n"&gt;chromium&lt;/span&gt; &lt;span class="n"&gt;thunderbird&lt;/span&gt; &lt;span class="n"&gt;xchat&lt;/span&gt; &lt;span class="n"&gt;firefox&lt;/span&gt; &lt;span class="n"&gt;rhythmbox&lt;/span&gt; &lt;span class="n"&gt;pidgin&lt;/span&gt; &lt;span class="n"&gt;transmission&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gtk&lt;/span&gt; &lt;span class="n"&gt;vlc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Voila! Et comme dirait &lt;a href="https://twitter.com/spartition"&gt;@Spartition&lt;/a&gt;, c'est sale, mais qu'est-ce que c'est
+bon!&lt;br /&gt;
+A plus~&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Fri, 05 Oct 2012 14:48:00 +0200</pubDate><guid>tag:wxcafe.net,2012-10-05:posts/%D/archlinux-made-simple/</guid></item></channel></rss>

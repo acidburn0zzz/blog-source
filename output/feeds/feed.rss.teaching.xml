@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wxcafé</title><link>//wxcafe.net/</link><description></description><atom:link href="//wxcafe.net/feeds/feed.rss.teaching.xml" rel="self"></atom:link><lastBuildDate>Tue, 25 Sep 2012 10:28:00 +0200</lastBuildDate><item><title>Les systèmes de fichiers</title><link>//wxcafe.net/posts/%D/les-systemes-de-fichiers/</link><description>&lt;p&gt;Un système de fichiers. Vous en avez surement déjà entendu parlé si vous
+avec déjà installé Linux, ou formaté une clé USB. Dans ces cas, vous
+connaissez surement NTFS, EXT4, ou encore FAT32.&lt;/p&gt;
+&lt;p&gt;Ces différents noms désignent en effet des systèmes de fichiers. Mais
+qu'est-ce qu'un système de fichiers?&lt;/p&gt;
+&lt;p&gt;Pour comprendre cela, il faut déjà savoir ce qu'est exactement un
+fichier. Un fichier est un ensemble de blocs (les blocs sont l'unité la
+plus petite traitable par le matériel, ils font généralement 1 ou 4 Kio
+(&lt;a href="http://fr.wikipedia.org/wiki/Kibioctet#Multiples_normalis.C3.A9s"&gt;kibioctet&lt;/a&gt;), en fonction du système de fichier utilisé.), qui est
+donc composé de bits, interprétés différemment en fonction du type de
+fichier. Cependant, seul, le fichier n'est pas accessible, puisqu'il
+n'est pas indexé, c'est a dire que l'OS ne sait pas qu'il est présent,
+ou il commence ni où il s'arrête (je schématise un peu, mais c'est
+l'idée). &lt;/p&gt;
+&lt;p&gt;Ainsi, le système de fichier donne un cadre et un standard à
+l'arborescence des fichiers. Par exemple, le système de fichier ext4
+utilise des blocs de 1 Kio, et de ce fait, toutes les partitions de
+disque dur formatées en ext4 peuvent prendre comme unité de base 1 Kio
+et mesurer la taille des fichiers en blocs de cette façon. Les systèmes
+de fichiers nécessitent l'inclusion de drivers dans le noyau pour
+pouvoir être pris en compte. &lt;/p&gt;
+&lt;p&gt;Le noyau linux inclut par défaut les drivers pour ext2/3/4, btrfs, 
+reiserfs, ntfs, fat16/32 et hfsx, ce qui permet de monter a peu 
+près tout type de partition récente.&lt;/p&gt;
+&lt;p&gt;Il convient de bien faire la différence entre le système de fichier et
+l'arborescence des fichiers. Si l'arborescence des fichiers est en fait
+une entité virtuelle englobant la racine / et tous les fichiers et
+dossiers contenus dedans, le système de fichier permet a votre système
+GNU/Linux de distinguer les différents fichiers composants cette
+arborescence.&lt;/p&gt;
+&lt;p&gt;Détaillons maintenant les types de fichiers les plus répandus:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;FAT16/32 : Les systèmes de fichier FAT (pour File Allocation Table,
+    soit la définition d'un système de fichier), remplissent leur rôle le
+    plus simplement possible. Ne permettant (historiquement) que des noms de
+    8 caractères (plus extension de trois caractères), ni chiffrement, ni
+    système de distinction d'utilisateurs (DOS étant un système
+    mono-utilisateur), Il fut décliné par microsoft en FAT16 et en FAT32,
+    utlisants respectivement des blocs de 16 et 32 Kio.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;NTFS :. Le NTFS (pour New Technology File System, rapport a Windows
+    NT) est un système de fichier qui est apparu avec Windows XP, et qui
+    était une mise a jour nécessaire du FAT32 vieillissant. NTFS ajoute a
+    FAT différentes capacités dont le chiffrement, les liens symboliques, la
+    compression et les quotas pour les volumes, permettant de limiter la
+    taille maximum occupée dans une partition.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ReFS : ReFS est le système de fichiers introduit dans Windows Server 2012.
+    Ne différant pas énormément de NTFS, je le mentionne principalement 
+    parce qu'il est prévu qu'il soit le défaut pour Windows 8. 
+    Il apporte principalement la redondance, c'est a dire que chaque
+    fichier possède une somme de contrôle en 64 bits stockée dans un fichier
+    séparé pour éviter les corruption de disque.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ext2/3/4 : les systèmes ext (extended) sont les systèmes de fichiers
+    les plus utilisés sous linux pour le grand public. (Je traiterai ici
+    d'ext4, puisque c'est le plus récent.) Il dispose de toutes les
+    fonctions que l'on peut attendre d'un système de fichiers moderne, ni
+    plus ni moins. Ainsi, ext4 est un système de fichiers journalisé,
+    acceptant les capacités jusqu’à 1 Exioctet, et utilise l'allocation dite
+    "par extent", ce qui signifie que la création d'un fichier réserve
+    automatiquement les zones contiguës de façon a réduire la fragmentation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ReiserFS : ce système de fichiers, créé par le (légèrement mégalo)
+    programmeur Hans Reiser, est a retenir pour avoir été le premier système
+    de fichiers journalisé, et accepte un nombre de fichiers de l'ordre des
+    4 milliards. Le but de ce système est de créer un système polyvalent, a
+    la fois système de fichiers et base de donnée (de part sa grande
+    capacité en terme de nombre de fichiers et de l'utilisation d'un
+    journal.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Btrfs : ce système est l'évolution logique d'ext4, et inclut lui aussi
+    l'allocation par extent, mais possède de plus un système de
+    sous-volumes, qui permet d’accéder a plusieurs arborescences de fichiers
+    montées en même temps (système pratique et utile pour faire des
+    snapshots de systèmes.). Il permet aussi de redimensionner a chaud la
+    taille des partitions, en les agrandissant ou en les rétrécissant, est
+    compatible avec &lt;a href="http://fr.wikipedia.org/wiki/LVM"&gt;LVM&lt;/a&gt;, a un système de checking intégré (btrfsck), et
+    utilise un algorithme de compression appelé LZ4, qui accélère les accès
+    aux fichiers compressés d'environ 30% par rapport a LZO, le système
+    utilisé dans ext4.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;HFS+ : le système de fichier présent sur tous les macs a des capacités
+    relativement standards, et ressemble énormément a l'ext3. Il supporte
+    cependant les liens directs vers les dossiers, fonction rare sur les
+    systèmes de fichiers actuels. Il est possible qu'il évolue a nouveau
+    dans les années a venir&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ZFS : Ce système de fichier, venu de Solaris mais utilisable par Linux
+    et *BSD, est, tel Btrfs, a la fois un système de fichier et un
+    remplaçant/compatible avec LVM, C'est un système de fichiers conçu
+    principalement pour les serveurs, et il intègre ainsi un système de
+    redondance des données pour éviter les corruptions, un mode RAID-Z
+    (apparenté au RAID5), des checks d’intégrité en continu, des snapshots,
+    etc...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Comme on a pu le voir, les systèmes de fichiers disponibles sont
+légions. Cependant, le plus adapté a Linux et a une utilisation grand
+public aujourd'hui est probablement Btrfs. Malheureusement, ce dernier
+n'est pas aujourd'hui proposé par défaut sur les distributions les plus
+utilisées, au profit de l'ext4, qui commence a accuser son âge...&lt;/p&gt;
+&lt;p&gt;Les systèmes de fichiers, s'ils peuvent ne pas sembler primordiaux au
+fonctionnement du système, sont en fait de première importance, et ce
+choix ne devrait pas être laissé au hasard, et être mis a jour
+régulièrement (pour éviter les failles de sécurité...)&lt;/p&gt;
+&lt;p&gt;Bon courage, et bon choix pour votre prochain système.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Tue, 25 Sep 2012 10:28:00 +0200</pubDate><guid>tag:wxcafe.net,2012-09-25:posts/%D/les-systemes-de-fichiers/</guid></item><item><title>Les différentes couches d'un système d'exploitation</title><link>//wxcafe.net/posts/%D/les-differentes-couches-dun-systeme-dexploitation/</link><description>&lt;p&gt;Étant utilisateur plus ou moins fidèle de GNU/Linux depuis quelques
+années (plus ou moins, parce que j'ai toujours un Windows en dual boot,
+principalement pour les jeux (possiblement plus pour longtemps, avec
+l'arrivée de Steam pour Linux... ) ), je commence a connaître plus ou
+moins bien mon système. Or il y a plusieurs choses a savoir sur les
+systèmes d'exploitation, et celle dont je vais parler aujourd'hui, c'est
+le système de couches.&lt;/p&gt;
+&lt;p&gt;Un système d'exploitation (de type UNIX, \&amp;lt;troll&gt;enfin un vrai système quoi.
+\&amp;lt;/troll&gt;) incorpore plusieurs systèmes de couches.&lt;/p&gt;
+&lt;p&gt;Ainsi, Linux (le noyau) a commencé en étant un kernel monolithique,
+c'est a dire que tous les composants sont intégrés au kernel. Ce qui
+signifie que rien ne peut être ajouté au noyau sans recompiler celui ci.
+Or, quand on sait que le noyau comprend entre autres les drivers du
+matériel et des systèmes de fichier, cela peut poser des problèmes quand
+a la taille du kernel et a la licence libre de ce dernier. &lt;/p&gt;
+&lt;p&gt;Depuis un certain temps, le kernel linux est devenu un kernel modulaire, ce qui
+signifie que des modules peuvent être chargé a tout moment en cours
+d’exécution, ce qui permet l'utilisation de nouveaux systèmes de
+fichiers a chaud, ou l'insertion de matériel et l'installation de
+drivers sans interrompre l’exécution du système (Windows utilise un
+système de fausse installation de drivers pour le matériel externe, et
+un système de pré-installation des drivers pour les périphériques dits
+"plug and play")&lt;/p&gt;
+&lt;p&gt;Après le noyau intervient le système. Or, au tous premiers instants du
+boot, les systèmes GNU/Linux utilisent un système permettant de limiter
+l'utilisation de ressources systèmes si elles ne sont pas nécessaires,
+et incorpore ainsi un système dit de "runlevels"&lt;/p&gt;
+&lt;p&gt;Ainsi, au runlevel 0, le système s'éteint après avoir booté. Ainsi, ce
+runlevel permet de tester le bon démarrage du système sans avoir a
+effectuer de manipulation pour le ré-éteindre&lt;/p&gt;
+&lt;p&gt;Le runlevel 1 est appelé mode single user, et c'est un nom plutôt adapté
+étant donné que ce runlevel donne accès a un système en étant
+automatiquement loggé en tant que root, avec tous les autres
+utilisateurs désactivés, de même que tous les systèmes de réseaux&lt;/p&gt;
+&lt;p&gt;Le runlevel 2 est appelé mode multi user, et vous mets en face d'un
+système classique. en ligne de commande, mais avec tous les systèmes de
+réseau désactivés.&lt;/p&gt;
+&lt;p&gt;Le runlevel 3 est le même que le 2, mais avec les systèmes de réseaux
+activés.&lt;/p&gt;
+&lt;p&gt;Le runlevel 4 n'est pas officiellement défini, et est censé être
+activable en fonction des besoins de l'utilisateur. Sur la plupart des
+distributions grand public, ce runlevel est lié au...&lt;/p&gt;
+&lt;p&gt;Runlevel 5! Multi-user, networking, with working GUI! c'est le système
+tel que vous le connaissez, avec l'interface graphique et le système de
+login graphique.&lt;/p&gt;
+&lt;p&gt;Le runlevel 6, enfin, est le bien nommé "reboot", qui reboot la machine
+quand il devient le runlevel courant.&lt;/p&gt;
+&lt;p&gt;(Il est a noter que Debian, et donc toutes les distribs qui en sont
+dérivées, ne font pas de distinction entre les differents runlevels du 2
+au 5. Ainsi, Ubuntu fonctionne par défaut au runlevel 2, avec un login
+et une interface graphique, et un mode réseau fonctionnel, bref avec des
+fonctionnalités qui ne sont normalement disponibles que sous le runlevel 5.)&lt;/p&gt;
+&lt;p&gt;Il est possible de changer de runlevel grâce a la commande runlevel
+(oui, c'est évident...)&lt;/p&gt;
+&lt;p&gt;Les systèmes Linux utilisent aussi un système dit de SandBox , qui en
+informatique est un système permettant d'isoler les processus les uns
+des autres. Ainsi, la pile réseau, qui est le système auquel les
+différents processus envoient les différents paquets qui doivent sortir
+de la machine , et qui redistribue ces paquets, est isolée du reste du
+système, en cela qu'aucun des autres processus ne peuvent modifier cette
+pile hors du runlevel 1 ou 2.&lt;/p&gt;
+&lt;p&gt;De la même façon, le navigateur chrom/ium fait fonctionner tous les
+onglets, ainsi que toutes les extensions, dans des processus différents.
+Certaines distributions linux implémentent un système de cette sorte
+pour toutes les applications, ou seulement pour certaines. ainsi Chakra
+Linux a un système d'installation d'applications dans des disques
+virtuels, ce qui permet une sécurité totale du processus.&lt;/p&gt;
+&lt;p&gt;Voila, j'espère vous en avoir appris un peu sur le fonctionnement des
+différentes couches de linux, et j'espère que cet article vous poussera
+a tester un peu votre système et a vous amuser avec les différents
+runlevels&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Thu, 06 Sep 2012 23:29:00 +0200</pubDate><guid>tag:wxcafe.net,2012-09-06:posts/%D/les-differentes-couches-dun-systeme-dexploitation/</guid></item><item><title>La programmation expliquée simplement</title><link>//wxcafe.net/posts/%D/la-programmation-expliquee-simplement/</link><description>&lt;p&gt;Salut!&lt;br /&gt;
+Tout d'abord, je tiens a m'excuser de ne pas avoir eu le temps d'écrire
+récement, mais j'ai eu la chance d'avoir un PC a monter, donc j'ai passé
+pas mal de temps assez occupé.  &lt;/p&gt;
+&lt;p&gt;Enfin, après un certain temps a farfouiller au millieu des connecteurs
+SATA et a apprendre que, oui, l'alimentation sert aussi pour les disques
+durs, je suis de retour pour un court article.&lt;br /&gt;
+Du coup, je m'étais dit que j'allais reprendre sur le thème de
+l'informatique expliquée au grand public, en tentant d'aller un peu plus
+loin que la dernière fois sur le thème de la programmation&lt;br /&gt;
+Ce qu'il faut comprendre, c'est la facon dont fonctionne un ordinateur.
+Si a peu près tout le monde sait que "les ordinateurs, ils ne
+comprennent que les 1 et les 0!", peu de gens savent comment cela
+fonctionne en détail.  &lt;/p&gt;
+&lt;p&gt;Si vous êtes sur ce blog, il y a pas mal de chance que vous ayez déjà
+des notions de base en informatique. Ainsi, vous savez surement que les
+ordinateurs fonctionnent avec des programmes, qui sont composés de
+code.&lt;br /&gt;
+Ainsi, il faut comprendre que le code (source) est "compilé" en un
+fichier "binaire". Un fichier binaire est un fichier comprenant les
+instructions telles qu’exécutées par le processeur, et donc absolument
+illisible pour un humain.  &lt;/p&gt;
+&lt;p&gt;La compilation est le processus qui transforme le code source en
+binaire executable. Les binaires ont, sous Windows, l'extension .exe,
+tandis que sous les systèmes UNIX-like, ils n'ont pas d'extension
+particulière.&lt;br /&gt;
+Ceci étant dit, il faut comprendre que certains langages sont plus
+proches que d'autres du langage processeur, les langages les plus
+proches sont dits de "bas niveau". Les langages les plus éloignés sont
+donc dits de haut niveau.  &lt;/p&gt;
+&lt;p&gt;Par exemple, l'assembleur est l'un des languages de plus bas niveau,
+tandis que python par exemple est un langage de plus haut niveau. Les
+langages de haut niveau sont souvent bien plus simples a comprendre et a
+apprendre que les langages de bas niveau  &lt;/p&gt;
+&lt;p&gt;Ainsi, en C, un langage de niveau relativement bas, pour afficher
+"hello world" sur l'écran, le code nécessaire est :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;le même programme en python s'écrit :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;et n'a pas besoin d'être compilé , puisqu'il peut être intepreté
+directement.  &lt;/p&gt;
+&lt;p&gt;Python utilise en effet un système similaire a Java en ayant un
+interpréteur dit "runtime" ou "temps réel", qui interprète le programme
+sans le compiler. Java utilise un système légèrement différent, puisque
+le code a besoin d'être compilé, mais est interpreté par un interpréteur
+et non par le processeur.  &lt;/p&gt;
+&lt;p&gt;Cette méthode permet le fameux "code once, run everywhere", ce qui
+signifie que le même code est exécutable sur quasiment tous les systèmes
+d'exploitation (en fait, tous ceux sur lesquels l’interpréteur est
+disponible.)&lt;/p&gt;
+&lt;p&gt;Voila, je vous laisse sur le fonctionnement de Java et de Python, et je
+vais me coucher.&lt;br /&gt;
+A bientôt!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Mon, 27 Aug 2012 00:22:00 +0200</pubDate><guid>tag:wxcafe.net,2012-08-27:posts/%D/la-programmation-expliquee-simplement/</guid></item><item><title>GNU/Linux pour les non technophiles, ou l'OS libre pour votre grand-mère</title><link>//wxcafe.net/posts/%D/gnulinux-pour-les-non-technophiles-ou-los-libre-pour-votre-grand-mere/</link><description>&lt;p&gt;GNU/Linux est un vaste et extraordinaire territoire technologique, mais
+je ne vais pas m'attarder ici sur les aspects profondément techniques de
+ce territoire pour faire plutôt une sorte d'introduction a ce qu'est
+vraiment GNU/Linux, pour les gens n'ayant aucune ou très peu de
+connaissances en informatique.&lt;/p&gt;
+&lt;p&gt;GNU/Linux, que j’abrégerai ici en Linux pour plus de simplicité, est un
+Système d'Exploitation. Un système d'exploitation est, pour simplifier,
+un ensemble d'outils informatiques qui vous permettent d'utiliser votre
+ordinateur, ainsi, Windows est un système d'exploitation. L'abréviation
+de système d'exploitation (Operating System en anglais) est OS. Les 4
+principaux OS existants aujourd'hui sont Windows, Mac OS, GNU/Linux, et
+Solaris. Les trois derniers sont issus d'un autre système, plus ancien,
+nommé UNIX.&lt;/p&gt;
+&lt;p&gt;De ce fait, on pourrait penser que Linux remplace complètement Windows
+une fois installé, et comprend une interface graphique, et toutes sortes
+d'utilitaires permettant a l'utilisateur d'utiliser le système (sous
+Windows, pensez a l'explorateur de fichiers, ou a Internet Explorer.
+Pour l'interface graphique, pensez a... Pensez que votre système affiche
+autre chose que des lignes de commande.) Or non, une fois installé,
+Linux en lui même ne vous afficherait aucune interface graphique, et
+s'il est effectivement livré avec des utilitaires, ils ne sont que des
+programmes en ligne de commande. Autant les utilisateurs avancés sauront
+s'en servir, et pourront argumenter que c'est plus efficace ou plus
+rapide, autant les utilisateurs basiques préfèrent une interface
+graphique. Alors comment en obtenir une?&lt;/p&gt;
+&lt;p&gt;Ici, il convient de faire une précision importante. Si il n'existe
+qu'une seule version de Windows, ou de Mac OS, il existe en fait
+plusieurs centaines de "versions" différentes de Linux. Appelées
+distributions, ces dernière sont développées par des groupes
+complètement séparés, et se basent sur le fait que Linux soit
+entièrement placé sous licence libre (ce qui leur permet de l'utiliser a
+leur guise, a condition que leur travail soit lui aussi placé sous
+licence libre). De ce fait, de nombreuses distributions existent et se
+développent en parallèle. On peut ainsi citer &lt;a href="http://debian.org"&gt;Debian&lt;/a&gt;, qui est l'une
+des distributions les plus importantes, ou encore &lt;a href="http://ubuntu.com"&gt;Ubuntu&lt;/a&gt;, qui est
+l'une des plus connues et des plus simples a utiliser.&lt;/p&gt;
+&lt;p&gt;Ainsi, ces distributions intègrent une interface graphique. Cependant,
+grâce a la liberté dont bénéficient les développeurs sous Linux, il
+existe de nombreuses interfaces graphiques différentes : &lt;a href="unity.ubuntu.com"&gt;Unity&lt;/a&gt;, la
+nouvelle interface d'Ubuntu; &lt;a href="gnome.org"&gt;GNOME&lt;/a&gt; , une interface qui vise a la
+simplicité; ou encore &lt;a href="http://kde.org/"&gt;KDE&lt;/a&gt;, une interface utilisateur ressemblant a
+Windows 7.&lt;/p&gt;
+&lt;p&gt;Ainsi, le choix astronomique de distributions Linux a bien un sens :
+chacune d'entre elle intègre des outils différents. Par exemple, Debian
+intègre GNOME 2, qui est l'ancienne version de GNOME, ce qui la rend
+particulièrement stable. Ubuntu intègre Unity, ce qui en fait une
+distribution particulièrement intuitive. Linux Mint intègre Cinnamon,
+qui est une version dérivée de GNOME 3, ce qui permet encore une autre
+expérience. Et Arch Linux n'intègre pas d'interface graphique du tout,
+ce qui permet a l'utilisateur de choisir entre les multiples interfaces
+existantes.&lt;/p&gt;
+&lt;p&gt;Ce qu'il est important de retenir de cela, c'est que Linux est un OS
+complètement libre, ce qui signifie que n'importe qui peut modifier et
+utiliser tout le code de Linux gratuitement et comme il l'entend. Ainsi,
+Linux est un OS qui est véritablement créé par des passionnés, pour tous
+et toutes. Surtout, il convient de retenir que Linux n'est pas compliqué
+a utiliser, ni a installer. Windows et Mac OS ne le sont pas non plus.
+Cependant, Linux donne la possibilité a l'utilisateur de le rendre
+affreusement complexe, mais aussi de le rendre adapté a ses besoins,
+quels que soient ceux ci. Et c'est la que réside l'incroyable puissance
+de ce Système d'Exploitation. Il est extraordinairement adaptable.&lt;/p&gt;
+&lt;p&gt;N'hésitez donc pas a le présenter a vos proches, même s'ils ne sont pas
+technophiles. Ils pourraient adorer, et peut être même le devenir :)&lt;/p&gt;
+&lt;p&gt;A bientôt!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Wed, 22 Aug 2012 20:33:00 +0200</pubDate><guid>tag:wxcafe.net,2012-08-22:posts/%D/gnulinux-pour-les-non-technophiles-ou-los-libre-pour-votre-grand-mere/</guid></item></channel></rss>

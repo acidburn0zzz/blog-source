@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Wxcafé - Wxcafe</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+			 			<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/monter-son-propre-serveur-partie-1/">Monter son propre serveur, partie 1: le serveur et l'apache.</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-03-18T09:51:00+01:00">
+		<i class="icon-calendar"></i> Mon 18 March 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Il y a un certain temps, j'avais parlé du concept du self-hosting. Il
+s'agit de posséder son propre serveur, et donc, par extension, ses
+données.  </p>
+<p>Bien entendu, il n'est pas nécessaire pour cela de posséder
+physiquement son propre serveur (encore que ce soit possible, mais ce
+n'est pas le sujet abordé ici.)<br />
+Nous expliquerons ici les étapes nécessaires pour arriver a avoir un
+serveur utilisable, du moment ou vous arrivez sur le système fraichement
+installé, au moment ou vous possédez un serveur avec tous les paquets
+nécessaires a l'utilisation que l'on veut en faire ici d'installés.
+Cette partie va consister a paramétrer le système (ici un debian
+squeeze. Il est bien sur possible de faire la même chose avec a peu près
+toutes les distributions Linux disponibles, tout comme avec les BSD et
+tous les  autres systèmes UNIX, mais je vais ici me limiter a debian 6.0.x
+squeeze, parce que c'est une distribution simple a utiliser comme
+serveur, stable, et facile a configurer (puisqu'une bonne partie de la
+configuration est déjà faite et incluse dans le paquet), donc adaptée au
+but de cet article, a savoir rendre l'installation simple et
+compréhensible).</p>
+<p>La première chose a faire est bien entendu d'obtenir le serveur en lui
+même. Cette partie de la chose ne sera pas traitée dans cet article. Il
+existe en effet un nombre infini d'obtenir un serveur, que ce soit en le
+louant chez OVH/1&amp;1/n'importe quel autre hébergeur commercial, en
+participant a un système d'hébergement collaboratif (je vous laisse
+chercher), en achetant un serveur et en le faisant fonctionner de chez
+vous, en utilisant un vieux PC... Bref, les possibilités sont multiples.
+Dès  lors que vous avez accès a un système debian serveur, peu importe sur
+quel matériel il fonctionne, et a priori peu importe aussi la manière
+dont vous y accédez, le résultat est le même (et la procédure aussi...).
+Dans cet article, nous parlerons de la configuration de base, du moment
+ou vous avez le serveur vierge dans les mains au moment ou vous
+installez le serveur http.</p>
+<p>Dans cet article, lorsque est précisée le type d'IP a utiliser, il
+convient de mettre ce type précisément. Quand le type n'est pas
+précisée, libre a vous de choisir ipv4 ou ipv6.</p>
+<p>Bref. Commençons au point ou vous avez un accès root a votre serveur,
+n'ayant soit aucun mot de passe, soit un choisi par l'hébergeur, et ou
+rien n'est configuré. Connectez vous a celui-ci (ssh root@). Commencez
+donc par faire un <code>passwd</code>, pour mettre au plus vite un mot de passe
+solide sur le compte root. Continuons en allant vite mettre en place le
+nom de domaine. Pour cela, votre registrar doit vous fournir une
+interface vous permettant d'éditer l'entrée DNS pour votre nom de
+domaine.  </p>
+<p>Cette entrée doit donc pour l'instant ressembler a ca :</p>
+<div class="highlight"><pre>    <span class="o">&lt;</span><span class="n">votre</span> <span class="n">nom</span> <span class="n">de</span> <span class="n">domaine</span><span class="o">&gt;</span>  <span class="n">NS</span> <span class="mi">1</span> 
+                            <span class="n">IN</span> <span class="n">MX</span> <span class="mi">1</span> 
+                            <span class="n">IN</span> <span class="n">A</span>        <span class="o">&lt;</span><span class="n">IPv4</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">serveur</span><span class="o">&gt;</span>
+                            <span class="n">IN</span> <span class="n">AAAA</span>     <span class="o">&lt;</span><span class="n">IPv6</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">serveur</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Cela vous permet de rediriger tout le trafic se référant a votre nom de
+domaine vers votre ip (le fonctionnement exact du DNS est assez
+compliqué a expliquer, donc on va dire que c'est de la magie pour
+l'instant, ca sera peut être le sujet d'un autre article), et d'indiquer
+que les mails @votre-nom-de-domai.ne doivent aussi être redirigés vers
+votre serveur, ce qui est un bon début. Faisons un petit point sécurité
+ici : pour accéder a votre serveur, il vous suffit actuellement de taper
+le mot de passe root.</p>
+<p>root est un utilisateur <strong>assez</strong> répandu, et il est assez simple de
+bruteforcer le mot de passe. (<em>Relativement</em> assez simple, en fonction
+du nombre de caractères, ça prend plus ou moins de temps, et si vous
+avez suffisamment de caractères, ça peut prendre un temps assez
+conséquent. Cela dit, il vaut mieux être prudent...) Ainsi, nous allons
+arrêter d'utiliser root et nous allons commencer a utiliser des couples
+clés publiques/privées pour nous connecter au serveur.<br />
+Cela se fait en deux temps : tout d'abord, créer un nouvel utilisateur,
+grâce auquel nous administrerons le serveur a l'avenir; puis configurer
+OpenSSH pour que celui ci n'accepte que les connections par clés et plus
+celles sur root.</p>
+<p>Commençons par ajouter un utilisateur. Si vous êtes sous debian, cela se
+fait avec adduser, qui est interactif (vous ne devriez pas avoir de
+problème avec, puisqu'il crée tout les dossiers et fichiers nécessaires,
+et vous pose toutes les questions utiles pour vous aider.) sinon, vous
+devrez utiliser useradd, qui est (en plus d'être très chiant a
+distinguer de l'autre, bien plus chiant a utiliser. (adduser est en fait
+un simple script permettant l'utilisation d'useradd plus facilement.)</p>
+<p>Avec adduser, vous pouvez soit utiliser le mode interactif en tapant
+juste <code>adduser &lt;username&gt;</code>, soit utiliser le mode non-interactif
+en faisant un <code>adduser --group &lt;username&gt;</code></p>
+<p>Avec useradd, vous devrez utiliser la commande suivante : <code>useradd -m
+-N -g &lt;username&gt;</code>. Cette commande ajoutera un utilisateur, créera
+son dossier principal dans /home/, et l'ajoutera au groupe du même nom
+que lui (ce qui est en général nécessaire pour des questions de vie
+privée).</p>
+<p>Il convient maintenant d'ajouter cet utilisateur aux groupes qu'il sera
+amené a administrer: <code>usermod &lt;username&gt; -a -G www-data postfix
+users staff sudo wheel</code>, puis de changer son mot de passe
+<code>passwd</code>. Enfin, ajoutons le aux utilisateurs autorisés a utiliser
+sudo: <code>echo "%sudo ALL=(ALL) ALL" &gt;&gt; /etc/sudoers</code><br />
+Enfin, changeons d'utilisateur : <code>su</code>. A ce point, vous avec un
+utilisateur complètement fonctionnel et utilisable pour toutes les
+taches d'administration. Si vous devez encore utiliser root, c'est que
+quelque chose ne va pas.</p>
+<p>Vous êtes donc loggés sur le système en tant qu'utilisateur normal. Nous
+allons maintenant passer a la phase 2 du plan : désactiver le login ssh
+root et le login ssh par mot de passe.<br />
+Tout d'abord, qu'est-ce qu'un login par clé ssh? Il s'agit en fait d'un
+système assez semblable a celui vous permettant de chiffrer vos mail :
+vous avec une clé publique et une clé privée sur le client, et la clé
+publique est aussi sur le serveur. Lorsque vous vous connectez, openssh
+vérifie que vous possédez la clé privée qui correspond a la clé publique
+stockée sur le serveur (pour votre utilisateur, bien entendu). Il est
+également possible d'utiliser plusieurs clés publique pour chaque<br />
+utilisateur.</p>
+<p>Bref, maintenant que nous avons la théorie, passons a la pratique : tout
+d'abord, il nous faut générer un couple de clés publique/privée sur le
+client. Openssh fait ça via la commande <code>ssh-keygen -t rsa</code> (le -t
+rsa précise a ssh que nous voulons un chiffrement rsa, qui est
+suffisamment solide pour cette utilisation.) Entrez les informations que
+ssh-keygen vous demande. Trois fichiers devraient maintenant se trouver
+dans votre dossier .ssh/ : id_rsa, id_rsa.pub, et known_hosts.<br />
+known_hosts liste les serveurs auxquels vous vous êtes connectés déjà
+une fois (pour éviter les attaques MITM, mais bref). Non, ce qui nous
+intéresse ici c'est id_rsa et id_rsa.pub . id_rsa contient votre clé
+privée, sauvegardez la sur une clé USB ou notez la sur un bout de
+papier, si vous la perdez, vous ne pourrez plus vous connecter au
+serveur. (planquez la clé usb/le bout de papier...) id_rsa.pub, quand a
+lui, contient votre clé publique. Copiez la sur le serveur, avec un
+<code>scp ~/.ssh/id_rsa.pub &lt;username&gt;@&lt;votre nom de domaine&gt;:~/</code> , ou
+en la copiant a la main, si ça vous amuse. </p>
+<p>Vous avez maintenant un fichier id_rsa.pub dans votre dossier personnel 
+sur le serveur, il faut le mettre a un endroit ou openssh le reconnaitra.
+Il est donc nécessaire de créer le dossier .ssh (<code>mkdir .ssh</code>), puis
+de déplacer ce fichier a la bonne place (<code>mv ~/id_rsa.pub ~/.ssh/authorized_keys</code>).
+Testez si ça fonctionne : ouvez un autre terminal, et<br />
+connectez vous a votre serveur (<code>ssh &lt;username&gt;@&lt;votre nom de
+domaine&gt;</code>), et il ne devrait pas vous demander de mot de passe.<strong>Si
+il vous en demande un, NE PASSEZ PAS A LA SUITE. Quelque chose a foiré,
+donc vérifiez que vous avez suivi correctement les instruction
+ci-dessus.</strong></p>
+<p>Continuons. Il ne nous reste plus qu'a installer le serveur web, et a le
+configurer: </p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+<span class="n">apache2</span> <span class="n">apache2</span><span class="mf">.2</span><span class="o">-</span><span class="n">common</span> <span class="n">apache2</span><span class="o">-</span><span class="n">doc</span> <span class="n">apache2</span><span class="o">-</span><span class="n">mpm</span><span class="o">-</span><span class="n">prefork</span> \
+<span class="n">apache2</span><span class="o">-</span><span class="n">utils</span> <span class="n">libexpat1</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">php5</span> \
+<span class="n">php5</span> <span class="n">php5</span><span class="o">-</span><span class="n">common</span> <span class="n">php5</span><span class="o">-</span><span class="n">gd</span> <span class="n">php5</span><span class="o">-</span><span class="n">cgi</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">fcgid</span> \
+<span class="n">apache2</span><span class="o">-</span><span class="n">suexec</span> <span class="n">php</span><span class="o">-</span><span class="n">pear</span> <span class="n">php</span><span class="o">-</span><span class="n">auth</span> <span class="n">php5</span><span class="o">-</span><span class="n">mcrypt</span> <span class="n">mcrypt</span> \
+<span class="n">php5</span><span class="o">-</span><span class="n">imagick</span> <span class="n">imagemagick</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">suphp</span> <span class="n">libruby</span> \
+<span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">ruby</span>
+</pre></div>
+
+
+<p>(faisons large, on aura besoin de l'excédent plus tard...), puis activons les<br />
+mods apache en faisant <code>a2enmod suexec rewrite ssl actions include
+dav_fs dav auth_digest</code>, et faisons en sorte que ces activations
+soient prises en compte par apache via un <code>sudo service apache2
+restart</code>  </p>
+<p>Le serveur fonctionne, maintenant, il est necessaire de lui expliquer
+comment fonctionner sur notre nom de domaine et ou trouver les fichiers
+a envoyer.  </p>
+<p>Pour cela, nous allons faire un simple <code>ln -s /etc/apache2/sites-{available,enabled}/default</code>, car apache est assez
+sympa pour nous filer un fichier de configuration par défaut. Il nous
+faut encore l'éditer, en changeant l'adresse mail au début du document
+par la votre, et en changeant <code>AllowOverride none</code> en <code>AllowOverride All</code>,
+et enfin redémarrer apache pour qu'il prenne en compte les
+modifications, par un <code>sudo service apache2 restart</code>  </p>
+<p>Et maintenant, il vous reste a apprendre le html, parce que ca y est,
+votre serveur est fonctionnel! Voila voila. Dans la prochaine partie, on
+verra l'installation du serveur mail (c'est suffisamment complexe pour
+prendre un article seul...)</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/pourquoi-je-vais-quitter-linux-pour-passer-a-freebsd/">Pourquoi je vais quitter linux pour passer a FreeBSD.</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-02-04T17:41:00+01:00">
+		<i class="icon-calendar"></i> Mon 04 February 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/ranting/"><i class="icon-folder-open"></i>Ranting</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p><em>This is subject to debate, and as most of the actors in this field are
+not French-speaker, there is an English version of this text <a href="http://data.wxcafe.net/archives/126">here</a></em></p>
+<p>Bon, voila. J'ai passé le cap. Je suis sous GNU/Linux depuis un certain
+temps, maintenant, et depuis un certain temps je remarque des
+changements malvenus. Bien entendu, au début, je n'avais pas les
+connaissances nécessaires pour comprendre ne serait-ce que ces
+modifications existaient. Et puis certaines sont arrivées avant que je
+n'ai même idée que quelque chose dans mon système d'exploitation avait
+cette fonction la. Par exemple, udev, ou policykit/consolekit/. A
+l'époque, je n'avais aucune idée de la façon dont les disques étaient
+montés sur mon système. Le premier système non-Windows que j'ai utilisé
+fut Ubuntu 9.10 Karmic Koala, et il était encore trop tôt pour que je
+cherche a démonter le système pour comprendre comment il fonctionnait en
+profondeur. Cependant, avec le temps, les connaissances s'accumulant et
+mon niveau de compréhension du système s'améliorant, j'ai commencé a
+remarquer que certain bouts de l'OS ne collaient pas exactement avec les
+autres. Bien sur, je ne saurais dire si cette réalisation s'est faite a
+cause de la recrudescence de ces bouts d'OS, ou bien juste a cause de ma
+compréhension plus poussée. Toujours est-il que ces petits bouts d'OS ne
+s’adaptant pas au reste du système se faisaient de plus en plus visible.
+Et puis, un jour, j'en ai eu marre de voir unity sur ma machine, et j'ai
+choisi de passer a Archlinux. C'était avant le passage a systemd. Ce
+système me convenait bien. Si je n'installais pas Gnome, ce que je ne
+comptais pas faire, il ne me forçait pas a installer un *kit
+quelconque, ni dbus. Oui, udev était toujours la, mais c'était le moins
+envahissant de ceux la.</p>
+<p>Mais Archlinux est passé a systemd. Attention hein, je ne critique ici
+ni systemd, ni udev, ni même les <em>kit, et surtout pas Archlinux. Les
+premiers sont probablement très efficaces dans leur domaine, et le
+second n'a pas <strong>vraiment</strong> eu le choix, rapport a la philosophie de la
+distribution d'avoir au plus vite les dernières versions de tout.
+Cependant, systemd, tout comme udev et les </em>kits (bien que ce ne soient
+pas les seuls a faire ça...) ont un problème très précis, qui n'importe
+pas a tout le monde, mais qui est très gênant pour ceux a qui il
+importe, et ce problème est que ces systèmes ne respectent absolument
+pas la philosophie UNIX. La philosophie UNIX, pour rappel, se résume en
+ces 9 principes :</p>
+<ol>
+<li>Ce qui est petit est beau</li>
+<li>Faites en sorte que chaque programme fasse une chose, bien.</li>
+<li>Faites un prototype aussi vite que possible</li>
+<li>Choisissez la portabilité plutôt que l'efficacité</li>
+<li>Stockez les données dans des fichiers textes.</li>
+<li>Utilisez ce qui existe déjà a votre avantage. [<strong>1</strong>]</li>
+<li>Utilisez des scripts shells pour faciliter la portabilité et la
+    réutilisation.</li>
+<li>Évitez les UI qui "capturent" l'utilisateur.</li>
+<li>Faites de chaque programme un filtre.</li>
+</ol>
+<p>Alors bien entendu, un système d'exploitation est fait pour évoluer, et
+on pourrait penser qu'UNIX a fait son temps. Cependant, ce n'est pas
+exactement la façon dont l'informatique fonctionne. Effectivement, les
+standards, les systèmes d'exploitation, les logiciels, tout doit évoluer
+- ou mourir - et UNIX ne fait pas exception a la règle. Mais ce n'est
+pas d'UNIX que nous parlons ici. C'est de la <em>philosophie</em> UNIX. Et
+celle-ci n'a pas fait son temps, <strong>elle a fait ses preuves.</strong> La
+philosophie UNIX, en plus d'être efficace sur le papier, a aussi 44 ans
+de tests derrière elle, et fonctionne aussi bien qu'au premier jour.<br />
+La philosophie UNIX est aussi et surtout une garantie d'utilisabilité
+et de simplicité pour les administrateurs systèmes, pour les
+développeurs, bref pour tous ceux qui font de l'informatique
+<em>sérieusement</em> (je ne dis pas que les autres métiers de l'informatique
+ne sont pas sérieux, je prend juste ceux-ci comme exemples parce que ce
+sont ceux qui sont les plus proches du système).</p>
+<p>Tous OS se doit d'avoir un système standardisé pour faire communiquer
+les programmes entre eux. UNIX a un système de pipes, des sortes de
+fichiers spéciaux permettant d'échanger des informations. C'est
+efficace, ça respecte le "tout est fichier", c'est standard, c'est
+simple a comprendre, bref, ça fonctionne parfaitement. Dbus vient
+remplacer ça, avec une interface qui n'est explicitement pas faite pour
+être utilisée a la ligne de commande mais a l'aide d'APIs, et un
+programme monolithique qui effectue sa tache d'une façon complètement
+obscure pour l'utilisateur. Alors bien sur, il l'effectue d'une façon
+efficace, cette tache. Oui, ça va plus vite qu'avant. Oui, c'est plus
+"rangé", ça fait moins "fouillis". Mais c'est moins efficace. C'est
+<em>beaucoup</em> moins utilisable pour l'utilisateur final. C'est
+horriblement chiant pour les sysadmins, parce qu'ils ne peuvent plus
+lire facilement les échanges entre programmes. C'est peu pratique, en
+fin de compte. Et ça ne respecte pas du tout la philosophie UNIX.<br />
+Systemd prend le même parti de créer une interface unifiée, accessible
+via des appels a des APIs uniquement, complètement obscure, extrêmement
+abstraite, bien entendu monolithique, et très peu ouverte a la
+modification par l'utilisateur final. Alors oui, il parait que ça
+augmente la vitesse de boot. Eh bien, au risque d'en choquer quelques
+uns, je préfère avoir un système qui boote <em>légèrement</em> plus lentement
+et que je puisse modifier facilement, et qui soit ouvert, compréhensible
+et distribué. C'est presque comme si les projets freedesktop.org avaient
+pour but de remplacer la base UNIX de linux en créant un système
+concurrent, bâtard, bâti sur le kernel Linux mais n'employant plus les
+systèmes basiques d'UNIX.</p>
+<p>Le problème est qu'il est facilement visible que la direction prise par
+la communauté Linux n'est pas celle du retour sur les systèmes UNIX ni
+celle du développement de solutions respectant la philosophie UNIX, mais
+remises au gout du jour (?), mais est bien d'accepter et de pousser les
+changements apportés par les projets freedesktop.org directement dans le
+cœur du système lui même. Ainsi, Fedora (très près de Red Hat, dont font
+partie de nombreux développeurs de ces projets), a déjà adopté tous ces
+changements (archlinux aussi, mais pour d'autres raisons...), et on peut
+compter sur le fait que les autres distributions l'adopteront un jour ou
+l'autre.</p>
+<p>Bon, maintenant que nous avons, si ce n'est démontré la nocivité de ces
+systèmes, tout du moins exprimé les raisons qui font qu'ils me
+déplaisent, on pourrait penser qu'il suffit de passer a une distribution
+n'incluant pas systemd, voire a une distribution n'incluant pas du tout
+de contenus freedesktop.org, et de vivre avec le fait de ne pas être sur
+archlinux. Cependant, avec un peu de réflexion, on voit que si des
+distributions comme archlinux et Fedora ont adopté systemd (et
+qu'OpenSUSE est en train de l’intégrer), il est probable que cela
+devienne un standard au fil des années, et que seuls survivent systemd
+et upstart, le gestionnaire de démarrage d'ubuntu, qui ne changera
+probablement pas (je les vois mal revenir en arrière sur ce point.)
+Toujours est-il que l'init héritée du System V semble condamnée a mourir
+sous Linux. Il pourrait être judicieux de passer sous debian squeeze,
+qui ne recevra probablement jamais la mise a jour, ou a wheezy, qui ne
+la recevra probablement que dans 2/3 ans. Cependant, cette période est
+toujours trop courte, et met sur mon système d'exploitation une date
+d'expiration, chose qui ne me plait que moyennement. Non, la solution
+est de passer sous un système autre, qui ait son propre système d'init
+(ou qui ne risque pas de passer sous systemd). Dans ce cas, deux options
+principales s'ouvrent a moi: OpenSolaris et *BSD. Minix n'est pas
+vraiment un choix, vu le peu de programmes qu'il permet de faire
+fonctionner et le fait qu'il ne soit disponible que sur i386, ce qui
+n'est pas vraiment avantageux au vu de mon système en x86_64. Haiku
+n'est pas un choix non plus, puisque le but est de rester dans une
+optique UNIX.</p>
+<p>OpenSolaris est un système d'exploitation tout a fait valable. Je n'ai
+en théorie aucun problème sur cet OS, sauf que certains choix de design
+ne correspondent pas du tout a l'idée que j'ai d'un OS. En effet,
+OpenSolaris ressemble assez a Debian dans sa vision du fonctionnement de
+ses outils, avec des paquets modifiés pour les rendre plus simples a
+utiliser (fichiers de configuration fournis par défaut, par exemple, et
+autres patchs "release-only"), et une tendance a faire des scripts et
+des outils installés par défaut pour tout et n'importe quoi. Bref, cela
+n'est pas le sujet. Il convient aussi de voir qu'avec la récente
+acquisition de Sun par Oracle, il est possible que le projet OpenSolaris
+n'ait pas de très beaux jours devant lui (la <a href="http://hub.opensolaris.org/bin/view/Main/">page d’accueil</a> du
+projet affiche d'ailleurs un ÉNORME logo Oracle, du meilleur gout.)</p>
+<p>Il reste donc *BSD. Pourquoi choisir FreeBSD plutôt qu'OpenBSD, NetBSD
+ou DragonFlyBSD (pour ne citer que les plus connus) ? Et bien c'est
+simple : pour aucune raison particulière. OpenBSD et NetBSD ont pour
+réputation d'être orientées sécurité, et d'après ce que j'ai pu en voir
+DFBSD ressemble aussi au système de l'assistance a l'user a outrance
+décris plus haut. Mais la vérité est que je n'ai pas fait suffisamment
+de recherches et que FreeBSD ne va me voir arriver que par hasard, parce
+qu'entre toutes les BSD ca me semble la plus sympa et la plus agréable a
+utiliser, plus le fait que le système de ports me convient bien (j'aime
+pouvoir configurer mes logiciels de façon assez profonde.)</p>
+<p>Voila, c'est mon avis sur ce "problème" actuel du monde de Linux. Bien
+entendu, je continuerai a utiliser Linux, et je ne peux qu’espérer que
+les systèmes tels que systemd ou dbus ne disparaissent, ou tout du moins
+n'apparaissent jamais chez certaines distributions, créant de ce fait un
+choix pour les utilisateurs.<br />
+[1]: Je n'ai pas trouvé de traduction satisfaisante a "software leveraging", mais l'idée est la...*</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/update-et-pensees-a-propos-du-raspberry-pi/">Update et pensées a propos du Raspberry Pi</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-01-27T01:55:00+01:00">
+		<i class="icon-calendar"></i> Sun 27 January 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/ranting/"><i class="icon-folder-open"></i>Ranting</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Bon.<br />
+J'ai annoncé il y a environ 20 jours que j'avais pour projet de faire
+une Piratebox basée sur un Raspberry Pi, <del>astucieusement</del> nommée
+PiRatBox. Il se trouve qu'après de nombreux essais, un problème
+récurrent apparait: le Raspberry Pi n'est pas capable de fournir assez
+de courant par défaut pour faire fonctionner a la fois un disque dur et
+une antenne WiFi.<br />
+Alors, autant il me semble évident qu'avec une
+alimentation provenant d'un port USB a 2A (max), je n'avais pas
+énormément de chances d'avoir 2A sur chacun des ports host du Raspi,
+autant avoir moins de 250 mA sur chacun de ces ports me semble un tout
+petit peu exagéré en terme de rentabilité.  </p>
+<p>De même, le fait de ne pas pouvoir désactiver le port Ethernet (ne me
+servant a rien) (vous savez, celui qui est monté en USB...), qui
+consomme énormément, est assez louche. Il devrait toujours être possible
+de désactiver une device USB, me semble-t-il, au niveau logiciel. La,
+bien qu'il soit surement possible de la désactiver au niveau du kernel,
+il n'est pas <strong>simplement</strong> possible de la "débrancher". Ce qui est bien
+chiant, étant donné le besoin évident de puissance électrique dans
+lequel on se retrouve.  </p>
+<p>Bon, je dois avouer n'avoir pas testé de lancer les différents services
+composant le système des piratebox sous arch, pour la simple <del>et
+bonne</del> raison qu'arch utilise systemd et qu'il n'existe pas de wrapper
+systemd pour les daemons piratebox, et que j'ai la flemme d'en faire,
+parce que systemd est une horreur a utiliser avec les scripts init. Donc
+non, j'utiliserai debian. Le problème d'utiliser debian dans ce cas
+précis est que apt/dpkg a une gestion des dépendances dans un sens mais
+pas dans l'autre, en ce sens que si on installe un package "haut", c'est
+a dire dépendant de plusieurs autres packages, apt/dpkg se charge
+efficacement d'installer toutes les dépendances nécessaires, tandis que
+si on désinstalle un package "bas", c'est a dire sur lequel de nombreux
+autres packages dépendent, apt/dpkg ne désinstalle pas ces packages
+"hauts", ce qui pose un vrai problème quand on se retrouve sur un
+Raspberry Pi, puisqu'il n'y a pas de moyen "facile" de choisir ce qui
+sera installé sur le système avant l'installation proprement dite
+(puisque le moyen "universel" d'installation sur Raspberry Pi est le dd
+vers la SD qui sert de disque système.)</p>
+<p>Il y a <strong>énormément</strong> d'autres critiques que l'ont pourrait faire
+concernant le Raspberry Pi. Son système de démarrage a s'arracher les
+cheveux, par exemple. En effet, plutôt que de faire comme tout pc
+normalement constitué ou la partie calcul démarre, lance le bootloader,
+cherche le kernel de l'OS qui lui même se lance, initialise le hardware,
+etc..., a un système bâtard du au fait que la puce au centre de la carte
+est a la base une puce graphique a laquelle on a greffé un cœur de
+calcul (probablement au fond d'une cour d'immeuble, dans les quartiers
+pauvres de Bratislava, vu la propreté de la greffe...), et le moyen le
+plus efficace qu'aient trouvé les personnes ayant implémenté cette
+atrocité de gérer le boot est donc de faire démarrer le cœur graphique
+en premier, ce dernier exécute un code propriétaire pour démarrer le
+cœur de calcul, qui a son tour lance le bootloader qui cherche le kernel
+etc...  </p>
+<p>Ce qui non seulement complique énormément le boot, non seulement ajoute
+du code propriétaire a un projet se disant libre, mais en plus n'est
+<strong>visiblement</strong> pas fait pour être utilisé de cette manière. Le hack,
+oui, mais uniquement quand c'est bien réalisé, sinon je dis non.  </p>
+<p>Enfin, le projet que j'avais est toujours en cours de réalisation. Je
+le terminerai dès que j'aurai récupéré les outils nécessaires pour
+monter mon alimentation personnalisée pour le Raspberry Pi. Et une fois
+que cela sera fait, ce Raspi restera une Piratebox pour le reste de sa
+vie. Les problèmes qu'il m'a posé, qu'il n'aurait pas du me poser, m'ont
+trop agacé pour que j'aie envie de le sortir et de jouer avec une fois
+sa mission remplie.  </p>
+<p>Dommage.</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/update/">Update</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-01-05T18:32:00+01:00">
+		<i class="icon-calendar"></i> Sat 05 January 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/notes/"><i class="icon-folder-open"></i>Notes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Juste une petite note pour annoncer le prochain article, consacré a la
+fabrication d'une PirateBox basée sur un Raspberry Pi. Voila, a bientôt
+sur le blog!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/mutt-ou-le-client-email-le-meilleur-moins-mauvais/">Mutt ou le client email le <del>meilleur</del> moins mauvais</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-01-02T02:12:00+01:00">
+		<i class="icon-calendar"></i> Wed 02 January 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Les clients mails ont une particularité en commun : ils sont tous
+<del>très</del> mauvais. Cela pour nombre de raisons, mais la principale reste
+que leurs interfaces/raccourcis claviers ne sont pas efficaces pour une
+utilisation <strong>a la</strong> UNIX<br />
+Cependant, un d'entre eux se démarque par sa moins-mauvais-itude, c'est
+le relativement bien connu <del>Outlook Express 2003</del> Mutt!<br />
+Mutt est un client mail en ligne de commande, qui, comme le dit sa page
+d’accueil, <a href="http://www.mutt.org">"just sucks less"</a>. Dans les faits, mutt est assez
+chiant a configurer mais particulièrement pratique a utiliser après.</p>
+<p>La configuration de mutt se fait dans le fichier <code>.muttrc</code> ou dans
+<code>/etc/Muttrc</code>, et il est courant d'utiliser offlineimap en
+conjonction avec celui ci, de façon a accéder aux mails même sans accès
+internet (mutt dispose d'un système d'accès IMAP/POP et SMTP, mais ne
+crée pas de cache, ce qui empêche la consultation des emails sans
+connexion internet.) La configuration d'offlineimap se fait dans
+<code>~/.offlineimaprc</code> ou dans rien d'autre en fait, c'est une config
+par user. Offlineimap est un petit logiciel en python qui synchronise un
+dossier en Maildir avec un serveur IMAP, ce qui tombe bien puisque
+justement mutt accepte les dossiers au format Maildir. (De plus, cela va
+tout a fait dans le sens de la libération des données en cela que vous
+possédez vos mails en local.)<br />
+Bref, passons aux choses serieuses : le code. Déjà, installez
+offlineimap et <a href="http://data.wxcafe.net/scripts/mutt-sidebar.sh">ce script</a> fait par moi, qui vous permet d'installer
+mutt avec le patch sidebar, qui crée un listing des dossiers sur la
+partie gauche.<br />
+Ensuite, voyons pour la partie configuration :<br />
+Ma configuration d'offlineimap :</p>
+<div class="highlight"><pre><span class="cp">## Config file for offlineimap</span>
+<span class="cp">## Originally located in ~/.offlineimaprc</span>
+<span class="cp">## This should not be edited without creating a copy before</span>
+<span class="cp">## Created by Wxcafe (Clément Hertling)</span>
+<span class="cp">## Published under CC-BY-SA</span>
+
+<span class="p">[</span><span class="n">general</span><span class="p">]</span>
+<span class="cp"># List of accounts to be synced, separated by a comma.</span>
+<span class="n">accounts</span> <span class="o">=</span> <span class="n">main</span>
+
+<span class="p">[</span><span class="n">Account</span> <span class="n">main</span><span class="p">]</span>
+<span class="cp"># Identifier for the local repository; e.g. the maildir to be synced via IMAP.</span>
+<span class="n">localrepository</span> <span class="o">=</span> <span class="n">main</span><span class="o">-</span><span class="n">local</span>
+<span class="cp"># Identifier for the remote repository; i.e. the actual IMAP, usually non-local.</span>
+<span class="n">remoterepository</span> <span class="o">=</span> <span class="n">main</span><span class="o">-</span><span class="n">remote</span>
+<span class="cp"># Status cache. Default is plain, which eventually becomes huge and slow.</span>
+<span class="n">status_backend</span> <span class="o">=</span> <span class="n">sqlite</span>              <span class="err">#</span> <span class="n">le</span> <span class="n">type</span> <span class="n">de</span> <span class="n">cache</span><span class="p">.</span> <span class="p">(</span><span class="n">plain</span> <span class="n">ou</span> <span class="n">sqlite</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">Repository</span> <span class="n">main</span><span class="o">-</span><span class="n">local</span><span class="p">]</span>
+<span class="cp"># Currently, offlineimap only supports maildir and IMAP for local repositories.</span>
+<span class="n">type</span> <span class="o">=</span> <span class="n">Maildir</span>                        <span class="err">#</span> <span class="n">le</span> <span class="n">type</span> <span class="n">de</span> <span class="n">stockage</span> <span class="p">(</span><span class="n">Maildir</span> <span class="n">ou</span> <span class="n">IMAP</span><span class="p">)</span>
+<span class="cp"># Where should the mail be placed?</span>
+<span class="n">localfolders</span> <span class="o">=</span> <span class="o">~/</span><span class="n">Emails</span><span class="o">/</span>                <span class="err">#</span> <span class="n">le</span> <span class="n">dossier</span> <span class="n">dans</span> <span class="n">lequel</span> <span class="n">vous</span>
+                                        <span class="err">#</span> <span class="n">voulez</span> <span class="n">que</span> <span class="n">vos</span> <span class="n">emails</span> <span class="n">apparaissent</span>
+
+<span class="p">[</span><span class="n">Repository</span> <span class="n">main</span><span class="o">-</span><span class="n">remote</span><span class="p">]</span>
+<span class="cp"># Remote repos can be IMAP or Gmail, the latter being a preconfigured IMAP.</span>
+<span class="n">type</span> <span class="o">=</span> <span class="n">IMAP</span>
+<span class="n">remotehost</span> <span class="o">=</span> <span class="c1">//placeholderhost//        # le serveur de votre messagerie</span>
+<span class="n">remoteuser</span> <span class="o">=</span> <span class="c1">//placeholderusername//    # votre nom d&#39;utilisateur</span>
+<span class="n">remotepass</span> <span class="o">=</span> <span class="c1">//placeholderpassword//    # votre mot de passe</span>
+<span class="n">cert_fingerprint</span> <span class="o">=</span> <span class="c1">//placeholdercert//  # le certificat du serveur (IMAPS only)</span>
+</pre></div>
+
+
+<p>Ça devrait être assez simple a lire, j'ai tout bien commenté :3<br />
+Puis ma config mutt :</p>
+<div class="highlight"><pre><span class="cp">## Mutt MUA configuration file</span>
+<span class="cp">## This file should not be edited without creating a copy</span>
+<span class="cp">## File Created and edited by Wxcafe (Clément Hertling)</span>
+<span class="cp">## Published under CC-BY-SA</span>
+
+<span class="cp"># General config for reading (fetched via offlineimap)</span>
+
+<span class="n">set</span> <span class="n">mbox_type</span> <span class="o">=</span> <span class="n">Maildir</span>
+<span class="cp"># type de boite mail (voir dans offlineimap, mailbox par defaut)</span>
+
+<span class="n">set</span> <span class="n">folder</span> <span class="o">=</span> <span class="o">~/</span><span class="n">Email</span><span class="o">/</span>
+<span class="cp"># dossier root mailbox/imap</span>
+
+<span class="n">set</span> <span class="n">spoolfile</span> <span class="o">=</span> <span class="o">+</span><span class="n">INBOX</span>
+<span class="cp"># dossier d&#39;inbox</span>
+
+<span class="n">set</span> <span class="n">mbox</span> <span class="o">=</span> <span class="o">+</span><span class="err">&#39;</span><span class="n">All</span> <span class="n">Mail</span><span class="err">&#39;</span>
+<span class="cp"># dossier ou archiver les emails</span>
+
+<span class="n">set</span> <span class="n">copy</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># yes pour copier les messages dans les differents dossier, no pour...</span>
+<span class="cp"># enfin voila quoi.</span>
+
+<span class="n">set</span> <span class="n">header_cache</span> <span class="o">=</span> <span class="o">/</span><span class="p">.</span><span class="n">hcache</span><span class="o">/</span>
+<span class="cp"># dossier ou sont stockés les headers (pour le cache)</span>
+
+<span class="n">set</span> <span class="n">record</span> <span class="o">=</span> <span class="o">+</span><span class="n">Sent</span>
+<span class="cp"># dossier dans lequel sont stockés les messages envoyés</span>
+
+<span class="n">set</span> <span class="n">postponed</span> <span class="o">=</span> <span class="o">+</span><span class="n">Drafts</span>
+<span class="cp"># dossier dans lequel sont stockés les brouillons</span>
+
+<span class="n">mailboxes</span> <span class="o">=</span> <span class="o">+</span><span class="n">INBOX</span> <span class="o">+</span><span class="n">Drafts</span> <span class="o">+</span><span class="n">Sent</span> <span class="o">+</span><span class="n">Trash</span>  <span class="o">+</span><span class="n">All</span><span class="err">\</span> <span class="n">Mail</span> 
+<span class="cp"># liste des dossiers qui vont apparaitre dans la colonne de gauche</span>
+
+<span class="cp"># General config for sending (using Mutt&#39;s native support)</span>
+
+<span class="n">set</span> <span class="n">smtp_pass</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">password_placeholder</span><span class="err">&#39;</span>
+<span class="cp"># votre mot de passe</span>
+
+<span class="n">set</span> <span class="n">smtp_url</span> <span class="o">=</span> <span class="s">&quot;smtp://username@whatev.org:465/&quot;</span>
+<span class="cp"># l&#39;url ou envoyer les emails</span>
+
+<span class="n">set</span> <span class="n">send_charset</span> <span class="o">=</span> <span class="s">&quot;utf-8&quot;</span>
+<span class="cp"># UTF8, NE PAS CHANGER</span>
+
+<span class="n">set</span> <span class="n">signature</span> <span class="o">=</span> <span class="s">&quot;.sign&quot;</span>
+<span class="cp"># vous pouvez mettre votre signature dans .sign</span>
+
+<span class="n">set</span> <span class="n">sig_on_top</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># il est d&#39;usge de mettre no ici. Cependant, je trouve ca plus lisible </span>
+<span class="cp"># comme ca.</span>
+
+<span class="n">set</span> <span class="n">ssl_verify_host</span> <span class="o">=</span> <span class="n">no</span>
+<span class="cp"># mettez yes ici si votre serveur a un certificat configuré correctement</span>
+
+<span class="n">set</span> <span class="n">hostname</span> <span class="o">=</span> <span class="s">&quot;wxcafe.net&quot;</span>
+<span class="cp"># mettez l&#39;adresse de votre serveur ici</span>
+
+<span class="cp"># Misc settings</span>
+
+<span class="n">auto_view</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span>
+<span class="cp"># la façon de voir les emails par défaut.</span>
+
+<span class="n">set</span> <span class="n">date_format</span> <span class="o">=</span> <span class="s">&quot;%y-%m-%d %T&quot;</span>
+<span class="cp"># format de date d&#39;envoi/de reception.</span>
+
+<span class="n">set</span> <span class="n">index_format</span> <span class="o">=</span> <span class="s">&quot;%2C | %Z [%D] %-30.30F (%-4.4c) %s&quot;</span>
+<span class="cp"># format de l&#39;index (la présentation de l&#39;interface)</span>
+<span class="cp"># voir http:</span><span class="c1">//www.mutt.org/doc/manual/manual-6.html#index_format</span>
+
+<span class="n">set</span> <span class="n">sort_alias</span> <span class="o">=</span> <span class="n">alias</span>
+<span class="n">set</span> <span class="n">reverse_alias</span> <span class="o">=</span> <span class="n">yes</span> 
+<span class="n">set</span> <span class="n">alias_file</span> <span class="o">=</span> <span class="s">&quot;$HOME/.mutt/aliases&quot;</span>
+<span class="cp"># liste des alias noms/email. a créer et remplir vous même.</span>
+<span class="cp"># format : &quot;alias short_name long_email_adress&quot;</span>
+<span class="n">source</span> <span class="err">$</span><span class="n">alias_file</span>
+
+<span class="n">set</span> <span class="n">beep</span> <span class="o">=</span> <span class="n">no</span>
+<span class="cp"># ne pas biper. CE SON ME TUE T.T</span>
+
+<span class="n">set</span> <span class="n">tilde</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">sleep_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="cp"># ?</span>
+
+<span class="n">set</span> <span class="n">sidebar_visible</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">sidebar_width</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="cp"># parametres de la barre coté gauche</span>
+
+<span class="n">set</span> <span class="n">realname</span> <span class="o">=</span> <span class="s">&quot;Clément Hertling (Wxcafé)&quot;</span>
+<span class="n">set</span> <span class="n">from</span> <span class="o">=</span> <span class="s">&quot;wxcafe@wxcafe.net&quot;</span>
+<span class="n">set</span> <span class="n">use_from</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">certificate_file</span> <span class="o">=</span> <span class="s">&quot;$HOME/.mutt/cacert&quot;</span>
+<span class="cp"># parametres d&#39;envoi. mettez vos propres infos a la place des miennes...</span>
+
+<span class="n">set</span> <span class="n">edit_headers</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># vous permet de vois les headers des mails. j&#39;aime, donc je laisse.</span>
+
+<span class="cp"># Macros</span>
+
+<span class="cp"># le titre dit tout. index veut dire que la macro est active dans les menus,</span>
+<span class="cp"># pager qu&#39;elle l&#39;est dans la visionneuse, les deux qu&#39;elle l&#39;est dans les </span>
+<span class="cp"># deux</span>
+<span class="cp"># \C represente la touche Control</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Cp</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">prev</span>
+<span class="cp"># Control+p -&gt; remonter d&#39;un dossier dans la sidebar</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Cn</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">next</span>
+<span class="cp"># Control+n -&gt; descendre d&#39;un dossier dans la sidebar</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Co</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">open</span>
+<span class="cp"># Control+o -&gt; ouvrir le dossier selectionné dans la sidebar</span>
+
+<span class="n">macro</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="n">d</span> <span class="s">&quot;=Trash&quot;</span> <span class="s">&quot;Trash&quot;</span>
+<span class="cp"># d supprime le message en cours</span>
+
+<span class="n">bind</span> <span class="n">pager</span>   <span class="n">previous</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># permet de monter d&#39;une ligne avec la touche up, au lieu de changer de message.</span>
+
+<span class="n">bind</span> <span class="n">pager</span>   <span class="n">next</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># permet de descendre d&#39;une ligne avec la touche down, au lieu de changer de </span>
+<span class="cp"># message</span>
+
+<span class="n">bind</span> <span class="n">pager</span> <span class="n">j</span> <span class="n">next</span><span class="o">-</span><span class="n">line</span>
+<span class="n">bind</span> <span class="n">pager</span> <span class="n">k</span> <span class="n">previous</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># raccourcis vim</span>
+
+<span class="cp"># PGP signing commands</span>
+
+<span class="n">set</span> <span class="n">pgp_decode_command</span><span class="o">=</span><span class="s">&quot;gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_verify_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --verify %s %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_decrypt_command</span><span class="o">=</span><span class="s">&quot;gpg --passphrase-fd 0 --no-verbose --batch --output - %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_sign_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_clearsign_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_encrypt_only_command</span><span class="o">=</span><span class="s">&quot;pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0x******** -- -r %r -- %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_encrypt_sign_command</span><span class="o">=</span><span class="s">&quot;pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x******** -- -r %r -- %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_import_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --import -v %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_export_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --export --armor %r&quot;</span>
+<span class="n">set</span> <span class="n">pgp_verify_key_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --fingerprint --check-sigs %r&quot;</span>
+<span class="n">set</span> <span class="n">pgp_list_pubring_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --with-colons --list-keys %r&quot;</span> 
+<span class="n">set</span> <span class="n">pgp_list_secring_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --with-colons --list-secret-keys %r&quot;</span> 
+<span class="n">set</span> <span class="n">pgp_autosign</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">set</span> <span class="n">pgp_sign_as</span><span class="o">=</span><span class="mi">0</span><span class="n">x</span><span class="o">********</span>
+<span class="cp"># remplacez 0x******** par votre identifiant PGP!!!!!</span>
+
+<span class="n">set</span> <span class="n">pgp_replyencrypt</span><span class="o">=</span><span class="n">no</span>
+<span class="n">set</span> <span class="n">pgp_timeout</span><span class="o">=</span><span class="mi">7200</span>
+<span class="n">set</span> <span class="n">pgp_good_sign</span><span class="o">=</span><span class="s">&quot;^gpg: Good signature from&quot;</span>
+
+<span class="cp"># si vous ne comptez pas utiliser PGP, commentez toute cette section, depuis</span>
+<span class="cp"># PGP signing options</span>
+
+<span class="cp"># Palette for use with the Linux console.  Black background.</span>
+
+<span class="cp"># Schéma de couleur Rouge et Noir. Commentez si vous voulez le </span>
+<span class="cp"># défaut noir et blanc.</span>
+<span class="cp"># d&#39;autres schémas sont trouvables sur google et autre.</span>
+
+<span class="n">color</span> <span class="n">hdrdefault</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">quoted</span> <span class="n">brightblack</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">signature</span> <span class="n">brightblack</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">attachment</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">message</span> <span class="n">brightwhite</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">error</span> <span class="n">brightred</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">indicator</span> <span class="n">black</span> <span class="n">red</span>
+<span class="n">color</span> <span class="n">status</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">tree</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">normal</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">markers</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">search</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">tilde</span> <span class="n">brightmagenta</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">index</span> <span class="n">red</span> <span class="n">black</span> <span class="o">~</span><span class="n">F</span>
+<span class="n">color</span> <span class="n">index</span> <span class="n">red</span> <span class="n">black</span> <span class="s">&quot;~N|~O&quot;</span>
+</pre></div>
+
+
+<p>Voila, pour plus d'informations vous pouvez aller voir le manuel de mutt
+@ <a href="http://www.mutt.org/doc/manual/">http://www.mutt.org/doc/manual/</a><br />
+J'espère que cette configuration "toute faite" vous aidera a commencer
+a utiliser mutt. Il est tout de fois important de se souvenir
+qu'utiliser une configuration toute faire n'aide pas a comprendre un
+programme ou un système, et que cette façon de faire devrait être
+réservée a l'introduction ou a des situations ou il est absolument
+nécessaire d'avoir rapidement une configuration fonctionnelle (c'est a
+dire, dans le cas d'un client email, euh... jamais?). Je vous invite
+donc a relire les annotations dont sont parsemés les fichiers de
+configuration en question, et surtout a lire le manuel, a chercher sur
+<del>Bing</del> <del>Google</del> <del>Yahoo</del> Seeks, et globalement 
+a tenter de comprendre les configurations en question et a les améliorer!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/la-separation-des-eglises-et-de-letat-une-idee-quelle-est-bonne/">La séparation des églises et de l'état, une idée qu'elle est bonne?</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-12-13T03:08:00+01:00">
+		<i class="icon-calendar"></i> Thu 13 December 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/ranting/"><i class="icon-folder-open"></i>Ranting</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Aujourd'hui, et depuis 1901 (j'ai révisé mon histoire récemment), il
+existe une loi dite de séparation des églises et de l'état, qui consiste
+a faire en sorte que l'état n'ait rien a voir avec les differentes
+églises, pour de sombres histoires d'indépendance et de laïcité.
+(principes qui sont aujourd'hui en voie de disparition, mais ce n'est
+pas le propos qui nous occupe ici). Cela dit, cette bonne idée
+politique, si elle a évité a ses auteurs de nombreux tracas, et leur a
+surement permis de conserver une tête en état de fonctionnement bien
+reliée a leur colonne vertébrale, ne vous interesse que moyennement, et
+vous voudriez retourner répondre a vos mails sur Gmail et micro-blogguer
+(quel mot horrible...) sur twitter?</p>
+<p>Ça tombe bien, vous abordez justement le sujet véritable de cet article
+(non, mon blog n'est pas devenu un histoblog, désolé aux déçus...), a savoir 
+la centralisation qui se met progressivement en place sur internet depuis
+quelques années : Twitter, Google, Facebook, Micro$oft, Apple, tous ces
+acteurs du web (et pas que, pour certains...) ont commencé a prendre
+pour manie de centraliser vos données : pour prendre un exemple simple,
+si vous utilisez Gmail (qui depuis quelque temps, lit aussi vos mails
+pour accorder la publicité, dites adieu a votre vie privée), vous avez
+un compte Google Talk, probablement aussi un Google+.  </p>
+<p>L'outil le plus pratique aujourd'hui pour aggreger des flux RSS est
+Google Reader, et vous l'utilisez aussi probablement. Votre téléphone
+est un android? Ah, un Nexus? Vous avez donc toutes les applications
+google installées, et Chrome mobile comme navigateur par défaut, qui est
+synchronisé avec la version qui tourne sur votre PC (via les serveurs de
+Google, bien sur). 
+Depuis peu, les recherches sur le moteur de recherche
+sont elles aussi ajoutées a votre profil, enregistrées a jamais par
+Google (qui n'est pas touchée, en tant que société américaine, par la
+"loi des 10 ans" francaise.). Vous commencez a voir le truc? Non, ne
+jetez pas ce telephone, enfin! (je refuse de rembourser tout smartphone
+ayant été perdu a cause de cet article) J'ai pris ici comme exemple
+Google, parce que c'est celui qui propose le plus de services, mais
+Apple avec iCloud, iTunes et son iPhone fait pareil, tout comme M$ avec
+WP8 et Skydrive. </p>
+<p>Twitter et Facebook n'ont de rôle dans ce sujet qu'en ce que vous leur 
+fournissez des informations dont ils s'empressent de devenir seuls 
+propriétaires (cf les Conditions d'Utilisation de ces deux services), 
+puis de les revendre a des annonceurs faisant de la publicité
+ciblée. Le problème est simple a apprehender, vous ne voulez pas que
+l'un de ces services connaisse trop de choses sur vous (et ils recoupent
+très bien les informations venant de sources differentes), car il est 
+évident qu'ils les vendent a des entreprises peu scrupuleuses quand 
+a leurs engagements de confidentialité, quand a leurs securité 
+aussi; mais surtout parce que depuis le 11 Septembre 2001 et le 
+Patriot Act, toute entreprise américaine <strong>doit</strong>fournir toutes ses 
+informations au gouvernement américain <strong>sans aucune intervention d'un 
+juge, ou de quelque institution de controle que ce soit.</strong>  </p>
+<p>Ce qui est, comme vous pouvez le comprendre, relativement
+problématique. (pour ceux qui a ce point se disent "je n'ai rien a
+cacher, donc je m'en fous si le gouvernement américain sait tout de
+moi", je vous conseille d'aller lire <a href="http://www.internetactu.net/2009/03/12/la-vie-privee-un-probleme-de-vieux-cons/">cet article</a> de Jean Marc
+Manach, plein de bon sens...) Pour éviter cela, vous avez plusieurs
+possibilités: utiliser des services concurrents pour tout (Facebook
+Mail, Skydrive, Twitter et Google Reader par exemple), tout en vous
+souvenant que comme ces entreprises sont toutes américaines, le
+gouvenrnement américain détient tout de même vos informations, et que ca
+lui prendra juste un peu plus de temps. </p>
+<p>Vous pouvez aussi n'utiliser que des entreprises francaises, 
+mais cela ne regle que le problème du Patriot Act, et pas celui de 
+la revente de vos données. Et puis essayez de trouver un service équivalent 
+a Google Reader et fourni par une entreprise française, on en reparlera.
+Non, la véritable alternative, c'est d'héberger vos services vous 
+même, d'avoir votre propre serveur sur lequel vous possedez le plus 
+de services possibles, et d'utiliser des concurents ou des services 
+libres au maximum pour les autres, ceux qui ne sont pas distribuables 
+(par exemple, les cartes sont difficiles a mettre en commun, 
+or plusieurs alternatives existent: Google Maps, <code>&lt;troll&gt;</code>Apple 
+Maps<code>&lt;/troll&gt;</code>, Bing Maps, OpenStreetMaps, etc...).
+Beaucoup de ces services sont cependant très facilement
+décentralisables, surement parce qu'ils ont a la base étés conçus comme
+des services décentralisés. Ainsi les emails, le web, le chat (via XMPP)
+par exemple sont basés sur un système décentralisé. </p>
+<p>De plus, votre serveur peut vous servir a beaucoup d'autres des 
+choses que vous feriez habituellement sur votre ordinateur 
+personnel: conserver une présence sur IRC, compiler du code, faire 
+du rendu vidéo, etc... En bref, un serveur peut vous servir 
+a effectuer toutes les opérations que vous effectuez sur votre 
+ordinateur sans les inconvénients de la consommation éléctrique 
+ni du bruit, mais vous permet aussi de ne dépendre aucunement
+d'une entreprise américaine, et cependant de disposer de tous les
+services utiles offerts par ces dernières. </p>
+<p>Un serveur peut de plus vous permettre de controller parfaitement 
+tous ces services, sans aucune limitation d'aucune sorte, 
+voire de vous créer une page web. Bien entendu, il est bien plus 
+utile d'avoir un serveur si vous avez aussi un nom de domaine.
+Heureusement, ils sont peu chers et souvent fournis avec le serveur.  </p>
+<p>Dans de prochains articles, je vous expliquerai comment louer puis
+configurer votre serveur pour qu'il serve de serveur mail (IMAP/SMTP),
+web, base de données, et proxy. Cela dit, comme c'est un serveur sous
+linux, vous pouvez l'utiliser pour a peu près n'importe quoi.<br />
+Voila, a bientôt!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/la-cryptographie-avec-pgp-et-principalement-gnupg/">La cryptographie avec PGP et principalement GnuPG</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-11-19T00:36:00+01:00">
+		<i class="icon-calendar"></i> Mon 19 November 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>PGP (pour <a href="http://fr.wikipedia.org/wiki/Pretty_Good_Privacy">pretty good privacy</a>) est un système de
+chiffrement asymétrique (pour plus d'information sur le chiffrement
+asymétrique, voir <a href="http://fr.wikipedia.org/wiki/Cryptographie_asym%C3%A9trique">ici</a>) utilisant en général les algorithmes RSA
+et/ou DSA, et pouvant servir a chiffrer tout fichier, mais aussi a
+signer des emails. Le système de signature consiste a s'identifier en
+tant que la personne que l'on est, en certifiant de son identité, et
+repose sur un système dit de <em>Web of Trust</em>.  </p>
+<p>Ce concept de Web of Trust est simple: si je valide le code vous
+identifiant (votre clé), en certifiant que vous êtes qui vous êtes et
+que je vous connais, et que d'autres personnes m'ont déjà
+personnellement validé, les autres utilisateurs seront enclins a croire
+que vous êtes en effet la personne que vous prétendez être. Bien
+entendu, les utilisateurs validant trop de clés rapportées comme fausses
+voient la valeur de leurs signatures baissée, et toutes les clés signées
+par ces utilisateurs voient leur crédibilité baisser.<br />
+Inversement, les "bons utilisateurs" voient la valeur de leurs
+signatures augmentée, ce qui augmente la crédibilité des clés qu'ils ont
+signées.</p>
+<p>Ceci dit, un email peut être a la fois signé et chiffré, de façon a être
+sûr, non seulement que l’expéditeur de l'email est bien celui qu'il dit
+être, mais aussi que l'email n'a pas été modifié entre l'envoi et
+la réception (en effet, avec un chiffrement de type RSA/DSA, une
+modification du corps de l'email rend ce dernier illisible, la clé
+publique ne  correspondant plus a la phrase de passe du message), ce qui
+offre bien évidemment des avantages non négligeables dans un
+environnement ou la protection des échanges est importante (soit a peu
+près partout sur internet, si vous tenez a votre vie privée. Pensez a
+<a href="http://www.hauteresolution.net/pourquoi-je-vais-quitter-gmail/">quitter Gmail</a> aussi, par exemple).</p>
+<p>Il est cependant a noter que les clés publiques sont généralement
+situées sur un serveur de clés publiques, tel pgp.mit.edu ou encore
+subkeys.pgp.net (certaines personnes préfèrent garder leur clés hors des
+serveurs de clés publiques, craignant une compromission de ces serveurs.
+Dans le cas d'utilisateurs normaux (c'est a dire n'échangeant pas de
+secrets classés secret-défense par email), la protection offerte par les
+serveurs de clé publiques est suffisante)</p>
+<p>L'une des implémentations les plus connues et utilisées de PGP est sans
+conteste GPG (<a href="http://fr.wikipedia.org/wiki/GNU_Privacy_Guard">GNU Privacy Guard</a>) , qui comme son nom l'indique fait
+partie du projet GNU, et qui (<code>&lt;troll&gt;</code> de façon surprenante pour un
+programme GNU<code>&lt;/troll&gt;</code>) est extrêmement efficace et claire.</p>
+<p>Après ces explications techniques, voici venue le
+moment intéressant/utile, a savoir l'application. Le chiffrement et la
+signature de mails doivent cependant attendre un petit peu, étant donné
+qu'il vous faut d'abord créer votre clé et la placer sur un serveur de
+clés publiques, de façon à ce que votre destinataire puisse vous
+identifier lorsqu'il recevra le mail, mais aussi a configurer votre
+client mail pour utiliser gpg (je baserai les explications de cet
+article sur Thunderbird, mais des explications efficaces sont trouvables
+facilement sur les interwebs).</p>
+<p>Tout d'abord, générons une clé GPG :</p>
+<div class="highlight"><pre> <span class="n">gpg</span> <span class="o">--</span><span class="n">gen</span><span class="o">-</span><span class="n">key</span>
+</pre></div>
+
+
+<p>GPG va vous demander les méthodes de chiffrement que vous voulez
+utiliser, le plus sur est de laisser la valeur par défaut. La question
+suivante est de savoir quelle taille votre clé doit faire, il est
+préférable de choisir la taille la plus importante possible (4096). GPG
+veut ensuite savoir quand votre clé doit expirer. La méthode simple est
+bien évidemment de ne jamais la faire expirer, il est cependant plus
+intéressant dans une logique de sécurité de régler cette durée a six
+mois/un an. </p>
+<p>Des informations personnelles vous sont ensuite demandées,
+concernant votre nom (mettez le vrai, tel qu'il apparaît sur votre carte
+d'identité, si vous souhaitez utiliser votre véritable identité), votre
+adresse mail (mettez la plus utilisée, vous pourrez en rajouter plus
+tard), et un mot de passe pour la clé (utilisez un mot de passe
+sécurisé!! Il est conseillé d'utiliser au moins 8 caractères, dont majuscules,
+minuscules, caractères spéciaux et nombres (vous pouvez utiliser la
+commande <code>makepasswd</code>, qui génère automatiquement un mot de
+passe)  </p>
+<p>GPG va maintenant prendre un peu de temps pour générer le couple clé
+publique/clé privée, vous devriez profiter de ce temps pour effectuer
+des opérations autres sur votre ordinateur : taper des textes, lancer
+des films, écouter de la musique... De façon à augmenter les chances
+d'obtenir un nombre bien aléatoire (le générateur d'aléatoire se base
+sur la RAM pour obtenir des bits au hasard)  </p>
+<p>Une fois cela fini, vous obtenez un couple clé publique/clé privée, que
+vous ne pouvez pas visualiser entièrement pour l'instant. Il est
+cependant possible (et recommandé) de les exporter pour les sauvegarder
+via une commande:</p>
+<div class="highlight"><pre><span class="n">gpg</span> <span class="o">--</span><span class="n">armor</span> <span class="o">--</span><span class="n">export</span> <span class="o">--</span><span class="n">output</span><span class="o">=</span><span class="n">pubkey</span><span class="p">.</span><span class="n">gpg</span>
+</pre></div>
+
+
+<p>pour la clé publique, et</p>
+<div class="highlight"><pre><span class="n">gpg</span> <span class="o">--</span><span class="n">armor</span> <span class="o">--</span><span class="n">export</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">keys</span> <span class="o">--</span><span class="n">output</span><span class="o">=</span><span class="n">seckey</span><span class="p">.</span><span class="n">gpg</span>
+</pre></div>
+
+
+<p>pour la clé privée. Il est possible et même souhaitable de copier ces
+clés sur une clé USB, une carte SD, ou un autre support de stockage
+résistant, de façon a avoir une solution de sauvegarde, au cas ou vous
+perdiez ces clés sur ce PC.  </p>
+<p>Cela fait, listons les informations sur votre clé publique :</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">gpg</span> <span class="o">--</span><span class="n">list</span><span class="o">-</span><span class="n">keys</span> <span class="o">--</span><span class="n">fingerprint</span>
+<span class="n">pub</span>     <span class="mi">4096</span><span class="n">R</span><span class="o">/</span><span class="mi">27</span><span class="n">D81AC8</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">17</span>
+    <span class="n">Key</span> <span class="n">fingerprint</span> <span class="o">=</span> <span class="mi">6345</span> <span class="n">A91A</span> <span class="n">FF89</span> <span class="mf">97E0</span> <span class="mi">13</span><span class="n">D0</span> <span class="mi">96</span><span class="n">A9</span> <span class="mf">9E2</span><span class="n">A</span> <span class="mi">1917</span> <span class="mi">27</span><span class="n">D8</span> <span class="mi">1</span><span class="n">AC8</span>
+<span class="n">uid</span>             <span class="n">Cl</span><span class="err">é</span><span class="n">ment</span> <span class="n">Hertling</span> <span class="p">(</span><span class="n">Wxcafe</span><span class="p">)</span> 
+<span class="n">uid</span>             <span class="p">[</span><span class="n">jpeg</span> <span class="n">image</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">14692</span><span class="p">]</span>
+<span class="n">sub</span>     <span class="mi">4096</span><span class="n">R</span><span class="o">/</span><span class="mi">9</span><span class="n">ED7F77F</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">17</span>
+</pre></div>
+
+
+<p>La partie <code>pub</code> indique que c'est une clé publique, <code>4096R</code> indique que c'est 
+une clé RSA sur 4096 bits.  La partie <code>27D81AC8</code> est 
+l'identifiant de la clé publique, <code>Key fingerprint = 6345 A91A FF89 97E0 13D0 
+96A9 9E2A 1917 27D8 1AC8</code> est appelé fingerprint de la clé. Les champs
+<code>uid</code> sont des manières d'identifier la clé et la personne associée a
+celle-ci, et enfin le champ <code>sub</code> est indicateur d'une subkey, système 
+uniquement pris en charge par GPG et non inclus dans les premières 
+versions de PGP, donc non-implémentées dans nombre de clients pgp.<br />
+Passons maintenant a la mise en place de cette clé publique sur un
+serveur de clés : nous utiliserons ici le serveur pgp.mit.edu.</p>
+<div class="highlight"><pre><span class="n">gpg</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">pgp</span><span class="p">.</span><span class="n">mit</span><span class="p">.</span><span class="n">edu</span> <span class="o">--</span><span class="n">send</span><span class="o">-</span><span class="n">keys</span> <span class="o">*</span><span class="n">ID</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cl</span><span class="err">é</span> <span class="n">a</span> <span class="n">uploader</span><span class="o">*</span>
+</pre></div>
+
+
+<p>Maintenant que votre clé publique a été uploadée, vous pouvez l'utiliser
+pour signer et chiffrer vos emails!<br />
+Installons donc l'extension Enigmail pour Thunderbird, permettant de
+chiffrer/signer vos emails de façon transparente. Il conviendra de
+paramétrer cette extension, via le menu OpenPGP dans Thunderbird, puis
+Setup Wizard (l'option entre Help et About OpenPGP). Normalement,
+Enigmail détecte votre installation de gpg automatiquement, si cependant
+ce n'était pas le cas, vous pouvez utiliser la clé exportée tout a
+l'heure (pubkey.gpg) en l'important (import key from file).  </p>
+<p>Selon les options que vous avez utilisées, vos emails seront
+automatiquement signés et/ou chiffrés a l'envoi. Gardez cependant a
+l'esprit que si tout le monde peut lire les mails signés, il n'en est
+pas de même pour les mails chiffrés, pour lesquels il est nécessaire de
+posséder la clé publique du correspondant en question, et de posséder
+soi même une clé privée, donc d'utiliser OpenPGP aussi.<br />
+Concernant les signatures de clés, elles fonctionnent de manière très
+simple :<br />
+Vous devez télécharger la clé de votre correspondant, via un</p>
+<div class="highlight"><pre> <span class="n">gpg</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">pgp</span><span class="p">.</span><span class="n">mit</span><span class="p">.</span><span class="n">edu</span> <span class="o">--</span><span class="n">search</span><span class="o">-</span><span class="n">keys</span> <span class="o">*</span><span class="n">ID</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cl</span><span class="err">é</span> <span class="n">de</span> <span class="n">votre</span> <span class="n">correspondant</span><span class="o">*</span>
+</pre></div>
+
+
+<p>(a noter que cette commande fonctionne aussi en cherchant une adresse
+email ou un nom. Cependant, en cherchant via l'identifiant de la clé,
+vous êtes sur de trouver votre correspondant. Globalement, l'email est
+lui aussi assez sûr en terme de recherche de clés, tandis que le nom
+donne rarement un résultat). L'étape suivante est de vérifier que votre
+correspondant est bien la personne qui est spécifiée sur sa clé. Pour
+cela, il convient d'avoir déjà vu physiquement cette personne et si
+possible d'avoir vu une pièce d'identité lui appartenant, et d'avoir une
+confirmation de cette personne que la clé que vous voyez lui appartient
+bien.<br />
+Ceci fait, vous pouvez signer la clé via un</p>
+<div class="highlight"><pre> <span class="n">gpg</span> <span class="o">--</span><span class="n">sign</span> <span class="o">*</span><span class="n">ID</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cl</span><span class="err">é</span> <span class="n">a</span> <span class="n">signer</span><span class="o">*</span>
+</pre></div>
+
+
+<p>puis la renvoyer au serveur via</p>
+<div class="highlight"><pre> <span class="n">gpg</span> <span class="o">--</span><span class="n">keyserver</span> <span class="n">pgp</span><span class="p">.</span><span class="n">mit</span><span class="p">.</span><span class="n">edu</span> <span class="o">--</span><span class="n">send</span><span class="o">-</span><span class="n">key</span> <span class="o">*</span><span class="n">ID</span> <span class="n">de</span> <span class="n">la</span> <span class="n">cl</span><span class="err">é</span> <span class="n">a</span> <span class="n">signer</span><span class="o">*</span>
+</pre></div>
+
+
+<p>Voila, la clé de votre correspondant est signée!</p>
+<p>Ce tutoriel sur PGP/GPG est terminé, et votre sécurité est améliorée
+grâce a cette superbe invention qu'est la cryptographie!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/linformatique-a-lecole/">L'informatique a l'école</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-10-15T20:34:00+02:00">
+		<i class="icon-calendar"></i> Mon 15 October 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/ranting/"><i class="icon-folder-open"></i>Ranting</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Après avoir lu <a href="http://t.co/5PTfe6zu">cet article</a> paru sur écrans.fr, et au vu des
+nombreuses réflexions que j'ai eu sur ce sujet au cours des années, je
+commence a me demander si la réponse logique ne serait pas d'enseigner
+les bases de l'informatique (bases d’électronique, de programmation et
+de logique formelle) dès le collège.</p>
+<p>En effet, l'exemple qui me revient toujours est celui des technoprêtres
+de warhammer 40 000, dans un univers ou la technologie est ritualisée et
+incomprise même des plus savants, qui se contentent de reproduire ce qui
+existe, et parfois par chance de retrouver un schéma explicatif lisible
+par une machine, et qu'ils ne comprennent pas eux mêmes, ou toute
+technologie est ointe d'onguents sacrés, entourée d'encens avant d'être
+péniblement actionnée par des assistants ne comprenant rien a cette
+technologie (ayant lu <a href="http://en.wikipedia.org/wiki/Hackers:_Heroes_of_the_Computer_Revolution">Hackers - Heroes of the Computer Revolution</a> de
+Steven Levy, c'est l'ambiance que l'on retrouve quand l'auteur décrit
+l'ambiance près des machines IBM au MIT, au début de l'ouvrage), et il
+me semble que de plus en plus la société se rapproche de cela.</p>
+<p>Cette culture de l’ingénierie, qui existait beaucoup lors des débuts de
+l'informatique (telle que décrite par exemple par Steve Wozniak dans son
+livre <a href="http://en.wikipedia.org/wiki/IWoz">iWoz</a>) disparait pour laisser place a une culture de la
+consommation et de l'utilisation de contenus existants, et même a une
+certaine peur de la compréhension de la technologie. Ceux qui s'y
+intéressent sont considérés comme marginaux (combien de hackers créent
+des outils sur lesquels seront construits tous les systèmes du siècle a
+venir, tels des Dennis Ritchie en puissance? Combien d'entre eux ne sont
+pas intégrés a la société dite "normale"?), et on peut souvent observer
+les réactions de peur que lancent les actions des hackers, ne serait-ce
+que dans les journaux (combien de journaux 'mainstream' ont-ils parlés
+des hackers en bien, c'est a dire tels qu'ils sont réellement, depuis
+les années 80?) ou a la télévision. </p>
+<p>Ainsi, la culture et la connaissance de ces appareils que 
+sont les ordinateurs, qui aujourd'hui se trouvent du fond de nos 
+poches a dans l'espace en passant par l’intérieur des pacemakers 
+jusqu’à être une composante indispensable de la société, se perdent et 
+rendent ainsi la compréhension de ces appareils impossible (j'ai eu 
+la désagréable surprise récemment de voir un camarade de classe
+me poser ingénument la question "Ah, mais en fait, quand tu installes
+Linux, ça change le fond d'écran et les icônes?". Au-delà du niveau, 
+la misère de cette question est que cette personne n'avait probablement 
+aucune idée de la façon dont fonctionnait son ordinateur, a part 
+pour le fond d'écran en question et pour les fameuses icônes.) pour
+le grand public, et cet évolution crée de fait une sorte d'oligarchie de
+techno-comprenants, seuls capables de manier et de créer la technologie.</p>
+<p>C'est pour cela qu'il me semble intéressant, important, peut être même
+requis, d'inclure au programme du collège puis du lycée des cours
+d’électronique et d'informatique tels que décrits plus haut, de façon a
+ce que les élèves comprennent le monde qui les entoure. Car c'est la le
+but du cycle scolaire secondaire, me semble-t-il, et non pas de former
+des futurs travailleurs. Sinon, pourquoi y aurait-il des cours de
+musique, d'arts plastiques, ou encore de philosophie? Si le but du cycle
+secondaire est bien d'ouvrir l'esprit des élèves sur le monde et sur ce
+qui les entoure, alors les cours sur l'informatique s'imposent comme une
+évidence, puisque ceux-ci nous entourent aujourd'hui bien plus que quoi
+que soit d'autre...</p>
+<p>Ces cours seraient susceptibles de s’insérer en un mélange entre des
+cours de technologie (qui aujourd'hui sont bien plus orientés physique
+et machines-outils qu'informatique ou électronique, alors que la
+technologie d'aujourd'hui et vraisemblablement de demain aussi est
+l'informatique) et de physique, pour le côté électronique, et de façon a
+donner enfin aux cours de physique un intérêt quelconque, sortir au delà
+de la théorie et de l'abstraction complète que sont actuellement ces
+cours et passer un peu dans la réalisation, avec des arduinos par
+exemple.</p>
+<p>Vous aussi, intéressez vous a cela, de façon a ce que les jeunes ne
+finissent pas par ne rien comprendre a ce qui est aujourd'hui l'une des
+composante les plus importantes du monde tel qu'il est programmé.</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/archlinux-made-simple/">Archlinux made simple</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-10-05T14:48:00+02:00">
+		<i class="icon-calendar"></i> Fri 05 October 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/oses/"><i class="icon-folder-open"></i>OSes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Archlinux est réputée être une distribution Linux très complexe a
+installer et a maintenir.</p>
+<p>Je vais tenter ici de vous convaincre que ce n'est pas le cas, et
+qu'elle peut se monter très intéressante et très instructive a installer
+tout autant qu'a utiliser.</p>
+<p>Il convient tout d'abord de rappeler a quels principes obéit Arch:</p>
+<ol>
+<li>
+<p>Le KISS : Keep It Simple and Stupid, Archlinux tente de faire des
+    programmes simples et utilisables par tous. Avec comme base de
+    simplicité les utilisateurs de LFS... Mais il n'empêche qu'avec un peu
+    de bonne volonté, la configuration n'est pas si compliquée!</p>
+</li>
+<li>
+<p>La philosophie UNIX : chaque programme est prévu pour ne remplir
+    qu'une seule tâche. Bien entendu, cela ne concerne que les programmes
+    conçus pour s’insérer dans la philosophie UNIX, et les installations de
+    dépendances avec le gestionnaire de paquet d'Arch fonctionnent
+    superbement bien.</p>
+</li>
+</ol>
+<p>De plus, posons les bases d'Arch : le gestionnaire de paquets s'appelle
+pacman, et les commandes de base sont :</p>
+<ul>
+<li>
+<p>recherche d'un paquet :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Ss</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>installation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>désinstallation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>mise a jour de tous les paquets installés :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+</ul>
+<p>Archlinux est une distribution dite "rolling release", ce qui signifie
+qu'il n'y a pas de version a proprement dites, et que les paquets se
+mettent a jour en permanence, sans jamais changer la "version" d'Arch.
+Il n'y a d'ailleurs qu'une seule version de l'installeur sur le site,
+puisqu'une version plus ancienne n'aurait aucun sens.</p>
+<p>Arch n'offre pas d'interface graphique par défaut : après avoir installé
+le système, vous n'aurez qu'une invite de commande. Heureusement, je
+vais ici vous guider a travers l'installation d'une interface graphique
+(mate, le fork de gnome 2)</p>
+<p>L'installation d'Arch se fait par le réseau, veillez a avoir une
+connection WiFi ou filaire a proximité avant de suivre ce guide.</p>
+<p>Ce guide utilise SystemV, alors qu'Arch va prochainement passer sous
+systemd. N'ayant pas encore eu le temps d’expérimenter assez avec ce
+dernier, je ferais un tutoriel pour passer votre Arch a systemd bientôt.</p>
+<p>Bon, passons a l'explication de l'installation proprement dite :</p>
+<p>Tout d'abord, téléchargeons l'iso d'arch la plus récente :</p>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//mir.archlinux.fr/iso/2012.09.07/archlinux-2012.09.07-dual.iso</span>
+</pre></div>
+
+
+<p>Ensuite, gravons cette image sur un disque USB :</p>
+<div class="highlight"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="n">archlinux</span><span class="o">-</span><span class="mf">2012.09.07</span><span class="o">-</span><span class="n">dual</span><span class="p">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
+</pre></div>
+
+
+<p>Après reboot de la machine sur l'iso en question et choix de
+l'architecture, nous sommes accueillis par un shell root.</p>
+<p>La première chose a faire est de paramétrer le clavier :</p>
+<div class="highlight"><pre><span class="n">loadkeys</span> <span class="n">fr</span>
+</pre></div>
+
+
+<p>Puis nous pouvons passer a l'installation proprement dite.
+Partitionnement :</p>
+<div class="highlight"><pre><span class="n">cfdisk</span> <span class="err">#</span> <span class="n">cfdisk</span> <span class="n">est</span> <span class="n">suffisamment</span> <span class="n">clair</span> <span class="n">pour</span> <span class="n">ne</span> <span class="n">pas</span> <span class="n">n</span><span class="err">é</span><span class="n">cessiter</span> <span class="n">d</span><span class="err">&#39;</span><span class="n">explications</span>
+</pre></div>
+
+
+<p>formatage des partitions :</p>
+<div class="highlight"><pre><span class="n">mkfs</span><span class="p">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">root</span>
+
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="o">&amp;&amp;</span> <span class="n">mkfs</span><span class="p">.</span><span class="n">btrfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">home</span>
+
+<span class="n">mkswap</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="o">&amp;&amp;</span> <span class="n">swapon</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">de</span> <span class="n">swap</span>
+</pre></div>
+
+
+<p>Montons les partitions nouvellement créées, puis installons le système :</p>
+<div class="highlight"><pre><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="o">/</span><span class="n">mnt</span>
+
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span>
+
+<span class="n">dhclient</span> <span class="n">eth0</span> <span class="err">#</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">utilisez</span> <span class="n">une</span> <span class="n">connection</span> <span class="n">filaire</span><span class="p">,</span> <span class="n">sinon</span> <span class="n">voire</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.archlinux.fr/Wifi#Configuration</span>
+
+<span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">base</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span>
+
+<span class="n">genfstab</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+
+
+<p>Allons prendre un café le temps que ça charge, puis installons les
+quelques paquets nécessaires a notre installation et au premier
+démarrage:</p>
+<div class="highlight"><pre><span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">syslinux</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="n">wireless_tools</span> <span class="n">dhclient</span>
+</pre></div>
+
+
+<p>Maintenant, passons sur notre install toute fraîche d'Arch :</p>
+<div class="highlight"><pre><span class="n">arch</span><span class="o">-</span><span class="n">chroot</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">bash</span>
+</pre></div>
+
+
+<p>configurons les bases :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="n">HOSTNAME</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostname</span>
+
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Europe</span><span class="o">/</span><span class="n">Paris</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
+
+<span class="n">date</span> <span class="n">MMJJhhmmAAAA</span>
+
+<span class="n">hwclock</span> <span class="o">--</span><span class="n">systohc</span>
+
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> <span class="err">#</span> <span class="n">D</span><span class="err">é</span><span class="n">commentez</span> <span class="n">les</span> <span class="n">lignes</span> <span class="n">correspondant</span> <span class="n">au</span> <span class="n">fran</span><span class="err">ç</span><span class="n">ais</span> <span class="o">:</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">et</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8859</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">echo</span>  <span class="err">&#39;</span><span class="n">LANG</span><span class="o">=</span><span class="s">&quot;fr_FR.UTF-8&quot;</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="n">mkinitcpio</span> <span class="o">-</span><span class="n">p</span> <span class="n">linux</span>
+</pre></div>
+
+
+<p>Enfin, vérifions que syslinux est correctement configuré :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">syslinux</span><span class="o">/</span><span class="n">syslinux</span><span class="p">.</span><span class="n">cfg</span> <span class="err">#</span> <span class="n">il</span> <span class="n">devrait</span> <span class="n">y</span> <span class="n">avoir</span> <span class="s">&quot;append root=/dev/sda1&quot;</span>
+</pre></div>
+
+
+<p>Si tout est correct, installons syslinux, et paramétrons un mot de passe
+root :</p>
+<div class="highlight"><pre><span class="n">syslinux</span><span class="o">-</span><span class="n">install_update</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="o">-</span><span class="n">mia</span>
+
+<span class="n">passwd</span> <span class="n">root</span>
+</pre></div>
+
+
+<p>Et voila, l'installation est terminée! Plus qu'a quitter la session et a
+redémarrer l'ordinateur!</p>
+<div class="highlight"><pre> <span class="n">exit</span>
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> 
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">reboot</span>
+</pre></div>
+
+
+<p>Fini!</p>
+<p>Prenons une petite pause. La partie suivante de ce tutoriel consister en
+un paramétrage des principaux services nécessaires a l'utilisation d'un
+OS, disons, moyen :</p>
+<ul>
+<li>
+<p>Installation de MATE, le gestionnaire de bureau (voir
+<a href="http://mate-desktop.org/">http://mate-desktop.org/</a>)</p>
+</li>
+<li>
+<p>Installation de sudo et de networkmanager pour faire fonctionner les
+composants essentiels du système sans avoir a tout activer a la main a
+chaque démarrage</p>
+</li>
+<li>
+<p>Installation de SLiM comme gestionnaire de login graphique, pour
+présenter une interface plus accueillante que la console, et
+configuration de celui-ci</p>
+</li>
+<li>
+<p>Installation des principaux logiciels utiles non inclus dans mate ni
+base (yaourt, chromium, thunderbird, etc...).</p>
+</li>
+</ul>
+<p>Ce guide est bien sur optionnel, si vous souhaitez utiliser Arch avec un
+gestionnaire de bureau autre que mate, ou sans, vous pouvez vous arrêter
+ici.</p>
+<p>Bon, reprenons.</p>
+<p>Nous sommes donc sur une demande de mot de passe. Entrez donc le mot de
+passe paramétré plus haut pour le root, puis retapez la commande
+utilisée plus tôt pour vous connecter a internet.</p>
+<p>Il convient d'ajouter le dépôt de MATE pour installer ce dernier, puis
+d'effectuer l'action en question :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ici, ajoutez les lignes suivantes :</p>
+<div class="highlight"><pre><span class="k">[mate]</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">http://repo.mate-desktop.org/archlinux/$arch</span>
+</pre></div>
+
+
+<p>Installons maintenant les paquets :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">mate</span> <span class="n">mate</span><span class="o">-</span><span class="n">extras</span> <span class="n">dbus</span> <span class="n">dbus</span><span class="o">-</span><span class="n">core</span> <span class="n">alsa</span> <span class="n">networkmanager</span> <span class="n">sudo</span>
+</pre></div>
+
+
+<p>Ajoutons un compte utilisateur pour utiliser les composants du système
+sans tout crasher a chaque fois :</p>
+<div class="highlight"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">users</span> <span class="o">-</span><span class="n">G</span> <span class="n">wheel</span><span class="p">,</span><span class="n">audio</span><span class="p">,</span><span class="n">optical</span><span class="p">,</span><span class="n">lp</span><span class="p">,</span><span class="n">scanner</span><span class="p">,</span><span class="n">log</span><span class="p">,</span><span class="n">power</span><span class="p">,</span><span class="n">floppy</span><span class="p">,</span><span class="n">storage</span><span class="p">,</span><span class="n">games</span><span class="p">,</span><span class="n">video</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">passwd</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">su</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+</pre></div>
+
+
+<p>Il faut maintenant éditer le fichier \~/.xinitrc pour préciser a X.org
+ce que l'on veut utiliser :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec ck-launch-session mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span>
+</pre></div>
+
+
+<p>Profitons en pour ajouter les démons système au lancement :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ajoutez donc <code>dbus, alsa. hwclock</code> et <code>networkmanager</code> dans la section
+DAEMONS (entre les parenthèses, après crond normalement)</p>
+<div class="highlight"><pre><span class="n">DAEMONS</span><span class="o">=</span><span class="p">(</span><span class="n">syslog</span><span class="o">-</span><span class="n">ng</span> <span class="n">network</span> <span class="n">crond</span> <span class="n">dbus</span> <span class="n">alsa</span> <span class="n">hwclock</span> <span class="n">networkmanager</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Pour éviter un reboot, il est ici possible de faire un</p>
+<div class="highlight"><pre><span class="n">su</span>
+</pre></div>
+
+
+<p>Puis un</p>
+<div class="highlight"><pre> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">dbus</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">alsa</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">networkmanager</span> <span class="n">start</span>
+</pre></div>
+
+
+<p>Sinon, il est possible de juste redémarrer.<br />
+Une fois cela fait, profitez de ce moment pour vous autoriser vous même
+a utiliser sudo. Loggez vous en root, et :</p>
+<div class="highlight"><pre> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+</pre></div>
+
+
+<p>Décommentez la ligne qui commence par # %wheel ALL=(ALL)<br />
+Sauvegardez le fichier, puis, après un <code>su *votrenom*</code>, tentez de faire
+un sudo ls /<br />
+Normalement, vous devriez avoir un listing du dossier /<br />
+Bon, maintenant, pourquoi ne pas tenter de lancer MATE?<br />
+C'est simple comme bonjour :</p>
+<div class="highlight"><pre> <span class="n">startx</span>
+</pre></div>
+
+
+<p>Et PAF! Voila un MATE desktop flambant neuf a configurer!<br />
+Avant de faire ça, retournez sur un TTY (CTRL+ALT+Fx), loggez vous,
+puis installez SLiM (<code>sudo pacman -Syu slim</code>).<br />
+Configurons le:</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec dbus-launch mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span> <span class="o">&amp;&amp;</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">slim</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Éditez la ligne
+"<code>sessions            xfce4,icewm-session,wmaker,blackbox</code>" de facon a
+ce qu'elle ressemble a "<code>sessions            mate-session</code>"<br />
+Puis ajoutez slim dans /etc/rc.conf, dans la section DAEMONS.<br />
+Normalement, tout devrait fonctionner!<br />
+Ah oui, et pour installer thunderbird, firefox, chromium, etc...</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">chromium</span> <span class="n">thunderbird</span> <span class="n">xchat</span> <span class="n">firefox</span> <span class="n">rhythmbox</span> <span class="n">pidgin</span> <span class="n">transmission</span><span class="o">-</span><span class="n">gtk</span> <span class="n">vlc</span>
+</pre></div>
+
+
+<p>Voila! Et comme dirait <a href="https://twitter.com/spartition">@Spartition</a>, c'est sale, mais qu'est-ce que c'est
+bon!<br />
+A plus~</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="//wxcafe.net/posts/%D/les-systemes-de-fichiers/">Les systèmes de fichiers</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-25T10:28:00+02:00">
+		<i class="icon-calendar"></i> Tue 25 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/teaching/"><i class="icon-folder-open"></i>Teaching</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Un système de fichiers. Vous en avez surement déjà entendu parlé si vous
+avec déjà installé Linux, ou formaté une clé USB. Dans ces cas, vous
+connaissez surement NTFS, EXT4, ou encore FAT32.</p>
+<p>Ces différents noms désignent en effet des systèmes de fichiers. Mais
+qu'est-ce qu'un système de fichiers?</p>
+<p>Pour comprendre cela, il faut déjà savoir ce qu'est exactement un
+fichier. Un fichier est un ensemble de blocs (les blocs sont l'unité la
+plus petite traitable par le matériel, ils font généralement 1 ou 4 Kio
+(<a href="http://fr.wikipedia.org/wiki/Kibioctet#Multiples_normalis.C3.A9s">kibioctet</a>), en fonction du système de fichier utilisé.), qui est
+donc composé de bits, interprétés différemment en fonction du type de
+fichier. Cependant, seul, le fichier n'est pas accessible, puisqu'il
+n'est pas indexé, c'est a dire que l'OS ne sait pas qu'il est présent,
+ou il commence ni où il s'arrête (je schématise un peu, mais c'est
+l'idée). </p>
+<p>Ainsi, le système de fichier donne un cadre et un standard à
+l'arborescence des fichiers. Par exemple, le système de fichier ext4
+utilise des blocs de 1 Kio, et de ce fait, toutes les partitions de
+disque dur formatées en ext4 peuvent prendre comme unité de base 1 Kio
+et mesurer la taille des fichiers en blocs de cette façon. Les systèmes
+de fichiers nécessitent l'inclusion de drivers dans le noyau pour
+pouvoir être pris en compte. </p>
+<p>Le noyau linux inclut par défaut les drivers pour ext2/3/4, btrfs, 
+reiserfs, ntfs, fat16/32 et hfsx, ce qui permet de monter a peu 
+près tout type de partition récente.</p>
+<p>Il convient de bien faire la différence entre le système de fichier et
+l'arborescence des fichiers. Si l'arborescence des fichiers est en fait
+une entité virtuelle englobant la racine / et tous les fichiers et
+dossiers contenus dedans, le système de fichier permet a votre système
+GNU/Linux de distinguer les différents fichiers composants cette
+arborescence.</p>
+<p>Détaillons maintenant les types de fichiers les plus répandus:</p>
+<ul>
+<li>
+<p>FAT16/32 : Les systèmes de fichier FAT (pour File Allocation Table,
+    soit la définition d'un système de fichier), remplissent leur rôle le
+    plus simplement possible. Ne permettant (historiquement) que des noms de
+    8 caractères (plus extension de trois caractères), ni chiffrement, ni
+    système de distinction d'utilisateurs (DOS étant un système
+    mono-utilisateur), Il fut décliné par microsoft en FAT16 et en FAT32,
+    utlisants respectivement des blocs de 16 et 32 Kio.</p>
+</li>
+<li>
+<p>NTFS :. Le NTFS (pour New Technology File System, rapport a Windows
+    NT) est un système de fichier qui est apparu avec Windows XP, et qui
+    était une mise a jour nécessaire du FAT32 vieillissant. NTFS ajoute a
+    FAT différentes capacités dont le chiffrement, les liens symboliques, la
+    compression et les quotas pour les volumes, permettant de limiter la
+    taille maximum occupée dans une partition.</p>
+</li>
+<li>
+<p>ReFS : ReFS est le système de fichiers introduit dans Windows Server 2012.
+    Ne différant pas énormément de NTFS, je le mentionne principalement 
+    parce qu'il est prévu qu'il soit le défaut pour Windows 8. 
+    Il apporte principalement la redondance, c'est a dire que chaque
+    fichier possède une somme de contrôle en 64 bits stockée dans un fichier
+    séparé pour éviter les corruption de disque.</p>
+</li>
+<li>
+<p>Ext2/3/4 : les systèmes ext (extended) sont les systèmes de fichiers
+    les plus utilisés sous linux pour le grand public. (Je traiterai ici
+    d'ext4, puisque c'est le plus récent.) Il dispose de toutes les
+    fonctions que l'on peut attendre d'un système de fichiers moderne, ni
+    plus ni moins. Ainsi, ext4 est un système de fichiers journalisé,
+    acceptant les capacités jusqu’à 1 Exioctet, et utilise l'allocation dite
+    "par extent", ce qui signifie que la création d'un fichier réserve
+    automatiquement les zones contiguës de façon a réduire la fragmentation.</p>
+</li>
+<li>
+<p>ReiserFS : ce système de fichiers, créé par le (légèrement mégalo)
+    programmeur Hans Reiser, est a retenir pour avoir été le premier système
+    de fichiers journalisé, et accepte un nombre de fichiers de l'ordre des
+    4 milliards. Le but de ce système est de créer un système polyvalent, a
+    la fois système de fichiers et base de donnée (de part sa grande
+    capacité en terme de nombre de fichiers et de l'utilisation d'un
+    journal.)</p>
+</li>
+<li>
+<p>Btrfs : ce système est l'évolution logique d'ext4, et inclut lui aussi
+    l'allocation par extent, mais possède de plus un système de
+    sous-volumes, qui permet d’accéder a plusieurs arborescences de fichiers
+    montées en même temps (système pratique et utile pour faire des
+    snapshots de systèmes.). Il permet aussi de redimensionner a chaud la
+    taille des partitions, en les agrandissant ou en les rétrécissant, est
+    compatible avec <a href="http://fr.wikipedia.org/wiki/LVM">LVM</a>, a un système de checking intégré (btrfsck), et
+    utilise un algorithme de compression appelé LZ4, qui accélère les accès
+    aux fichiers compressés d'environ 30% par rapport a LZO, le système
+    utilisé dans ext4.</p>
+</li>
+<li>
+<p>HFS+ : le système de fichier présent sur tous les macs a des capacités
+    relativement standards, et ressemble énormément a l'ext3. Il supporte
+    cependant les liens directs vers les dossiers, fonction rare sur les
+    systèmes de fichiers actuels. Il est possible qu'il évolue a nouveau
+    dans les années a venir</p>
+</li>
+<li>
+<p>ZFS : Ce système de fichier, venu de Solaris mais utilisable par Linux
+    et *BSD, est, tel Btrfs, a la fois un système de fichier et un
+    remplaçant/compatible avec LVM, C'est un système de fichiers conçu
+    principalement pour les serveurs, et il intègre ainsi un système de
+    redondance des données pour éviter les corruptions, un mode RAID-Z
+    (apparenté au RAID5), des checks d’intégrité en continu, des snapshots,
+    etc...</p>
+</li>
+</ul>
+<p>Comme on a pu le voir, les systèmes de fichiers disponibles sont
+légions. Cependant, le plus adapté a Linux et a une utilisation grand
+public aujourd'hui est probablement Btrfs. Malheureusement, ce dernier
+n'est pas aujourd'hui proposé par défaut sur les distributions les plus
+utilisées, au profit de l'ext4, qui commence a accuser son âge...</p>
+<p>Les systèmes de fichiers, s'ils peuvent ne pas sembler primordiaux au
+fonctionnement du système, sont en fait de première importance, et ce
+choix ne devrait pas être laissé au hasard, et être mis a jour
+régulièrement (pour éviter les failles de sécurité...)</p>
+<p>Bon courage, et bon choix pour votre prochain système.</p></div>
+			</div>
+			<hr />
+		<div class="pagination">
+			<ul>
+					<li class="prev"><a href="//wxcafe.net/author/wxcafe.html">&larr; Previous</a></li>
+					<li class="">
+						<a href="//wxcafe.net/author/wxcafe.html">1</a>
+					</li>
+					<li class="active">
+						<a href="//wxcafe.net/author/wxcafe2.html">2</a>
+					</li>
+					<li class="">
+						<a href="//wxcafe.net/author/wxcafe3.html">3</a>
+					</li>
+					<li class="next"><a href="//wxcafe.net/author/wxcafe3.html">Next &rarr;</a></li>
+			</ul>
+		</div>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

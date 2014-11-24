@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Mutt ou le client email le <del>meilleur</del> moins mauvais</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+			 			<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Mutt ou le client email le <del>meilleur</del> moins mauvais">Mutt ou le client email le <del>meilleur</del> moins mauvais</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-01-02T02:12:00+01:00">
+		<i class="icon-calendar"></i> Wed 02 January 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Les clients mails ont une particularité en commun : ils sont tous
+<del>très</del> mauvais. Cela pour nombre de raisons, mais la principale reste
+que leurs interfaces/raccourcis claviers ne sont pas efficaces pour une
+utilisation <strong>a la</strong> UNIX<br />
+Cependant, un d'entre eux se démarque par sa moins-mauvais-itude, c'est
+le relativement bien connu <del>Outlook Express 2003</del> Mutt!<br />
+Mutt est un client mail en ligne de commande, qui, comme le dit sa page
+d’accueil, <a href="http://www.mutt.org">"just sucks less"</a>. Dans les faits, mutt est assez
+chiant a configurer mais particulièrement pratique a utiliser après.</p>
+<p>La configuration de mutt se fait dans le fichier <code>.muttrc</code> ou dans
+<code>/etc/Muttrc</code>, et il est courant d'utiliser offlineimap en
+conjonction avec celui ci, de façon a accéder aux mails même sans accès
+internet (mutt dispose d'un système d'accès IMAP/POP et SMTP, mais ne
+crée pas de cache, ce qui empêche la consultation des emails sans
+connexion internet.) La configuration d'offlineimap se fait dans
+<code>~/.offlineimaprc</code> ou dans rien d'autre en fait, c'est une config
+par user. Offlineimap est un petit logiciel en python qui synchronise un
+dossier en Maildir avec un serveur IMAP, ce qui tombe bien puisque
+justement mutt accepte les dossiers au format Maildir. (De plus, cela va
+tout a fait dans le sens de la libération des données en cela que vous
+possédez vos mails en local.)<br />
+Bref, passons aux choses serieuses : le code. Déjà, installez
+offlineimap et <a href="http://data.wxcafe.net/scripts/mutt-sidebar.sh">ce script</a> fait par moi, qui vous permet d'installer
+mutt avec le patch sidebar, qui crée un listing des dossiers sur la
+partie gauche.<br />
+Ensuite, voyons pour la partie configuration :<br />
+Ma configuration d'offlineimap :</p>
+<div class="highlight"><pre><span class="cp">## Config file for offlineimap</span>
+<span class="cp">## Originally located in ~/.offlineimaprc</span>
+<span class="cp">## This should not be edited without creating a copy before</span>
+<span class="cp">## Created by Wxcafe (Clément Hertling)</span>
+<span class="cp">## Published under CC-BY-SA</span>
+
+<span class="p">[</span><span class="n">general</span><span class="p">]</span>
+<span class="cp"># List of accounts to be synced, separated by a comma.</span>
+<span class="n">accounts</span> <span class="o">=</span> <span class="n">main</span>
+
+<span class="p">[</span><span class="n">Account</span> <span class="n">main</span><span class="p">]</span>
+<span class="cp"># Identifier for the local repository; e.g. the maildir to be synced via IMAP.</span>
+<span class="n">localrepository</span> <span class="o">=</span> <span class="n">main</span><span class="o">-</span><span class="n">local</span>
+<span class="cp"># Identifier for the remote repository; i.e. the actual IMAP, usually non-local.</span>
+<span class="n">remoterepository</span> <span class="o">=</span> <span class="n">main</span><span class="o">-</span><span class="n">remote</span>
+<span class="cp"># Status cache. Default is plain, which eventually becomes huge and slow.</span>
+<span class="n">status_backend</span> <span class="o">=</span> <span class="n">sqlite</span>              <span class="err">#</span> <span class="n">le</span> <span class="n">type</span> <span class="n">de</span> <span class="n">cache</span><span class="p">.</span> <span class="p">(</span><span class="n">plain</span> <span class="n">ou</span> <span class="n">sqlite</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">Repository</span> <span class="n">main</span><span class="o">-</span><span class="n">local</span><span class="p">]</span>
+<span class="cp"># Currently, offlineimap only supports maildir and IMAP for local repositories.</span>
+<span class="n">type</span> <span class="o">=</span> <span class="n">Maildir</span>                        <span class="err">#</span> <span class="n">le</span> <span class="n">type</span> <span class="n">de</span> <span class="n">stockage</span> <span class="p">(</span><span class="n">Maildir</span> <span class="n">ou</span> <span class="n">IMAP</span><span class="p">)</span>
+<span class="cp"># Where should the mail be placed?</span>
+<span class="n">localfolders</span> <span class="o">=</span> <span class="o">~/</span><span class="n">Emails</span><span class="o">/</span>                <span class="err">#</span> <span class="n">le</span> <span class="n">dossier</span> <span class="n">dans</span> <span class="n">lequel</span> <span class="n">vous</span>
+                                        <span class="err">#</span> <span class="n">voulez</span> <span class="n">que</span> <span class="n">vos</span> <span class="n">emails</span> <span class="n">apparaissent</span>
+
+<span class="p">[</span><span class="n">Repository</span> <span class="n">main</span><span class="o">-</span><span class="n">remote</span><span class="p">]</span>
+<span class="cp"># Remote repos can be IMAP or Gmail, the latter being a preconfigured IMAP.</span>
+<span class="n">type</span> <span class="o">=</span> <span class="n">IMAP</span>
+<span class="n">remotehost</span> <span class="o">=</span> <span class="c1">//placeholderhost//        # le serveur de votre messagerie</span>
+<span class="n">remoteuser</span> <span class="o">=</span> <span class="c1">//placeholderusername//    # votre nom d&#39;utilisateur</span>
+<span class="n">remotepass</span> <span class="o">=</span> <span class="c1">//placeholderpassword//    # votre mot de passe</span>
+<span class="n">cert_fingerprint</span> <span class="o">=</span> <span class="c1">//placeholdercert//  # le certificat du serveur (IMAPS only)</span>
+</pre></div>
+
+
+<p>Ça devrait être assez simple a lire, j'ai tout bien commenté :3<br />
+Puis ma config mutt :</p>
+<div class="highlight"><pre><span class="cp">## Mutt MUA configuration file</span>
+<span class="cp">## This file should not be edited without creating a copy</span>
+<span class="cp">## File Created and edited by Wxcafe (Clément Hertling)</span>
+<span class="cp">## Published under CC-BY-SA</span>
+
+<span class="cp"># General config for reading (fetched via offlineimap)</span>
+
+<span class="n">set</span> <span class="n">mbox_type</span> <span class="o">=</span> <span class="n">Maildir</span>
+<span class="cp"># type de boite mail (voir dans offlineimap, mailbox par defaut)</span>
+
+<span class="n">set</span> <span class="n">folder</span> <span class="o">=</span> <span class="o">~/</span><span class="n">Email</span><span class="o">/</span>
+<span class="cp"># dossier root mailbox/imap</span>
+
+<span class="n">set</span> <span class="n">spoolfile</span> <span class="o">=</span> <span class="o">+</span><span class="n">INBOX</span>
+<span class="cp"># dossier d&#39;inbox</span>
+
+<span class="n">set</span> <span class="n">mbox</span> <span class="o">=</span> <span class="o">+</span><span class="err">&#39;</span><span class="n">All</span> <span class="n">Mail</span><span class="err">&#39;</span>
+<span class="cp"># dossier ou archiver les emails</span>
+
+<span class="n">set</span> <span class="n">copy</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># yes pour copier les messages dans les differents dossier, no pour...</span>
+<span class="cp"># enfin voila quoi.</span>
+
+<span class="n">set</span> <span class="n">header_cache</span> <span class="o">=</span> <span class="o">/</span><span class="p">.</span><span class="n">hcache</span><span class="o">/</span>
+<span class="cp"># dossier ou sont stockés les headers (pour le cache)</span>
+
+<span class="n">set</span> <span class="n">record</span> <span class="o">=</span> <span class="o">+</span><span class="n">Sent</span>
+<span class="cp"># dossier dans lequel sont stockés les messages envoyés</span>
+
+<span class="n">set</span> <span class="n">postponed</span> <span class="o">=</span> <span class="o">+</span><span class="n">Drafts</span>
+<span class="cp"># dossier dans lequel sont stockés les brouillons</span>
+
+<span class="n">mailboxes</span> <span class="o">=</span> <span class="o">+</span><span class="n">INBOX</span> <span class="o">+</span><span class="n">Drafts</span> <span class="o">+</span><span class="n">Sent</span> <span class="o">+</span><span class="n">Trash</span>  <span class="o">+</span><span class="n">All</span><span class="err">\</span> <span class="n">Mail</span> 
+<span class="cp"># liste des dossiers qui vont apparaitre dans la colonne de gauche</span>
+
+<span class="cp"># General config for sending (using Mutt&#39;s native support)</span>
+
+<span class="n">set</span> <span class="n">smtp_pass</span> <span class="o">=</span> <span class="err">&#39;</span><span class="n">password_placeholder</span><span class="err">&#39;</span>
+<span class="cp"># votre mot de passe</span>
+
+<span class="n">set</span> <span class="n">smtp_url</span> <span class="o">=</span> <span class="s">&quot;smtp://username@whatev.org:465/&quot;</span>
+<span class="cp"># l&#39;url ou envoyer les emails</span>
+
+<span class="n">set</span> <span class="n">send_charset</span> <span class="o">=</span> <span class="s">&quot;utf-8&quot;</span>
+<span class="cp"># UTF8, NE PAS CHANGER</span>
+
+<span class="n">set</span> <span class="n">signature</span> <span class="o">=</span> <span class="s">&quot;.sign&quot;</span>
+<span class="cp"># vous pouvez mettre votre signature dans .sign</span>
+
+<span class="n">set</span> <span class="n">sig_on_top</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># il est d&#39;usge de mettre no ici. Cependant, je trouve ca plus lisible </span>
+<span class="cp"># comme ca.</span>
+
+<span class="n">set</span> <span class="n">ssl_verify_host</span> <span class="o">=</span> <span class="n">no</span>
+<span class="cp"># mettez yes ici si votre serveur a un certificat configuré correctement</span>
+
+<span class="n">set</span> <span class="n">hostname</span> <span class="o">=</span> <span class="s">&quot;wxcafe.net&quot;</span>
+<span class="cp"># mettez l&#39;adresse de votre serveur ici</span>
+
+<span class="cp"># Misc settings</span>
+
+<span class="n">auto_view</span> <span class="n">text</span><span class="o">/</span><span class="n">html</span>
+<span class="cp"># la façon de voir les emails par défaut.</span>
+
+<span class="n">set</span> <span class="n">date_format</span> <span class="o">=</span> <span class="s">&quot;%y-%m-%d %T&quot;</span>
+<span class="cp"># format de date d&#39;envoi/de reception.</span>
+
+<span class="n">set</span> <span class="n">index_format</span> <span class="o">=</span> <span class="s">&quot;%2C | %Z [%D] %-30.30F (%-4.4c) %s&quot;</span>
+<span class="cp"># format de l&#39;index (la présentation de l&#39;interface)</span>
+<span class="cp"># voir http:</span><span class="c1">//www.mutt.org/doc/manual/manual-6.html#index_format</span>
+
+<span class="n">set</span> <span class="n">sort_alias</span> <span class="o">=</span> <span class="n">alias</span>
+<span class="n">set</span> <span class="n">reverse_alias</span> <span class="o">=</span> <span class="n">yes</span> 
+<span class="n">set</span> <span class="n">alias_file</span> <span class="o">=</span> <span class="s">&quot;$HOME/.mutt/aliases&quot;</span>
+<span class="cp"># liste des alias noms/email. a créer et remplir vous même.</span>
+<span class="cp"># format : &quot;alias short_name long_email_adress&quot;</span>
+<span class="n">source</span> <span class="err">$</span><span class="n">alias_file</span>
+
+<span class="n">set</span> <span class="n">beep</span> <span class="o">=</span> <span class="n">no</span>
+<span class="cp"># ne pas biper. CE SON ME TUE T.T</span>
+
+<span class="n">set</span> <span class="n">tilde</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">sleep_time</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="cp"># ?</span>
+
+<span class="n">set</span> <span class="n">sidebar_visible</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">sidebar_width</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="cp"># parametres de la barre coté gauche</span>
+
+<span class="n">set</span> <span class="n">realname</span> <span class="o">=</span> <span class="s">&quot;Clément Hertling (Wxcafé)&quot;</span>
+<span class="n">set</span> <span class="n">from</span> <span class="o">=</span> <span class="s">&quot;wxcafe@wxcafe.net&quot;</span>
+<span class="n">set</span> <span class="n">use_from</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">set</span> <span class="n">certificate_file</span> <span class="o">=</span> <span class="s">&quot;$HOME/.mutt/cacert&quot;</span>
+<span class="cp"># parametres d&#39;envoi. mettez vos propres infos a la place des miennes...</span>
+
+<span class="n">set</span> <span class="n">edit_headers</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># vous permet de vois les headers des mails. j&#39;aime, donc je laisse.</span>
+
+<span class="cp"># Macros</span>
+
+<span class="cp"># le titre dit tout. index veut dire que la macro est active dans les menus,</span>
+<span class="cp"># pager qu&#39;elle l&#39;est dans la visionneuse, les deux qu&#39;elle l&#39;est dans les </span>
+<span class="cp"># deux</span>
+<span class="cp"># \C represente la touche Control</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Cp</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">prev</span>
+<span class="cp"># Control+p -&gt; remonter d&#39;un dossier dans la sidebar</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Cn</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">next</span>
+<span class="cp"># Control+n -&gt; descendre d&#39;un dossier dans la sidebar</span>
+
+<span class="n">bind</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="err">\</span><span class="n">Co</span> <span class="n">sidebar</span><span class="o">-</span><span class="n">open</span>
+<span class="cp"># Control+o -&gt; ouvrir le dossier selectionné dans la sidebar</span>
+
+<span class="n">macro</span> <span class="n">index</span><span class="p">,</span><span class="n">pager</span> <span class="n">d</span> <span class="s">&quot;=Trash&quot;</span> <span class="s">&quot;Trash&quot;</span>
+<span class="cp"># d supprime le message en cours</span>
+
+<span class="n">bind</span> <span class="n">pager</span>   <span class="n">previous</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># permet de monter d&#39;une ligne avec la touche up, au lieu de changer de message.</span>
+
+<span class="n">bind</span> <span class="n">pager</span>   <span class="n">next</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># permet de descendre d&#39;une ligne avec la touche down, au lieu de changer de </span>
+<span class="cp"># message</span>
+
+<span class="n">bind</span> <span class="n">pager</span> <span class="n">j</span> <span class="n">next</span><span class="o">-</span><span class="n">line</span>
+<span class="n">bind</span> <span class="n">pager</span> <span class="n">k</span> <span class="n">previous</span><span class="o">-</span><span class="n">line</span>
+<span class="cp"># raccourcis vim</span>
+
+<span class="cp"># PGP signing commands</span>
+
+<span class="n">set</span> <span class="n">pgp_decode_command</span><span class="o">=</span><span class="s">&quot;gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_verify_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --verify %s %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_decrypt_command</span><span class="o">=</span><span class="s">&quot;gpg --passphrase-fd 0 --no-verbose --batch --output - %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_sign_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_clearsign_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_encrypt_only_command</span><span class="o">=</span><span class="s">&quot;pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0x******** -- -r %r -- %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_encrypt_sign_command</span><span class="o">=</span><span class="s">&quot;pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x******** -- -r %r -- %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_import_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --import -v %f&quot;</span>
+<span class="n">set</span> <span class="n">pgp_export_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --export --armor %r&quot;</span>
+<span class="n">set</span> <span class="n">pgp_verify_key_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --fingerprint --check-sigs %r&quot;</span>
+<span class="n">set</span> <span class="n">pgp_list_pubring_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --with-colons --list-keys %r&quot;</span> 
+<span class="n">set</span> <span class="n">pgp_list_secring_command</span><span class="o">=</span><span class="s">&quot;gpg --no-verbose --batch --with-colons --list-secret-keys %r&quot;</span> 
+<span class="n">set</span> <span class="n">pgp_autosign</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">set</span> <span class="n">pgp_sign_as</span><span class="o">=</span><span class="mi">0</span><span class="n">x</span><span class="o">********</span>
+<span class="cp"># remplacez 0x******** par votre identifiant PGP!!!!!</span>
+
+<span class="n">set</span> <span class="n">pgp_replyencrypt</span><span class="o">=</span><span class="n">no</span>
+<span class="n">set</span> <span class="n">pgp_timeout</span><span class="o">=</span><span class="mi">7200</span>
+<span class="n">set</span> <span class="n">pgp_good_sign</span><span class="o">=</span><span class="s">&quot;^gpg: Good signature from&quot;</span>
+
+<span class="cp"># si vous ne comptez pas utiliser PGP, commentez toute cette section, depuis</span>
+<span class="cp"># PGP signing options</span>
+
+<span class="cp"># Palette for use with the Linux console.  Black background.</span>
+
+<span class="cp"># Schéma de couleur Rouge et Noir. Commentez si vous voulez le </span>
+<span class="cp"># défaut noir et blanc.</span>
+<span class="cp"># d&#39;autres schémas sont trouvables sur google et autre.</span>
+
+<span class="n">color</span> <span class="n">hdrdefault</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">quoted</span> <span class="n">brightblack</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">signature</span> <span class="n">brightblack</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">attachment</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">message</span> <span class="n">brightwhite</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">error</span> <span class="n">brightred</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">indicator</span> <span class="n">black</span> <span class="n">red</span>
+<span class="n">color</span> <span class="n">status</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">tree</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">normal</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">markers</span> <span class="n">red</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">search</span> <span class="n">white</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">tilde</span> <span class="n">brightmagenta</span> <span class="n">black</span>
+<span class="n">color</span> <span class="n">index</span> <span class="n">red</span> <span class="n">black</span> <span class="o">~</span><span class="n">F</span>
+<span class="n">color</span> <span class="n">index</span> <span class="n">red</span> <span class="n">black</span> <span class="s">&quot;~N|~O&quot;</span>
+</pre></div>
+
+
+<p>Voila, pour plus d'informations vous pouvez aller voir le manuel de mutt
+@ <a href="http://www.mutt.org/doc/manual/">http://www.mutt.org/doc/manual/</a><br />
+J'espère que cette configuration "toute faite" vous aidera a commencer
+a utiliser mutt. Il est tout de fois important de se souvenir
+qu'utiliser une configuration toute faire n'aide pas a comprendre un
+programme ou un système, et que cette façon de faire devrait être
+réservée a l'introduction ou a des situations ou il est absolument
+nécessaire d'avoir rapidement une configuration fonctionnelle (c'est a
+dire, dans le cas d'un client email, euh... jamais?). Je vous invite
+donc a relire les annotations dont sont parsemés les fichiers de
+configuration en question, et surtout a lire le manuel, a chercher sur
+<del>Bing</del> <del>Google</del> <del>Yahoo</del> Seeks, et globalement 
+a tenter de comprendre les configurations en question et a les améliorer!</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

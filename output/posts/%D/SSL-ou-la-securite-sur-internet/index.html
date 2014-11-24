@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>SSL ou la sécurité sur l'internet</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+			 			<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to SSL ou la sécurité sur l'internet">SSL ou la sécurité sur l'internet</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2014-05-30T08:25:00+02:00">
+		<i class="icon-calendar"></i> Fri 30 May 2014
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/notes/"><i class="icon-folder-open"></i>Notes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p><em>Disclaimer: Ce billet est écrit après le visionnage de la conférence de Moxie 
+Marlinspike suivante: <a href="https://www.youtube.com/watch?v=ibF36Yyeehw">More Tricks for Defeating SSL</a>,
+présentée a la DefCon 17 (en 2011), et la lecture du billet suivant: 
+<a href="http://www.thoughtcrime.org/blog/lavabit-critique/">A Critique of Lavabit</a>, 
+ce qui peut avoir l'effet de rendre légèrement parano. Si vous considérez que 
+c'est le cas ici, veuillez ne pas tenir compte de ce billet (et vous pouvez dès
+a présent dire coucou aux différentes personnes qui écoutent votre connection)</em></p>
+<p>Si vous venez ici souvent (vous devriez), et que vous utilisez SSL pour vous
+connecter a ce site (vous devriez, vraiment, dans ce cas), vous avez peut être
+remarqué quelque chose récemment : il se trouve que le certificat qui permet de
+desservir ce site a changé.</p>
+<p>Cela fait suite aux évènements évoqués dans le <em>Disclaimer</em>, mais aussi a des
+doigts sortis d'un endroit particulier du corps de l'admin/auteur de ce "blog",
+qui a pris <strong>enfin</strong> les 5 minutes nécessaires a la compréhension superficielle
+du fonctionnement de SSL, et les 10 nécessaires a la mise en place d'un système
+fonctionnel utilisant cette compréhension récemment acquise.</p>
+<p>Bref, le certificat a changé. Mais de quelle façon, vous demandez vous peut
+être (ou pas, mais bon, je vais expliquer de toute façon). Et bien c'est très
+simple : il existait auparavant un certificat pour <code>wxcafe.net</code>, un pour
+<code>paste.wxcafe.net</code>, un pour <code>mail.wxcafe.net</code>, etc... Bref, un certificat
+différent pour chaque sous-domaine.</p>
+<p>Il s'avère que c'est a la fois très peu pratique a utiliser (les utilisateurs
+doivent ajouter chaque certificat a leur navigateur séparément, chaque 
+changement de sous-domaine conduit a un message d'erreur, etc) et pas plus
+sécurisé que d'avoir un seul certificat wildcard. J'ai donc généré un certificat
+pour <code>*.wxcafe.net</code> hier, et il sera dorénavant utilisé pour tous les
+sous-domaine de <code>wxcafe.net</code>; et un certificat pour <code>wxcafe.net</code>, qui ne matche
+pas <code>*.wxcafe.net</code>, et qui sera donc utilisé... bah pour <code>wxcafe.net</code>.</p>
+<p>Il serait préférable de faire des redirections automatiques des adresses http
+vers les adresses https, cependant, étant donné que le certificat est
+self-signed, il me semble préférable que l'arrivée sur le site ne commence pas
+par une page firefox disant "Something's Wrong!", et ces redirections ne seront
+donc pas mises en place.</p>
+<p>De plus, après la lecture de l'article de blog sur Lavabit dont le lien est plus
+haut, il semble intéressant (et assez important) de faire en sorte que le
+serveur utilise en priorité (et si possible, uniquement) des ciphers supportant
+PFS, soit EDH et EECDH (Ephemeral Diffie-Helmann et la version Elliptic Curves 
+de ce même algorithme). Cela permet de faire en sorte que toutes les 
+communications avec ce serveur soient future-proof, c'est a dire que, même si 
+quelqu'un récupérait la clé privée, elle ne serait pas utile pour déchiffrer les 
+communications passées.</p>
+<p>Bon, maintenant que les explications basiques sont faites, voyons
+l'implémentation : <br />
+Pour générer la clé, tout d'abord, il convient d'utiliser les commandes
+suivantes:  </p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">openssl</span> <span class="n">genrsa</span> <span class="o">-</span><span class="n">out</span> <span class="n">example</span><span class="p">.</span><span class="n">key</span> <span class="mi">4096</span>
+<span class="cp"># nous utilisons ici une clé de 4096 bits, la taille est laissée a votre appréciation</span>
+<span class="n">sudo</span> <span class="n">openssl</span> <span class="n">req</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">key</span> <span class="n">example</span><span class="p">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">example</span><span class="p">.</span><span class="n">csr</span>
+<span class="cp"># OpenSSL va ici vous demander de nombreuses informations, &quot;Common Name&quot; devant contenir le FQDN</span>
+<span class="n">sudo</span> <span class="n">openssl</span> <span class="n">X509</span> <span class="o">-</span><span class="n">req</span> <span class="o">-</span><span class="n">days</span> <span class="mi">1095</span> <span class="o">-</span><span class="n">in</span> <span class="n">example</span><span class="p">.</span><span class="n">csr</span> <span class="o">-</span><span class="n">signkey</span> <span class="n">example</span><span class="p">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">example</span><span class="p">.</span><span class="n">crt</span>
+<span class="cp"># enfin, nous générons la clé, d&#39;une durée de vie de 3 ans</span>
+</pre></div>
+
+
+<p>Bien entendu, si vous voulez utiliser une clé wildcard, il vous faut préciser
+<code>*.example.com</code> comme common name.
+Une fois la clé générée, il faut dire aux différents services de l'utiliser, et
+de n'utiliser que des ciphers PFS. La méthode dépend donc du service.
+Je vais lister ici les methodes pour quelques services que j'utilise :</p>
+<h3>apache :</h3>
+<div class="highlight"><pre><span class="cp"># /etc/apache2/mods_enabled/ssl.conf</span>
+<span class="cp"># [...]</span>
+<span class="n">SSLProtocol</span> <span class="n">all</span> <span class="o">-</span><span class="n">SSLv2</span> <span class="o">-</span><span class="n">SSLv3</span>
+<span class="n">SSLHonorCipherOrder</span> <span class="n">on</span>
+<span class="n">SSLCipherSuite</span> <span class="s">&quot;EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 \</span>
+<span class="s">  EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 \</span>
+<span class="s">  EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS&quot;</span>
+<span class="cp"># [...]</span>
+<span class="cp"># /etc/apache2/sites-enabled/default-ssl</span>
+<span class="cp"># [...]</span>
+<span class="n">SSLEngine</span> <span class="n">on</span>
+<span class="n">SSLCertificateFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">crt</span>
+<span class="n">SSLCertificateKeyFile</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">key</span>
+<span class="cp"># [...]</span>
+</pre></div>
+
+
+<h3>nginx :</h3>
+<div class="highlight"><pre><span class="cp"># /etc/nginx/nginx.conf </span>
+<span class="cp"># [...]</span>
+<span class="n">ssl_protocols</span> <span class="n">TLSv1</span> <span class="n">TLSv1</span><span class="mf">.1</span> <span class="n">TLSv1</span><span class="mf">.2</span><span class="p">;</span>
+<span class="n">ssl_prefer_server_ciphers</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">ssl_ciphers</span> <span class="s">&quot;EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 \</span>
+<span class="s">  EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 \</span>
+<span class="s">  EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS&quot;</span><span class="p">;</span>
+<span class="cp"># [...]</span>
+<span class="cp"># /etc/nginx/sites-enabled/default-ssl</span>
+<span class="cp"># [...]</span>
+<span class="n">ssl</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">ssl_certificate</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">crt</span>
+<span class="n">ssl_certificate_key</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">key</span>
+<span class="cp"># [...]</span>
+</pre></div>
+
+
+<h3>prosody (jabber) :</h3>
+<div class="highlight"><pre><span class="cp"># tout d&#39;abord, lancez la commande suivante :</span>
+<span class="n">sudo</span> <span class="n">openssl</span> <span class="n">dhparam</span> <span class="o">-</span><span class="n">out</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">prosody</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">dh</span><span class="o">-</span><span class="mf">2048.</span><span class="n">pem</span> <span class="mi">2048</span>
+<span class="cp"># ensuite, pour chaque VirtualHost dans /etc/prosody/prosody.conf :</span>
+<span class="n">ssl</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">dhparam</span> <span class="o">=</span> <span class="s">&quot;/etc/prosody/certs/dh-2048.pem&quot;</span><span class="p">;</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;/etc/certs/example.com.key&quot;</span><span class="p">;</span>
+  <span class="n">certificate</span> <span class="o">=</span> <span class="s">&quot;/etc/certs/example.com.crt&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp"># la cipher suite de prosody utilise par défaut EDH et EECDH</span>
+</pre></div>
+
+
+<h3>postfix (email) :</h3>
+<div class="highlight"><pre><span class="cp"># /etc/postfix/main.cf</span>
+<span class="cp"># [...]</span>
+<span class="n">smtpd_tls_cert_file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">crt</span>
+<span class="n">smtpd_tls_key_file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">key</span>
+<span class="n">tls_preempt_cipherlist</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">smtpd_tls_eecdh_grade</span> <span class="o">=</span> <span class="n">strong</span>
+<span class="n">smtdp_tls_mandatory_ciphers</span> <span class="o">=</span> <span class="n">high</span>
+<span class="n">smtpd_tls_mandatory_exclude_ciphers</span> <span class="o">=</span> <span class="n">aNULL</span><span class="p">,</span> <span class="n">eNULL</span><span class="p">,</span> <span class="n">MD5</span><span class="p">,</span> <span class="n">LOW</span><span class="p">,</span> <span class="mi">3</span><span class="n">DES</span><span class="p">,</span> <span class="n">EXP</span><span class="p">,</span> <span class="n">PSK</span><span class="p">,</span> <span class="n">SRP</span><span class="p">,</span> <span class="n">DSS</span>
+<span class="n">smtpd_tls_security_level</span> <span class="o">=</span> <span class="n">encrypt</span>
+<span class="n">smtpd_tls_mandatory_protocols</span> <span class="o">=</span> <span class="o">!</span><span class="n">SSLv2</span><span class="p">,</span> <span class="o">!</span><span class="n">SSLv3</span>
+<span class="n">smtpd_use_tls</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="cp"># [...]</span>
+</pre></div>
+
+
+<h3>dovecot (imap) :</h3>
+<div class="highlight"><pre><span class="cp"># /etc/dovecot/dovecot.conf </span>
+<span class="cp"># [...]</span>
+<span class="n">ssl_cert</span> <span class="o">=</span> <span class="o">&lt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">crt</span>
+<span class="n">ssl_key</span> <span class="o">=</span> <span class="o">&lt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">key</span>
+<span class="n">ssl_cipher_list</span> <span class="o">=</span> <span class="n">HIGH</span><span class="o">+</span><span class="n">kEDH</span><span class="o">:</span><span class="n">HIGH</span><span class="o">+</span><span class="n">kEECDH</span><span class="o">:</span><span class="n">HIGH</span><span class="o">:!</span><span class="n">PSK</span><span class="o">:!</span><span class="n">SRP</span><span class="o">:!</span><span class="mi">3</span><span class="n">DES</span><span class="o">:!</span><span class="n">aNULL</span>
+</pre></div>
+
+
+<p>Voila. Pour d'autres protocoles/services, je vous invite a RTFM^W vous reporter
+au manuel approprié.</p>
+<p>Cela étant dit, je conseille a tout le monde d'aller voir la conférence dans le
+disclaimer, et tant qu'a faire la conférence du même hacker <a href="https://www.youtube.com/watch?v=8N4sb-SEpcg">SSL and the future
+of Authenticity</a> qui parle de son
+implémentation d'une technologie "remplaçant" le système de CAs qui existe
+actuellement.</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>
