@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Comment Saurik a rooté les Google Glass</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Comment Saurik a rooté les Google Glass">Comment Saurik a rooté les Google Glass</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-05-06T06:24:00+02:00">
+		<i class="icon-calendar"></i> Mon 06 May 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/hacking/"><i class="icon-folder-open"></i>Hacking</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Comme vous avez pu le lire dans les médias, Saurik (Jay Freeman, connu
+pour avoir développé Cydia, un &ldquo;app store&rdquo; alternatif pour les iTrucs),
+après avoir reçu une paire de Google glass de la part de Google (de
+façon assez évidente&hellip;), a trouvé intéressant d&rsquo;obtenir un accès root
+sur celles-ci, ce qu&rsquo;il a accompli très rapidement. Des démentis de la
+part de Google et de certains autres sites sont vite arrivés, disant que
+les lunettes possédaient un bootloader débloqué et que de fait, le root
+était facile a obtenir : il suffisait de débloquer le bootloader,
+d&rsquo;extraire l&rsquo;OS, de le rooter hors-fonctionnement, puis de le
+réinstaller, rooté, sur les lunettes.</p>
+<p>Le fait est que de débloquer le bootloader laisse une trace permanente
+sur les lunettes, et que Saurik n&rsquo;a pas utilisé cette technique pour
+rooter sa paire. Voyons comment il a fait :</p>
+<p><em>Je tiens tout d&rsquo;abord a préciser que toutes les informations qui vont
+suivre sont extraites de <a href="http://www.saurik.com/id/16">cet article</a>, et plus précisément de la
+partie &ldquo;How does this exploit work&rdquo;.  Je tente d&rsquo;apporter ma maigre
+contribution a cette explication.</em></p>
+<p>Donc, d&rsquo;après les témoignages des quelques utilisateurs de Glass dans le
+monde, il semblerait que ces dernières fonctionnent avec un système
+d&rsquo;exploitation Android, avec une nouvelle interface, mais avec les mêmes
+outils internes: un kernel Linux, des outils userland GNU et une machine
+virtuelle Java Dalvik pour les applications.</p>
+<p>Saurik a donc cherché un exploit connu pour cette version d&rsquo;android, et
+l&rsquo;a appliqué a son problème. L&rsquo;exploit en question est relativement
+simple. Depuis la version 4.0 d&rsquo;android, le système permet la sauvegarde
+des données des différentes applications, une a une, via ADB (Android
+Debug Bridge, un protocole USB permettant l&rsquo;accès a de nombreuses
+fonctions avancées des machines fonctionnant sous android, dont, entre
+autre, un shell, un accès au logs de debugging, etc&hellip; Cette
+fonctionnalité est bien entendu désactivable.) Ce backup est très simple : 
+il crée un fichier .tgz contenant le dossier de configuration de
+l&rsquo;application. Lors de la restauration, le système supprime la
+configuration existante, puis la remplace par celle dans l&rsquo;archive gzip.</p>
+<p>Le problème de sécurité vient du fait que les applications android
+voient leurs données stockées dans /data/data/identifiant/, et que
+/data/ a pour permissions drwxrwx&ndash;x  27  system  system, ce qui
+signifie que seul system et les membres du groupe system peuvent lire
+dessus. Or, le fichier /data/local.prop définit de nombreux paramètres
+au démarrage, et notamment un qui permet au système de déterminer s&rsquo;il
+fonctionne dans une VM ou sur un véritable appareil. S&rsquo;il fonctionne sur
+une machine virtuelle, il donne les droits root a tout utilisateur se
+connectant via ADB, ce qui est ce que l&rsquo;on cherche pour l&rsquo;instant. Le
+fait que /data/ appartienne a system veut dire que le programme de
+restauration doit être setuid pour accéder aux données a l’intérieur qui
+appartiennent a root (soit toutes les applications système d&rsquo;android,
+dont l&rsquo;application paramètres, et, dans ce cas précis, l&rsquo;application de
+log système présente sur les google glass de test. Ainsi, nous avons un
+processus tournant en tant que root, qui va écrire sur une partition qui
+nous intéresse des données que nous possédons.</p>
+<p>Cependant, un problème reste : le système de restauration d&rsquo;Android
+vérifie les données avant de restaurer, et ne restaure pas les symlinks,
+ce qui nous empêche d&rsquo;avoir accès directement a /data/local.prop, le
+fichier qu&rsquo;on cherche a modifier. Cela dit, il nous reste une
+possiblité. Plaçons un dossier world-writable dans le fichier de backup,
+et nous pourrons écrire dedans pendant quelques secondes, le temps que
+la restauration se termine et que le système remette les permissions en
+place. Ainsi, nous pouvons créer le fichier
+/data/local/com.google.glass.logging/whatev/x, lien vers
+/data/local.prop, et nous avons un toujours un processus tournant en
+tant que root qui est en train d&rsquo;écrire dans ce dossier.</p>
+<p>Donc, nous allons lancer deux processus en même temps :  </p>
+<ul>
+<li>
+<p>Le premier tentera en boucle de créer le symlink. Il sera consitué de
+    la commande suivante, depuis un shell sur les lunettes :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">while ! ln -s /data/local.prop /data/data/com.google.glass.logging/whatev/x 2&gt;/dev/null
+do :
+done
+</pre></div>
+
+
+</li>
+<li>
+<p>Le deuxième sera le processus de restauration de notre exploit. Celui
+    ci, pour une plus grande chance de réussite, devra être suffisamment
+    lourd : au moins \~50Mo. Il devra contenir whatev/bigfile et whatev/x,
+    pour qu&rsquo;il crée whatev, prenne du temps a copier bigfile, puis écrive
+    dans x après que le symlink soit effectif. La commande sera, depuis
+    l&rsquo;ordinateur host :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb restore exploit.ab
+</pre></div>
+
+
+<p>Ces commandes vont fonctionner de concert pour nous donner un accès root :<br />
+- Le processus de restauration va créer le dossier whatev, qui sera
+    world-readable. Il va commencer a copier le fichier bigfile.<br />
+- Le processus de symlink va créer le lien
+    /data/data/com.google.glass.logging/whatev/x, pointant vers
+    /data/local.prop, puis rendre l&rsquo;âme proprement.<br />
+- Le processus de restauration, ayant enfin fini de copier
+    whatev/bigfile, copiera les contenus que nous voulons dans whatev/x, qui
+    est lié a /data/local.prop. Comme le processus est setuid root, il ne se
+    rendra compte de rien, et écrira tout dans /data/local.prop.</p>
+</li>
+</ul>
+<p>And voilà! On a écrit ce que l&rsquo;on veut dans /data/local.prop, ce qui
+nous permet de faire croire a android qu&rsquo;il tourne dans une machine
+virtuelle (ce que l&rsquo;on veut, c&rsquo;est en fait &ldquo;ro.kernel.qemu=1&rdquo;, qui
+indique au noyau qu&rsquo;il tourne dans qemu, un système de VM).</p>
+<p>Il nous reste a rebooter, depuis l&rsquo;ordinateur host :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb reboot
+</pre></div>
+
+
+<p>Puis nous remontons la partitions système en lecture/écriture (r/w),
+depuis le host :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb shell &quot;mount -o remount,rw /system&quot;
+</pre></div>
+
+
+<p>Nous copions le binaire <a href="https://data.wxcafe.net/uploads/android/glass/su">su</a> vers l&rsquo;appareil :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb push su /system/xbin
+</pre></div>
+
+
+<p>Nous donnons les bonnes permissions a ce binaire, afin de pouvoir
+l’exécuter plus tard :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb shell &quot;chmod 6755 /system/xbin/su&quot;
+</pre></div>
+
+
+<p>Ensuite, nous supprimons le fichier /data/local.prop, pour pouvoir
+redémarrer normalement :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb shell &quot;rm /data/local.prop&quot;
+</pre></div>
+
+
+<p>Enfin, nous redemarrons a nouveau :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">adb reboot
+</pre></div>
+
+
+<p>Et voila, une paire de google glass rootée!</p>
+<p>Il est bon de préciser que cette manipulation n&rsquo;est possible que parce
+que les lunettes tournent sous une ancienne version d&rsquo;android, et que ce
+bug a été fixé depuis.</p>
+<p>Il serait aussi interessant de couvrir les problèmes de vie privée
+qu&rsquo;engendrent les Google Glass, et ce sera fait dans un autre billet.</p>
+<p>A bientôt!</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

@@ -1,7 +1,7 @@
 Date: 2013-06-12 19:14
 Title: Redesign du blog, etc
 Author: wxcafe
-Category: Notes
+Category: Note
 Slug: redesign-du-blog
 
 Comme vous avez pu le remarquer, ce blog a "un peu" changé récemment.

@@ -4,24 +4,49 @@ Slug: about
 Author: wxcafé
 Category: Perso
 
-Hey, it's me!
-=================
+Wxcafé, c'est moi.
+------------------
 
-I'm Clément Hertling, a 18 years-old student, in my first year at [Epita](http://epita.fr),
-and living in Villejuif, near Paris, France.
+Je m'appelle Clément Hertling, je suis né en 1995, et je suis étudiant en DUT a
+[Paris 12 (UPEC)](http://www.u-pec.fr). Je vis actuellement a Villejuif, près de
+Paris, en France.
 
-I like to mess around with computers, particularly with operating systems, and
-generally speaking with UNIX based systems (GNU/Linux, \*BSD, OS X, ...).
-I also like working with computer hardware, be it embedded devices or servers, 
-and on a smaller scale I'm interested in electronics too. I regularly try to 
-learn some programming, but it hasn't been very convincing for now. That will
-with, well, going to school and learning this stuff.
-I generally enjoy learning about tech, though.
+Je suis enthousiaste dès qu'il s'agit de jouer avec des ordinateurs, que ce soit
+avec des systèmes d'exploitations (et particulièrement les UNIX-like : Linux,
+\*BSD, OS X, Plan 9, ...), mais aussi avec le réseau et son administration
+(principalement couches 2 et 3, routage et commutation).  
+Je suis aussi intéressé par le hardware, que ce soit de l'embarqué ou bien des
+serveurs, et dans une moindre mesure par l'électronique. Je fais un peu (et de
+plus en plus) de programmation, principalement en python et en Rust. Je
+m'intéresse beaucoup a la théorie de la programmation, toutefois, et notamment
+de plus en plus a la programmation fonctionnelle et a la théorie des types.  
+On peut probablement en conclure que j'aime travailler avec la technologie.
+J'aime aussi écrire a propos de ce que je fais, et de mes pensées sur la
+technologie en général, et c'est ce que je fais (parfois) ici.
 
-I like to write about what I do and my thoughts about technology, and I
-(sometimes) do it here, mostly in French though.
-You can also find me on some social networks, as shown in the right bar, or in 
-real life at LeLoop (sometimes). If you want to meet me directly, send me an 
+Vous pouvez aussi me lire sur Twitter. Les liens sont dans la
+barre a droite. Si vous voulez me rencontrer en vrai, vous pouvez m'envoyer un
 email.
 
-Thanks for visiting!
+
+Wxcafé, that's me.
+------------------
+
+I'm Clément Hertling, I was born in 1995, and I'm a student in a technical 
+formation at [Paris 12 (UPEC)](http://www.u-pec.fr). I live in Villejuif, near
+Paris, France.
+
+I'm pretty enthusiastic when it's about playing with computers, whether that
+means operating systems (and more specifically UNIX-like OSes : Linux, \*BSD,
+OS X, Plan 9, ...), or networks and their administration (generally speaking,
+layer 2 and 3, routing and switching).  
+I'm also interested in hardware, be it embedded systems or servers, and to a
+smaller extent in electronics. I also do a bit of (but more and more)
+programming, mostly in python and Rust. I'm very interested in CS theory,
+though, and very much so in functionnal programming and type theory.  
+You could conclude that I like tech, and working in this domain. I also enjoy
+writing about what I do and about my ideas on tech in general, and that's what I
+(sometimes) do here.
+
+You can also read my thoughts on twitter. The links are in the sidebar. If you
+want to meet me, you can send me an email.

@@ -53,6 +53,11 @@ section {
   display: block;
 }
 
+.summary {
+	font-family: Arial;
+	font-size: 16px;
+}
+
 audio,
 canvas,
 video {
@@ -972,12 +977,16 @@ address {
 code,
 pre {
   padding: 0 3px 2px;
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-family: Monaco, Liberation Mono, Menlo, Consolas, "Courier New", monospace;
   font-size: 12px;
   color: #333333;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
           border-radius: 3px;
+}
+
+.article > h1 {
+	font-family : Oswald, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 code {
@@ -1012,7 +1021,7 @@ pre.prettyprint {
 
 pre code {
   padding: 0;
-  color: inherit;
+  color: #f8f8f2;
   white-space: pre;
   white-space: pre-wrap;
   background-color: transparent;

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wxcafé</title><link href="//wxcafe.net/" rel="alternate"></link><link href="//wxcafe.net/feeds/feed.note.xml" rel="self"></link><id>//wxcafe.net/</id><updated>2015-08-22T02:43:00+02:00</updated><entry><title>les NUCs et le HDMI-CEC</title><link href="//wxcafe.net/posts/nuc-hdmi-cec/" rel="alternate"></link><updated>2015-08-22T02:43:00+02:00</updated><author><name>Wxcafe</name></author><id>tag:wxcafe.net,2015-08-22:posts/nuc-hdmi-cec/</id><summary type="html">&lt;p&gt;J&amp;rsquo;ai récemment récupéré une télé. Ce post ne se centrant pas sur cette télé,
+passons rapidement sur ce qui y est lié : ne souhaitant pas &amp;ldquo;profiter&amp;rdquo; du
+paysage audiovisuel français (ou PAF), et ayant nombre de films et séries acquis
+tout a fait légalement (hmm hmm) stockés sur mon serveur local, je souhaitais
+brancher sur ma télévision un système me permettant de regarder ces films et
+séries, et possiblement quelques sources de vidéos en ligne (Youtube, Netflix,
+etc&amp;hellip;) simplement.&lt;/p&gt;
+&lt;p&gt;Ayant un &lt;a href="https://www.raspberrypi.org/"&gt;Raspberry Pi 1&lt;/a&gt; qui trainait, j&amp;rsquo;ai
+décidé d&amp;rsquo;installer &lt;a href="http://openelec.tv/"&gt;OpenELEC&lt;/a&gt; dessus et de voir ce que ça
+donnait. Le résultat n&amp;rsquo;étant pas satisfaisant (a cause des difficultés du RPi
+a faire fonctionner tout ça), j&amp;rsquo;ai décidé d&amp;rsquo;upgrader le système.&lt;/p&gt;
+&lt;p&gt;J&amp;rsquo;ai donc acquis un &lt;a href="http://www.amazon.fr/gp/product/B00GPJ83EU"&gt;NUC D34010WYK&lt;/a&gt;
+(attention, les nouveaux modèles ne fonctionnent pas pour ce qui suit), un 
+&lt;a href="http://www.amazon.fr/dp/B00WU5F8MS/"&gt;adaptateur HDMI-CEC&lt;/a&gt; pour celui-ci, et un
+&lt;a href="http://www.amazon.fr/gp/product/B00INTR4ZE"&gt;SSD mSATA&lt;/a&gt;, en me disant que je
+pourrais sans trop de problème faire tourner &lt;a href="http://kodi.tv/"&gt;Kodi&lt;/a&gt; sur un
+debian, avec en plus Steam pour faire du streaming depuis mon desktop. L&amp;rsquo;autre
+avantage de tourner sur du Intel, c&amp;rsquo;est de pouvoir mater Netflix (puisque le
+plugin kodi approprié utilise chrome, et ne fonctionne (a ma connaissance) que
+sur x86).&lt;/p&gt;
+&lt;p&gt;J&amp;rsquo;ai donc reçu après un certain temps le matériel sus cité, que j&amp;rsquo;ai avidement
+monté, avant de me rendre compte que le manuel de l&amp;rsquo;adaptateur Pulse-Eight était
+[PDF]&lt;a href="https://www.pulse-eight.com/Download/Get/30"&gt;assez médiocre&lt;/a&gt;. J&amp;rsquo;ai donc
+cherché plusieurs heures, avant de trouver [DE]&lt;a href="http://www.technikaffe.de/anleitung-293-pulse_eight_intel_nuc_hdmi_cec_adapter_im_test"&gt;ce 
+post&lt;/a&gt;
+expliquant comment brancher l&amp;rsquo;adaptateur. Je vais donc résumer ici le processus,
+ce qui devrait rendre la tache a la fois plus simple pour les autres personnes
+cherchant l&amp;rsquo;information, et pour moi si je dois remonter ce système.&lt;/p&gt;
+&lt;p&gt;Pour faire simple, le NUC présente trois headers séparés : un dual-USB, un dit
+&amp;ldquo;Front Panel&amp;rdquo;, et un appelé &amp;ldquo;Custom Solution Header&amp;rdquo;. Les trois sont utilisés
+ici. La première chose a faire est de brancher les fiches grises et rouges sur
+le Custom Solution Header: le branchement doit être fait ainsi :&lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;Custom Solution
+  ┌─┬─┬─┬─┬─┐
+  │g│ │·│r│·│
+  ├─┼─┼─┼─┼─┤
+  │·│·│·│·│·│
+  └─┴─┴─┴─┴─┘
+
+  g ➔ fiche grise
+  r ➔ fiche rouge
+  · ➔ pin inutilisé
+    ➔ espace vide (sans pin)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Une fois cela fait, il faut brancher le Front Panel. Heureusement, c&amp;rsquo;est plus
+facile, puisqu&amp;rsquo;il n&amp;rsquo;y a qu&amp;rsquo;une seule fiche a brancher ici : la orange.&lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;  Front Panel
+  ┌─┬─┬─┬─┬─┐
+  │·│·│·│·│·│
+  ├─┼─┼─┼─┼─┤
+  │ │·│o│·│·│
+  └─┴─┴─┴─┴─┘
+
+  o ➔ fiche orange
+  · ➔ pin inutilisé
+    ➔ espace vide (sans pin)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enfin, il faut encore brancher les fiches restantes sur le header dual-USB.
+Étant donné que ce header contient deux fois les pins nécessaires a un
+branchement USB, il est possible de brancher les cables de plusieurs façons. &lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;   Dual-USB
+  ┌─┬─┬─┬─┬─┐
+  │b│B│v│n│·│
+  ├─┼─┼─┼─┼─┤
+  │·│·│·│·│ │
+  └─┴─┴─┴─┴─┘
+
+  b ➔ fiche bleue
+  B ➔ fiche Blanche
+  v ➔ fiche verte
+  n ➔ fiche noire
+  · ➔ pin inutilisé
+    ➔ espace vide (sans pin)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Tous les branchements étant effectués, il faut maintenant remonter la bête
+(attention a ne pas déranger les branchements avec les antennes Wifi, par
+exemple), la brancher, et vérifier que tout démarre bien. Il faut aussi changer
+un paramètre dans le BIOS intel : dans Power➔Secondary Power Settings, il faut
+que &amp;ldquo;Deep S4/S5&amp;rdquo; soit &lt;em&gt;dés&lt;/em&gt;activé. Ceci permettant a la connection HDMI-CEC de
+démarrer et le NUC.&lt;/p&gt;
+&lt;p&gt;Ne reste plus ensuite qu&amp;rsquo;a installer un système digne de ce nom dessus!&lt;/p&gt;</summary></entry><entry><title>SSL - STARTTLS</title><link href="//wxcafe.net/posts/ssl-starttls/" rel="alternate"></link><updated>2015-05-16T02:00:00+02:00</updated><author><name>Wxcafe</name></author><id>tag:wxcafe.net,2015-05-16:posts/ssl-starttls/</id><summary type="html">&lt;p&gt;Le chiffrement SSL pour les services en ligne est un problème relativement
+récent, par rapport a l&amp;rsquo;histoire d&amp;rsquo;Internet. Sa mise en place pose 
+problème : les protocoles existants ne s&amp;rsquo;accommodent qu&amp;rsquo;assez mal de recevoir
+soudainement un flot de données chiffrées, mais développer de nouveaux
+protocoles est complexe et n&amp;rsquo;apporte rien d&amp;rsquo;intéressant. Pour palier a ce
+problème, deux solutions sont apparues.&lt;/p&gt;
+&lt;p&gt;Le première consiste à faire écouter les services sur un
+autre port, dans un tunnel SSL. De cette façon, le service existant écoute
+normalement, mais il ne répond pas directement aux requêtes. A la place, un
+tunnel SSL est mis en place, et les requêtes et les réponses passent dans le 
+tunnel (ou elles apparaissent donc chiffrées pour l&amp;rsquo;extérieur). Cela permet de
+proposer un service chiffré en modifiant de façon minimale le programme, au prix
+de devoir aussi changer tous les clients, et de devoir les orienter sur un autre
+port.&lt;/p&gt;
+&lt;p&gt;L&amp;rsquo;autre approche qui a été utilisée est une approche d&amp;rsquo;&lt;em&gt;upgrade&lt;/em&gt;. La
+communication commence en mode non chiffré, puis le client demande l&amp;rsquo;upgrade de
+la connexion vers le mode chiffré s&amp;rsquo;il le supporte, les deux machines
+machines font un &lt;em&gt;handshake&lt;/em&gt; SSL et la communication continue a travers le
+tunnel SSL. Le service peut continuer a écouter sur son port habituel, et seuls
+les clients capables de passer en SSL le feront, ce qui permet de faire la &amp;ldquo;mise
+a jour&amp;rdquo; en douceur.&lt;/p&gt;
+&lt;p&gt;Il est souvent demandé quelle est la meilleure méthode pour mettre en place un
+service &amp;ndash; laisser un port pour le SSL et un pour le trafic non chiffré, ou bien
+un seul, avec &lt;code&gt;STARTTLS&lt;/code&gt;, qui &lt;em&gt;upgrade&lt;/em&gt; les connexions si nécessaire.&lt;br /&gt;
+La réponse est que &lt;code&gt;STARTTLS&lt;/code&gt; est plus interessant, pour plusieurs raisons. Tout
+d&amp;rsquo;abord, il permet de n&amp;rsquo;utiliser qu&amp;rsquo;un seul port : ça permet de simplifier la
+configuration du firewall. En plus de ça, il permet aux clients &amp;ldquo;anciens&amp;rdquo; (ceux
+qui ne supportent pas SSL, donc ceux qui devraient être changés) de toujours se
+connecter, même si cela signifie que leurs informations seront transmises en
+clair. Surtout, il permet d&amp;rsquo;éviter aux utilisateurs d&amp;rsquo;avoir a configurer leurs
+clients. Si le client supporte le chiffrement, il l&amp;rsquo;activera de lui même s&amp;rsquo;il
+voit qu&amp;rsquo;il est disponible.&lt;br /&gt;
+Bref, mettez en place du &lt;code&gt;STARTTLS&lt;/code&gt;, et pas du SSL. C&amp;rsquo;est mieux pour la sécurité
+de tout le monde.&lt;/p&gt;</summary></entry><entry><title>Docker et les ebooks sur Twitter</title><link href="//wxcafe.net/posts/docker-et-les-ebooks-sur-twitter/" rel="alternate"></link><updated>2015-02-28T14:11:00+01:00</updated><author><name>Wxcafe</name></author><id>tag:wxcafe.net,2015-02-28:posts/docker-et-les-ebooks-sur-twitter/</id><summary type="html">&lt;p&gt;Vous avez peut être déjà entendu parler de &lt;a href="https://www.docker.com/"&gt;Docker&lt;/a&gt;. Si
+ce n&amp;rsquo;est pas le cas, voila les bases : Docker est un système de containers. Les
+containers sont une forme particulière de virtualisation, ou le kernel n&amp;rsquo;est pas
+virtualisé, mais ou les processus du système hôte sont séparés de ceux des
+systèmes invités. Cela est possible depuis longtemps sous FreeBSD avec les &lt;a href="https://www.freebsd.org/doc/en/books/handbook/jails.html"&gt;Jails&lt;/a&gt;,
+mais n&amp;rsquo;est devenu possible sous linux que récemment grâce aux &lt;a href="https://www.kernel.org/doc/Documentation/cgroups/cgroups.txt"&gt;cgroups&lt;/a&gt;,
+qui permettent justement de séparer des groupes de processus. Le principe de
+Docker est donc d&amp;rsquo;avoir une machine hôte sur laquelle s&amp;rsquo;exécutent plusieurs
+conteneurs Dockers, chacun séparé des autres et de l&amp;rsquo;hôte, mais utilisant tous
+le même kernel. Cela pose quelques questions en terme de sécurités, puisque la
+séparation est bien plus fine qu&amp;rsquo;avec de la virtualisation classique. En effet,
+ici, en trouvant un exploit kernel, un attaquant aurait potentiellement la
+capacité de remonter jusqu&amp;rsquo;à l&amp;rsquo;hôte, puisqu&amp;rsquo;il n&amp;rsquo;est pas vraiment séparé des
+invités. &lt;/p&gt;
+&lt;p&gt;Quoi qu&amp;rsquo;il en soit, Docker permet donc de virtualiser a moindre coût des
+systèmes GNU/Linux. &amp;ldquo;Mais pourquoi utiliser Docker, dans ce cas&amp;rdquo;, vous
+demandez-vous peut être, &amp;ldquo;puisque Xen peut faire la même chose, et plus
+(notamment, Xen est capable de virtualiser autre chose que GNU/Linux)?&amp;rdquo;. Et bien
+c&amp;rsquo;est très simple : Docker apporte la simplicité de déploiement d&amp;rsquo;applications.
+Les conteneurs Dockers peuvent être décrit en un fichier, nommé Dockerfile, qui
+permet de répliquer un conteneur en quelques minutes sur un autre hôte, en une
+commande. Le &lt;a href="https://hub.docker.com"&gt;Docker Hub&lt;/a&gt; permet aussi de récupérer
+rapidement et facilement un grand nombre d&amp;rsquo;images déjà configurées. &lt;/p&gt;
+&lt;p&gt;Maintenant que nous avons expliqué rapidement ce qu&amp;rsquo;était Docker, voyons le
+rapport avec les ebooks et Twitter.&lt;/p&gt;
+&lt;p&gt;Les comptes dits &amp;ldquo;ebooks&amp;rdquo; (le nom vient a l&amp;rsquo;origine de &lt;a href="https://twitter.com/horse_ebooks"&gt;horse_ebooks&lt;/a&gt;,
+voir &lt;a href="https://en.wikipedia.org/wiki/Horse_ebooks"&gt;ici&lt;/a&gt; pourquoi) sont des bots
+twitter utilisant des &lt;a href="https://en.wikipedia.org/wiki/Markov_chain"&gt;Chaines de Markov&lt;/a&gt;,
+avec les tweets d&amp;rsquo;un utilisateur &amp;ldquo;source&amp;rdquo; comme corpus, pour produire des tweets
+ressemblant a ceux de l&amp;rsquo;utilisateur source. Nous allons voir maintenant comment
+en installer un.&lt;/p&gt;
+&lt;p&gt;C&amp;rsquo;est, comme disent certaines personnes, &amp;ldquo;fun&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Il existe de nombreuses librairies écrites pour créer ce genre de bots,
+cependant dans ce cas nous nous concentrerons sur
+&lt;a href="https://github.com/mispy/twitter_ebooks"&gt;celle-ci&lt;/a&gt;, qui est une lib ruby créée
+par &lt;a href="https://twitter.com/m1sp"&gt;@m1sp&lt;/a&gt;, qui gère pour nous a la fois l&amp;rsquo;API
+twitter et la génération des messages.&lt;/p&gt;
+&lt;p&gt;Cependant, cela n&amp;rsquo;explique toujours pas le lien avec Docker. Ce lien est très
+simple : nous utilisons un container pour faire tourner les bots. Depuis la
+version 3, la gem twitter_ebooks permet de faire tourner plusieurs bots dans une
+seule instance. Cependant, il est toujours plus sûr d&amp;rsquo;isoler les bots, et les
+containers dockers permettent de les déployer sur n&amp;rsquo;importe quelle machine
+(celleux qui ont déjà tenté de mettre en place une application basée sur ruby
+sauront le problème que cela pose habituellement). Pour ce faire, j&amp;rsquo;ai créé &lt;a href="https://github.com/wxcafe/ebooks_example"&gt;un
+repo github&lt;/a&gt; qui contient toutes les
+pièces nécessaires pour mettre cela en place : le bot en lui même, les deux 
+Dockerfiles, etc.&lt;/p&gt;
+&lt;p&gt;Le fonctionnement du bot est
+simple : après avoir installé la gem twitter_ebooks, vous archivez le corpus de
+l&amp;rsquo;utilisateur source avec &lt;code&gt;ebooks archive &amp;lt;username&amp;gt; &amp;lt;filename&amp;gt;&lt;/code&gt; (c&amp;rsquo;est du json)
+, puis vous convertissez le json en fichier utilisable par le bot : &lt;code&gt;ebooks
+consume &amp;lt;filename&amp;gt;&lt;/code&gt;. Cela fait, démarrer le bot revient a lancer le container :
+&lt;code&gt;docker run -d &amp;lt;container name&amp;gt;&lt;/code&gt; Pour plus d&amp;rsquo;informations, allez voir &lt;a href="https://docs.docker.com/articles/basics/"&gt;la
+documentation Docker&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bien entendu, dans l&amp;rsquo;idéal il faudrait mettre a jour les corpus de chaque
+utilisateur régulièrement. Cela est très simple a mettre en place avec un simple
+script cron : &lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;00 00 * * *    /usr/local/bin/ebooks archive username /usr/local/ebooks/main/corpus/username.json &amp;gt;&amp;gt; /var/log/ebooks/update.log 2&amp;gt;&amp;amp;1
+00 05 * * *    cd /usr/local/ebooks/main/ &amp;amp;&amp;amp; /usr/local/bin/ebooks consume corpus/username.json &amp;gt;&amp;gt; /var/log/ebooks/update.log 2&amp;gt;&amp;amp;1
+00 10 * * *    docker rm -f bots &amp;gt;/dev/null 2&amp;gt;&amp;amp;1
+00 15 * * *    docker rmi bots  &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
+00 20 * * *    cd /usr/local/ebooks/main/ &amp;amp;&amp;amp; docker build --rm -t bots . &amp;gt;&amp;gt; /var/log/ebooks/build.log 2&amp;gt;&amp;amp;1
+00 25 * * *    docker run -d --name bots bots &amp;gt;&amp;gt; /var/log/ebooks/run.log 2&amp;gt;&amp;amp;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Les 5 minutes entre chaque commande sont laissées pour empécher que deux
+commandes ne s&amp;rsquo;executent en même temps.&lt;/p&gt;
+&lt;p&gt;Et voila, vous avez un container Docker qui fait tourner une application en ruby
+toute sale, et votre système hôte reste propre. Bien sûr, ce n&amp;rsquo;est qu&amp;rsquo;un exemple
+des possibilités de Docker : par exemple, on peut aussi faire tourner &lt;a href="https://blog.jessfraz.com/posts/docker-containers-on-the-desktop.html"&gt;des
+applications &amp;ldquo;usuelles&amp;rdquo;
+dedans&lt;/a&gt;,
+puisque l&amp;rsquo;overhead de Docker est minimal, et beaucoup d&amp;rsquo;autres applications
+existent.&lt;/p&gt;</summary></entry><entry><title>SSL ou la sécurité sur l'internet</title><link href="//wxcafe.net/posts/SSL-ou-la-securite-sur-internet/" rel="alternate"></link><updated>2014-05-30T08:25:00+02:00</updated><author><name>Wxcafe</name></author><id>tag:wxcafe.net,2014-05-30:posts/SSL-ou-la-securite-sur-internet/</id><summary type="html">&lt;p&gt;&lt;em&gt;Disclaimer: Ce billet est écrit après le visionnage de la conférence de Moxie 
+Marlinspike suivante: &lt;a href="https://www.youtube.com/watch?v=ibF36Yyeehw"&gt;More Tricks for Defeating SSL&lt;/a&gt;,
+présentée a la DefCon 17 (en 2011), et la lecture du billet suivant: 
+&lt;a href="http://www.thoughtcrime.org/blog/lavabit-critique/"&gt;A Critique of Lavabit&lt;/a&gt;, 
+ce qui peut avoir l&amp;rsquo;effet de rendre légèrement parano. Si vous considérez que 
+c&amp;rsquo;est le cas ici, veuillez ne pas tenir compte de ce billet (et vous pouvez dès
+a présent dire coucou aux différentes personnes qui écoutent votre connection)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Si vous venez ici souvent (vous devriez), et que vous utilisez SSL pour vous
+connecter a ce site (vous devriez, vraiment, dans ce cas), vous avez peut être
+remarqué quelque chose récemment : il se trouve que le certificat qui permet de
+desservir ce site a changé.&lt;/p&gt;
+&lt;p&gt;Cela fait suite aux évènements évoqués dans le &lt;em&gt;Disclaimer&lt;/em&gt;, mais aussi a des
+doigts sortis d&amp;rsquo;un endroit particulier du corps de l&amp;rsquo;admin/auteur de ce &amp;ldquo;blog&amp;rdquo;,
+qui a pris &lt;strong&gt;enfin&lt;/strong&gt; les 5 minutes nécessaires a la compréhension superficielle
+du fonctionnement de SSL, et les 10 nécessaires a la mise en place d&amp;rsquo;un système
+fonctionnel utilisant cette compréhension récemment acquise.&lt;/p&gt;
+&lt;p&gt;Bref, le certificat a changé. Mais de quelle façon, vous demandez vous peut
+être (ou pas, mais bon, je vais expliquer de toute façon). Et bien c&amp;rsquo;est très
+simple : il existait auparavant un certificat pour &lt;code&gt;wxcafe.net&lt;/code&gt;, un pour
+&lt;code&gt;paste.wxcafe.net&lt;/code&gt;, un pour &lt;code&gt;mail.wxcafe.net&lt;/code&gt;, etc&amp;hellip; Bref, un certificat
+différent pour chaque sous-domaine.&lt;/p&gt;
+&lt;p&gt;Il s&amp;rsquo;avère que c&amp;rsquo;est a la fois très peu pratique a utiliser (les utilisateurs
+doivent ajouter chaque certificat a leur navigateur séparément, chaque 
+changement de sous-domaine conduit a un message d&amp;rsquo;erreur, etc) et pas plus
+sécurisé que d&amp;rsquo;avoir un seul certificat wildcard. J&amp;rsquo;ai donc généré un certificat
+pour &lt;code&gt;*.wxcafe.net&lt;/code&gt; hier, et il sera dorénavant utilisé pour tous les
+sous-domaine de &lt;code&gt;wxcafe.net&lt;/code&gt;; et un certificat pour &lt;code&gt;wxcafe.net&lt;/code&gt;, qui ne matche
+pas &lt;code&gt;*.wxcafe.net&lt;/code&gt;, et qui sera donc utilisé&amp;hellip; bah pour &lt;code&gt;wxcafe.net&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Il serait préférable de faire des redirections automatiques des adresses http
+vers les adresses https, cependant, étant donné que le certificat est
+self-signed, il me semble préférable que l&amp;rsquo;arrivée sur le site ne commence pas
+par une page firefox disant &amp;ldquo;Something&amp;rsquo;s Wrong!&amp;rdquo;, et ces redirections ne seront
+donc pas mises en place.&lt;/p&gt;
+&lt;p&gt;De plus, après la lecture de l&amp;rsquo;article de blog sur Lavabit dont le lien est plus
+haut, il semble intéressant (et assez important) de faire en sorte que le
+serveur utilise en priorité (et si possible, uniquement) des ciphers supportant
+PFS, soit EDH et EECDH (Ephemeral Diffie-Helmann et la version Elliptic Curves 
+de ce même algorithme). Cela permet de faire en sorte que toutes les 
+communications avec ce serveur soient future-proof, c&amp;rsquo;est a dire que, même si 
+quelqu&amp;rsquo;un récupérait la clé privée, elle ne serait pas utile pour déchiffrer les 
+communications passées.&lt;/p&gt;
+&lt;p&gt;Bon, maintenant que les explications basiques sont faites, voyons
+l&amp;rsquo;implémentation : &lt;br /&gt;
+Pour générer la clé, tout d&amp;rsquo;abord, il convient d&amp;rsquo;utiliser les commandes
+suivantes:  &lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;sudo openssl genrsa -out example.key 4096
+# nous utilisons ici une clé de &lt;span style="color: #ae81ff"&gt;4096&lt;/span&gt; bits, la taille est laissée a votre appréciation
+sudo openssl req -new -key example.key -out example.csr
+# OpenSSL va ici vous demander de nombreuses informations, &lt;span style="color: #e6db74"&gt;&amp;quot;Common Name&amp;quot;&lt;/span&gt; devant contenir le FQDN
+sudo openssl X509 -req -days 1095 -in example.csr -signkey example.key -out example.crt
+# enfin, nous générons la clé, d&lt;span style="color: #960050; background-color: #1e0010"&gt;&amp;#39;&lt;/span&gt;une durée de vie de &lt;span style="color: #ae81ff"&gt;3&lt;/span&gt; ans
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Bien entendu, si vous voulez utiliser une clé wildcard, il vous faut préciser
+&lt;code&gt;*.example.com&lt;/code&gt; comme common name.
+Une fois la clé générée, il faut dire aux différents services de l&amp;rsquo;utiliser, et
+de n&amp;rsquo;utiliser que des ciphers PFS. La méthode dépend donc du service.
+Je vais lister ici les methodes pour quelques services que j&amp;rsquo;utilise :&lt;/p&gt;
+&lt;h3&gt;apache :&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #75715e"&gt;# /etc/apache2/mods_enabled/ssl.conf&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;SSLProtocol&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;all&lt;/span&gt; -SSLv2 -SSLv3
+&lt;span style="color: #f8f8f2"&gt;SSLHonorCipherOrder&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;on&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;SSLCipherSuite&lt;/span&gt; &lt;span style="color: #960050; background-color: #1e0010"&gt;&amp;quot;&lt;/span&gt;EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 \
+  EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 \
+  EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS&lt;span style="color: #960050; background-color: #1e0010"&gt;&amp;quot;&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# /etc/apache2/sites-enabled/default-ssl&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;SSLEngine&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;on&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;SSLCertificateFile&lt;/span&gt; &lt;span style="color: #e6db74"&gt;/etc/certs/example.com.crt&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;SSLCertificateKeyFile&lt;/span&gt; &lt;span style="color: #e6db74"&gt;/etc/certs/example.com.key&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;nginx :&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #75715e"&gt;# /etc/nginx/nginx.conf &lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #66d9ef"&gt;ssl_protocols&lt;/span&gt; &lt;span style="color: #e6db74"&gt;TLSv1&lt;/span&gt; &lt;span style="color: #e6db74"&gt;TLSv1.1&lt;/span&gt; &lt;span style="color: #e6db74"&gt;TLSv1.2&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+&lt;span style="color: #66d9ef"&gt;ssl_prefer_server_ciphers&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;on&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+&lt;span style="color: #66d9ef"&gt;ssl_ciphers&lt;/span&gt; &lt;span style="color: #e6db74"&gt;&amp;quot;EECDH+ECDSA+AESGCM&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EECDH+aRSA+AESGCM&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EECDH+ECDSA+SHA384&lt;/span&gt; &lt;span style="color: #e6db74"&gt;\&lt;/span&gt;
+  &lt;span style="color: #e6db74"&gt;EECDH+ECDSA+SHA256&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EECDH+aRSA+SHA384&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EECDH+aRSA+SHA256&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EECDH+aRSA+RC4&lt;/span&gt; &lt;span style="color: #e6db74"&gt;\&lt;/span&gt;
+  &lt;span style="color: #e6db74"&gt;EECDH&lt;/span&gt; &lt;span style="color: #e6db74"&gt;EDH+aRSA&lt;/span&gt; &lt;span style="color: #e6db74"&gt;RC4&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!aNULL&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!eNULL&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!LOW&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!3DES&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!MD5&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!EXP&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!PSK&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!SRP&lt;/span&gt; &lt;span style="color: #e6db74"&gt;!DSS&amp;quot;&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# /etc/nginx/sites-enabled/default-ssl&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #66d9ef"&gt;ssl&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;on&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+&lt;span style="color: #66d9ef"&gt;ssl_certificate&lt;/span&gt; &lt;span style="color: #e6db74"&gt;/etc/certs/example.com.crt&lt;/span&gt;
+&lt;span style="color: #e6db74"&gt;ssl_certificate_key&lt;/span&gt; &lt;span style="color: #e6db74"&gt;/etc/certs/example.com.key&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;prosody (jabber) :&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #f92672"&gt;#&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;tout&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;d&lt;/span&gt;&lt;span style="color: #e6db74"&gt;&amp;#39;abord, lancez la commande suivante :&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;sudo&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;openssl&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;dhparam&lt;/span&gt; &lt;span style="color: #f92672"&gt;-&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;out&lt;/span&gt; &lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;etc&lt;/span&gt;&lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;prosody&lt;/span&gt;&lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;certs&lt;/span&gt;&lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;dh&lt;/span&gt;&lt;span style="color: #f92672"&gt;-&lt;/span&gt;&lt;span style="color: #ae81ff"&gt;2048.&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;pem&lt;/span&gt; &lt;span style="color: #ae81ff"&gt;2048&lt;/span&gt;
+&lt;span style="color: #f92672"&gt;#&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;ensuite,&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;pour&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;chaque&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;VirtualHost&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;dans&lt;/span&gt; &lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;etc&lt;/span&gt;&lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;prosody&lt;/span&gt;&lt;span style="color: #f92672"&gt;/&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;prosody.conf&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;:&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;ssl&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;{&lt;/span&gt;
+  &lt;span style="color: #f8f8f2"&gt;dhparam&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &lt;span style="color: #e6db74"&gt;&amp;quot;/etc/prosody/certs/dh-2048.pem&amp;quot;&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+  &lt;span style="color: #f8f8f2"&gt;key&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &lt;span style="color: #e6db74"&gt;&amp;quot;/etc/certs/example.com.key&amp;quot;&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+  &lt;span style="color: #f8f8f2"&gt;certificate&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &lt;span style="color: #e6db74"&gt;&amp;quot;/etc/certs/example.com.crt&amp;quot;&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;;&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;}&lt;/span&gt;
+&lt;span style="color: #f92672"&gt;#&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;la&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;cipher&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;suite&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;de&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;prosody&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;utilise&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;par&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;d&lt;/span&gt;&lt;span style="color: #960050; background-color: #1e0010"&gt;é&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;faut&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;EDH&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;et&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;EECDH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;postfix (email) :&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #75715e"&gt;# /etc/postfix/main.cf&lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_cert_file&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; /etc/certs/example.com.crt
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_key_file&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; /etc/certs/example.com.key
+&lt;span style="color: #f8f8f2"&gt;tls_preempt_cipherlist&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; yes
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_eecdh_grade&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; strong
+&lt;span style="color: #f8f8f2"&gt;smtdp_tls_mandatory_ciphers&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; high
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_mandatory_exclude_ciphers&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; aNULL, eNULL, MD5, LOW, 3DES, EXP, PSK, SRP, DSS
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_security_level&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; encrypt
+&lt;span style="color: #f8f8f2"&gt;smtpd_tls_mandatory_protocols&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; !SSLv2, !SSLv3
+&lt;span style="color: #f8f8f2"&gt;smtpd_use_tls&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; yes
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;dovecot (imap) :&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #75715e"&gt;# /etc/dovecot/dovecot.conf &lt;/span&gt;
+&lt;span style="color: #75715e"&gt;# [...]&lt;/span&gt;
+&lt;span style="color: #f8f8f2"&gt;ssl_cert&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &amp;lt;/etc/certs/example.com.crt
+&lt;span style="color: #f8f8f2"&gt;ssl_key&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; &amp;lt;/etc/certs/example.com.key
+&lt;span style="color: #f8f8f2"&gt;ssl_cipher_list&lt;/span&gt; &lt;span style="color: #f92672"&gt;=&lt;/span&gt; HIGH+kEDH:HIGH+kEECDH:HIGH:!PSK:!SRP:!3DES:!aNULL
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Voila. Pour d&amp;rsquo;autres protocoles/services, je vous invite a RTFM^W vous reporter
+au manuel approprié.&lt;/p&gt;
+&lt;p&gt;Cela étant dit, je conseille a tout le monde d&amp;rsquo;aller voir la conférence dans le
+disclaimer, et tant qu&amp;rsquo;a faire la conférence du même hacker &lt;a href="https://www.youtube.com/watch?v=8N4sb-SEpcg"&gt;SSL and the future
+of Authenticity&lt;/a&gt; qui parle de son
+implémentation d&amp;rsquo;une technologie &amp;ldquo;remplaçant&amp;rdquo; le système de CAs qui existe
+actuellement.&lt;/p&gt;</summary></entry><entry><title>Redesign du blog, etc</title><link href="//wxcafe.net/posts/redesign-du-blog/" rel="alternate"></link><updated>2013-06-12T19:14:00+02:00</updated><author><name>wxcafe</name></author><id>tag:wxcafe.net,2013-06-12:posts/redesign-du-blog/</id><summary type="html">&lt;p&gt;Comme vous avez pu le remarquer, ce blog a &amp;ldquo;un peu&amp;rdquo; changé récemment.&lt;/p&gt;
+&lt;p&gt;Du coup, expliquons. J&amp;rsquo;ai récemment monté &lt;a href="http://serverporn.fr"&gt;serverporn&lt;/a&gt;, et ai par la même
+occasion découvert &lt;a href="http://getpelican.com"&gt;pelican&lt;/a&gt;. J&amp;rsquo;ai tout de suite accroché a ce générateur de
+site statique en python, du fait de son efficacité, de sa facilité d&amp;rsquo;utilisation
+et de sa grande customisation. En gros, pelican est un logiciel qui prend des
+fichiers markdown ou reStructuredText, les passe a la moulinette d&amp;rsquo;un &amp;ldquo;thème&amp;rdquo;
+constitué de templates pour les fichiers html et l&amp;rsquo;organisation du projet et
+d&amp;rsquo;une partie &amp;ldquo;statique&amp;rdquo; contenant le css, et les autres fichiers nécessaires au
+projet, et en fait des pages html.  &lt;/p&gt;
+&lt;p&gt;Globalement, un thème est constitué ainsi :&lt;/p&gt;
+&lt;div class="codehilite" style="background: #272822"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #f8f8f2"&gt;th&lt;/span&gt;&lt;span style="color: #960050; background-color: #1e0010"&gt;è&lt;/span&gt;&lt;span style="color: #f8f8f2"&gt;me&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;├──&lt;/span&gt; &lt;span style="color: #66d9ef"&gt;static&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;   &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;css&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;   &lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;  &lt;span style="color: #960050; background-color: #1e0010"&gt;└─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;[css&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;files]&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;   &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;img&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;   &lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;  &lt;span style="color: #960050; background-color: #1e0010"&gt;└─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;[image&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;files]&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;   &lt;span style="color: #960050; background-color: #1e0010"&gt;└─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;js&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;│&lt;/span&gt;      &lt;span style="color: #960050; background-color: #1e0010"&gt;└─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;[javascript&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;files]&lt;/span&gt;
+&lt;span style="color: #960050; background-color: #1e0010"&gt;└──&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;template&lt;/span&gt;
+    &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;base.html&lt;/span&gt;
+    &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;index.html&lt;/span&gt;
+    &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;page.html&lt;/span&gt;
+    &lt;span style="color: #960050; background-color: #1e0010"&gt;├─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;[...]&lt;/span&gt;
+    &lt;span style="color: #960050; background-color: #1e0010"&gt;└─&lt;/span&gt; &lt;span style="color: #f8f8f2"&gt;article.html&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sachant que les fichiers .html sont en réalité des fichiers suivant la syntaxe 
+django, et utilisent des variables particulières telles &lt;code&gt;{{ article.content }}&lt;/code&gt;,
+par exemple. La syntaxe complète est très bien documentée dans la &lt;a href="http://docs.getpelican.com/en/3.2/themes.html#templates-and-variables"&gt;doc&lt;/a&gt; de
+pelican.&lt;/p&gt;
+&lt;p&gt;L&amp;rsquo;un des grands avantages de pelican est aussi la facilité qu&amp;rsquo;il offre quand a
+la mise a jour du blog.&lt;br /&gt;
+En effet, il offre un système de Makefiles permettant, grâce a de nombreuses
+cibles de compilation, de régénérer le site entier, de ne générer que les
+fichiers modifiés depuis la dernière génération, de générer uniquement les
+fichiers n&amp;rsquo;existant pas la dernière fois, etc&amp;hellip;
+La gestion du projet en devient donc très simple, puisque après avoir écrit un
+article, il suffit de faire un &lt;code&gt;make html&lt;/code&gt; pour mettre a jour le blog.&lt;/p&gt;
+&lt;p&gt;De plus, le système de wordpress commençait a ne plus me convenir, du fait du
+manque de customisation, du fait que ça soit du PHP (beurk), etc. La, avec
+pelican, je contrôle bien plus ce qui est mis sur le serveur (puisque c&amp;rsquo;est moi
+qui ait modifié les templates et le css), c&amp;rsquo;est lisible (puisque c&amp;rsquo;est du
+python, par opposition au PHP&amp;hellip;), et c&amp;rsquo;est plus &amp;ldquo;efficace&amp;rdquo;. Le markdown est
+très pratique, je peux utiliser mon éditeur de texte de prédilection pour faire
+les articles, je n&amp;rsquo;ai pas besoin d&amp;rsquo;un accès continu au net, bref, c&amp;rsquo;est plus
+efficace.&lt;/p&gt;
+&lt;p&gt;En ce qui concerne les points négatifs : &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Perte des commentaires: 
+    Je vous propose de vous référer a l&amp;rsquo;article de Gordontesos &lt;a href="http://gordon.re/hacktivisme/la-necessite-des-commentaires.html"&gt;ici&lt;/a&gt; quand a 
+    mon avis sur ce sujet.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Perte du bouton flattr:
+    Il va bientôt être remis, c&amp;rsquo;est juste un manque de temps de ma part, mais vu
+    que toutes les pages passent par les mêmes templates, c&amp;rsquo;est assez facile a
+    faire.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Perte du spam:
+    Pourquoi c&amp;rsquo;est dans les points négatifs, ca?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Temps d&amp;rsquo;adaptation et d&amp;rsquo;appréhension du système:
+    Oui, pendant encore un certain temps, il y aura des glitchs plus ou moins
+    réguliers sur le blog, c&amp;rsquo;est parce que j&amp;rsquo;apprend a me servir de ce système
+    et que j&amp;rsquo;apprend du css et du html. Ca arrive, ca passera, mais dans tous
+    les cas ca me permet d&amp;rsquo;apprendre plein de choses, donc je mets plutôt ca
+    dans la catëgorie positive.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Voila, c&amp;rsquo;est mon retour d&amp;rsquo;expérience sur pelican. A plus. &lt;/p&gt;</summary></entry><entry><title>Update</title><link href="//wxcafe.net/posts/update/" rel="alternate"></link><updated>2013-01-05T18:32:00+01:00</updated><author><name>Wxcafe</name></author><id>tag:wxcafe.net,2013-01-05:posts/update/</id><summary type="html">&lt;p&gt;Juste une petite note pour annoncer le prochain article, consacré a la
+fabrication d&amp;rsquo;une PirateBox basée sur un Raspberry Pi. Voila, a bientôt
+sur le blog!&lt;/p&gt;</summary></entry></feed>

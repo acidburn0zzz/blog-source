@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Le chiffrement de partitions avec dm-crypt et device-mapper</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Le chiffrement de partitions avec dm-crypt et device-mapper">Le chiffrement de partitions avec dm-crypt et device-mapper</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-07-10T03:18:00+02:00">
+		<i class="icon-calendar"></i> Wed 10 July 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Le chiffrement en tant que concept informatique est traditionnellement associé
+au chiffrement de fichiers, c&rsquo;est a dire au fait de passer d&rsquo;un fichier <em>en
+clair</em> a un fichier chiffré dit <em>cyphertext</em>. Cependant, il ne se limite pas a
+ça, et peut aussi servir a garantir l&rsquo;intégrité d&rsquo;un système d&rsquo;exploitation, ou
+bien la confidentialité d&rsquo;un support de stockage, par exemple. Nous allons ici
+voir comment mettre en place un système de ce type sous GNU/Linux. Cet article
+n&rsquo;a pas pour but de vous apprendre a mettre en place un système basé sur une
+procédure de boot sécurisée, mais plutôt d&rsquo;expliquer les concepts qui entrent en
+jeu dans l&rsquo;utilisation du sous-système du noyau Linux <a href="http://en.wikipedia.org/wiki/dm-crypt"><strong>dm_crypt</strong></a> et de
+présenter un rapide tutoriel concernant la création d&rsquo;un support chiffré sur
+lequel garder vos informations confidentielles (par exemple, votre <a href="http://wxcafe.net/posts/11/19/12/la-cryptographie-avec-pgp-et-principalement-gnupg">clé GPG</a>)</p>
+<p>dm-crypt est un sous-système de device-mapper, qui est lui-même un sous-système
+du noyau Linux, et s&rsquo;appuie sur <a href="http://en.wikipedia.org/wiki/Linux_Unified_Key_Setup">LUKS</a>, un standard de chiffrement 
+de disques. Comme son nom l&rsquo;indique, device-mapper est un système qui a pour but
+de <strong>mapper</strong> des <strong>block devices</strong>. Pour être plus clair, le kernel considère
+comme &ldquo;block device&rdquo; tout fichier spécial (en gros, les fichiers disques dans<code>/dev/</code>, les systèmes de fichiers type LVM, les RAID logiciels, et, dans le
+cas qui nous intéresse, les systèmes de fichier chiffrés). Son mode de
+fonctionnement est simple : a partir d&rsquo;un &ldquo;fichier de périphérique&rdquo; (trad.
+Wikipédia), il en &ldquo;crée&rdquo; un nouveau, virtuel, ayant des propriétés différentes. 
+Par exemple, un disque partitionné via LVM apparaîtra comme un seul disque dans
+/dev, et device-mapper est requis pour pouvoir en voir les partitions (qui
+apparaîtront donc dans /dev/mapper)</p>
+<p>Ainsi, dans le cas qui nous intéresse ici, device-mapper prend un système de
+fichier chiffré, crée un périphérique virtuel non chiffré dans /dev/mapper, et
+déchiffre a la volée tous les accès disques a ce périphérique non chiffré en les
+traduisant sur le système de fichier chiffré, le tout de manière tout a fait
+transparente pour les applications utilisant le disque en question. Cela induit
+bien entendu une baisse de performance relativement significative dans le cas
+d&rsquo;un chiffrement du système de fichier root, mais quasiment insignifiante dans
+le cas de chiffrement de partitions de données.</p>
+<p>D&rsquo;ailleurs, certain-e-s se demandent peut-être comment le système peut démarrer
+si le système de fichier root est chiffré. Dans ce cas précis, la procédure de
+boot <strong><em>doit</em></strong> s&rsquo;appuyer sur une image initrd (l&rsquo;initrd est un système de
+fichier minimal qui sert uniquement a initialiser le système. Les kernels de
+base de la plupart des distributions GNU/Linux en utilisent un dans tous les
+cas, pour des raisons de compatibilité) et sur une partition de boot qui elle
+n&rsquo;est pas chiffrée. Ainsi, le bootloader de niveau 2 (grub, syslinux,&hellip;) charge
+en mémoire le kernel depuis la partition de boot, puis ce dernier décompresse et
+charge l&rsquo;initrd en RAM, celui-ci a son tour lance un script permettant de 
+charger les modules nécessaires a la suite du boot (que ce soit pour un boot 
+sans disque root local, ou bien comme ici avec un système chiffré), puis le 
+système de fichier &ldquo;cible&rdquo; est remonté sur la racine, et l&rsquo;initrd est démonté
+est la RAM qu&rsquo;il occupait est libérée, puis la procédure de boot normale reprend
+depuis le système de fichier maintenant monté sur la racine.</p>
+<p>La méthode la plus évidente pour contourner le chiffrement du disque est alors
+de remplacer le fichier compressé initrd dans /boot, qui n&rsquo;est pas chiffrée, par
+un autre modifié, copiant par exemple la phrase de passe permettant de
+déchiffrer la partition cible. Plusieurs méthodes permettent de se prémunir
+contre ce genre d&rsquo;attaques : l&rsquo;une des plus simple est de faire un checksum du
+fichier initrd utilisé et reconnu comme sûr, et de vérifier lors du <em>vrai</em> boot
+que l&rsquo;initrd présente toujours le même checksum. Cela dit, cette méthode a
+l&rsquo;inconvénient d&rsquo;intervenir après les faits, et de nécessiter au moins un accès
+a un fichier initrd reconnu comme sûr.<br />
+Une autre approche consisterait a placer le système de fichier /boot sur un
+périphérique dédié, protégé en écriture de façon matérielle (par exemple, une
+carte SD) ou, de façon encore plus efficace, sur un périphérique chiffré et
+protégé en écriture de façon matérielle. Ainsi, il n&rsquo;est pas possible pour un
+attaquant de modifier ce système de fichier, et l&rsquo;initrd est alors toujours de
+confiance. Cependant, cela a pour conséquence de rendre la mise a jour de
+l&rsquo;initrd et du noyau <em>beaucoup</em> plus difficile qu&rsquo;elle ne le serait sans.</p>
+<p>Pour en revenir aux systèmes de fichiers chiffrés, leur gestion est faite par un
+programme dédié, <code>cryptsetup</code>. Ce dernier était en charge de cryptoloop,
+l&rsquo;ancien sous-système de chiffrement du kernel Linux (déprécié depuis), et est
+maintenant responsable de l&rsquo;utilisation <em>userspace</em> de dm-crypt, qui pour sa
+part est entièrement <em>kernel-space</em>. Cryptsetup permet ainsi le chiffrement, la
+manipulation (montage/démontage/&hellip;) et la gestion de clé des systèmes de fichier
+LUKS. Cryptsetup est cependant conçu pour être utilisé en tant que root, et les
+utilisateurs qui veulent monter de systèmes de fichiers chiffrés devront ainsi
+obligatoirement être capables de le faire en tant que root. </p>
+<p>Voyons comment il faudrait procéder pour créer une image disque chiffrée de 1Go :<br />
+Tout d&rsquo;abord, il nous faut créer le fichier qui contiendra l&rsquo;image. Pour cela,
+dans une situation réelle ou l&rsquo;on cherche a chiffrer un disque, il convient 
+d&rsquo;utiliser /dev/urandom comme source, pour éviter la détection du système de 
+fichier chiffré sur le disque. 
+Ici, par exemple, nous allons faire :  </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">dd bs=1000 count=1000000 if=/dev/urandom of=image.img
+</pre></div>
+
+
+<p>Maintenant que notre image est créée, nous pouvons la chiffrer :  </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo cryptsetup luksFormat image.img
+</pre></div>
+
+
+<p><code>cryptsetup</code> va alors nous demander si nous sommes absolument surs de vouloir
+formater ce disque (nous allons donc valider en tapant YES), puis une
+passphrase. Il convient ici de choisir une passphrase particulièrement sûre,
+puisque toute personne ayant accès a la passphrase aura aussi accès au disque et
+donc a vos secrets.<br />
+Une fois cela fait, nous allons mapper cette image : </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo cryptsetup luksOpen image.img crypto
+</pre></div>
+
+
+<p><code>cryptsetup</code> nous redemande la passphrase, charge pendant quelques secondes,
+puis nous redonne le prompt. Que s&rsquo;est-il passé? En cherchant un peu, nous
+voyons qu&rsquo;il n&rsquo;y a pas de nouveau disque dans /dev. C&rsquo;est tout a fait normal. En
+effet, cryptsetup (et par lui, device-mapper et dm-crypt) ne monte pas les
+systèmes de fichiers chiffrés, il les mappe, et ça n&rsquo;a rien a voir. On remarque
+qu&rsquo;est apparu dans /dev/mapper le fichier crypto. Ce fichier est le disque
+virtuel qui correspond a notre image. Il se comporte comme toute partition, et 
+peut donc être monté, formaté, etc (il ne peut cependant pas être partitionné.
+Il se comporte en effet comme une partition, et non comme un véritable disque.)
+Bon, ceci fait, notre disque virtuel n&rsquo;est pas formaté. Il nous reviens donc de
+le faire, pour pouvoir l&rsquo;utiliser. </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo mkfs.ext4 /dev/mapper/crypto
+</pre></div>
+
+
+<p>Maintenant que notre disque est formaté, il peut être monté : </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo mount /dev/mapper/crypto /mnt
+</pre></div>
+
+
+<p>Et voila, nous avons un système de fichier fonctionnel et chiffré! Si vous
+voulez vérifier, un <code>mount | grep crypto</code> devrait vous donner le résultat
+suivant : </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">/dev/mapper/crypto on /mnt type ext4 (rw,relatime,data=ordered)
+</pre></div>
+
+
+<p>Vous pouvez maintenant commencer a stocker tous vos secrets sur ce fichier, ils
+sont (en fonction de votre passphrase) en sécurité. </p>
+<p>Pour résumer :</p>
+<ul>
+<li>
+<p>Pour monter vos partitions : </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo cryptsetup luksOpen &lt;fichier chiffré&gt; &lt;nom de disque virtuel&gt;
+sudo mount /dev/mapper/&lt;nom de disque virtuel&gt; &lt;emplacement&gt;
+</pre></div>
+
+
+</li>
+<li>
+<p>Pour démonter vos partitions : </p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo umount &lt;emplacement&gt;
+sudo cryptsetup luksClose &lt;nom de disque virtuel&gt;
+</pre></div>
+
+
+</li>
+</ul>
+<p>Pour simplifier la vie de tous, j&rsquo;ai créé deux petits scripts vous permettant de
+créer et de monter/démonter vos images/disques chiffré-e-s en une seule
+commande. Ils se trouvent sur <a href="https://github.com/wxcafe/cryptoscripts">github</a>.  </p>
+<p>Par ailleurs, si vous comptez transferer votre image disque sur un véritable
+disque (ou clé usb, ou autre), il est préférable de créer une partition de
+taille appropriée et de faire un <code>dd if=votre_image of=/dev/votre_partition</code>
+pour ce faire.</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

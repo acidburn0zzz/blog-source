@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>SSL - STARTTLS</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to SSL - STARTTLS">SSL - STARTTLS</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2015-05-16T02:00:00+02:00">
+		<i class="icon-calendar"></i> Sat 16 May 2015
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/note/"><i class="icon-folder-open"></i>Note</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Le chiffrement SSL pour les services en ligne est un problème relativement
+récent, par rapport a l&rsquo;histoire d&rsquo;Internet. Sa mise en place pose 
+problème : les protocoles existants ne s&rsquo;accommodent qu&rsquo;assez mal de recevoir
+soudainement un flot de données chiffrées, mais développer de nouveaux
+protocoles est complexe et n&rsquo;apporte rien d&rsquo;intéressant. Pour palier a ce
+problème, deux solutions sont apparues.</p>
+<p>Le première consiste à faire écouter les services sur un
+autre port, dans un tunnel SSL. De cette façon, le service existant écoute
+normalement, mais il ne répond pas directement aux requêtes. A la place, un
+tunnel SSL est mis en place, et les requêtes et les réponses passent dans le 
+tunnel (ou elles apparaissent donc chiffrées pour l&rsquo;extérieur). Cela permet de
+proposer un service chiffré en modifiant de façon minimale le programme, au prix
+de devoir aussi changer tous les clients, et de devoir les orienter sur un autre
+port.</p>
+<p>L&rsquo;autre approche qui a été utilisée est une approche d&rsquo;<em>upgrade</em>. La
+communication commence en mode non chiffré, puis le client demande l&rsquo;upgrade de
+la connexion vers le mode chiffré s&rsquo;il le supporte, les deux machines
+machines font un <em>handshake</em> SSL et la communication continue a travers le
+tunnel SSL. Le service peut continuer a écouter sur son port habituel, et seuls
+les clients capables de passer en SSL le feront, ce qui permet de faire la &ldquo;mise
+a jour&rdquo; en douceur.</p>
+<p>Il est souvent demandé quelle est la meilleure méthode pour mettre en place un
+service &ndash; laisser un port pour le SSL et un pour le trafic non chiffré, ou bien
+un seul, avec <code>STARTTLS</code>, qui <em>upgrade</em> les connexions si nécessaire.<br />
+La réponse est que <code>STARTTLS</code> est plus interessant, pour plusieurs raisons. Tout
+d&rsquo;abord, il permet de n&rsquo;utiliser qu&rsquo;un seul port : ça permet de simplifier la
+configuration du firewall. En plus de ça, il permet aux clients &ldquo;anciens&rdquo; (ceux
+qui ne supportent pas SSL, donc ceux qui devraient être changés) de toujours se
+connecter, même si cela signifie que leurs informations seront transmises en
+clair. Surtout, il permet d&rsquo;éviter aux utilisateurs d&rsquo;avoir a configurer leurs
+clients. Si le client supporte le chiffrement, il l&rsquo;activera de lui même s&rsquo;il
+voit qu&rsquo;il est disponible.<br />
+Bref, mettez en place du <code>STARTTLS</code>, et pas du SSL. C&rsquo;est mieux pour la sécurité
+de tout le monde.</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

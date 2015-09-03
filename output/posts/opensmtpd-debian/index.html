@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>OpenSMTPd comme serveur mail sous debian</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to OpenSMTPd comme serveur mail sous debian">OpenSMTPd comme serveur mail sous debian</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2014-11-07T13:04:00+01:00">
+		<i class="icon-calendar"></i> Fri 07 November 2014
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafé</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/tutoriel/"><i class="icon-folder-open"></i>Tutoriel</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>J&rsquo;avais dit il y a un certain temps que j&rsquo;allais écrire un tutoriel expliquant
+comment gérer ses mails soi-même.  Il se trouve que j&rsquo;ai récemment décidé de
+changer le serveur qui héberge (entre autres) ce blog, et que ce dernier héberge
+aussi mes emails. J&rsquo;ai donc totalement changé d&rsquo;infrastructure quand a la
+gestion de mon système de mails.</p>
+<p>Ainsi, j&rsquo;ai décidé de passer de Postfix a OpenSMTPd, changement que je voulais
+effectuer depuis un certain temps.  <a href="https://opensmtpd.org">OpenSMTPd</a> est un
+projet originaire d&rsquo;<a href="http://openbsd.org">OpenBSD</a> qui a pour but de fournir un
+serveur SMTP fiable, simple, rapide, et surtout sécurisé (les même buts que ceux
+qu&rsquo;a le projet OpenBSD, globalement).</p>
+<p>Pour rappel, le système d&rsquo;emails fonctionne d&rsquo;une façon très simple : votre MUA
+(Mail User Agent, ou client email) contacte le MTA (Mail Transport Agent, ou
+serveur SMTP) de votre fournisseur email, qui contacte le MTA du fournisseur du
+destinataire, qui lui même contacte le MDA (Mail Delivery Agent) qui délivre le
+mail au destinataire.</p>
+<p>Si vous avez bien suivi, vous pouvez voir que je n&rsquo;ai pas parlé de récupération
+ni de lecture des mails. C&rsquo;est pour une raison simple, qui est que ces taches
+sont remplies par d&rsquo;autres services encore (IMAP/POP pour la récupération depuis
+le serveur, des yeux pour la lecture).</p>
+<p>Or ce qui nous intéresse ici, ce n&rsquo;est pas simplement d&rsquo;envoyer et de recevoir
+des emails mais bien aussi de pouvoir les récupérer et les lire, et c&rsquo;est pour
+ça que ce tutoriel ne parlera pas que d&rsquo;OpenSMTPd mais aussi de <a href="http://dovecot.org/">Dovecot</a> qui fait office de serveur IMAP et
+<a href="http://www.ijs.si/software/amavisd/">amavis</a>/<a href="http://spamassassin.apache.org/">spamassassin</a> 
+pour filtrer les mails entrants et sortants. 
+Le schéma suivant explique la façon dont les mails sont gérés sur le système</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">            ╭────────────────╮                    ╭──────────╮
+            │╭──────────────&gt;│────&gt; to filter ───&gt;│─╮        │
+  mail in   ││               │                    │ │ amavis │
+───────────&gt;│╯ OpenSMTPd  ╭──│&lt;─── from filter&lt;───│&lt;╯        │
+            │             │  │                    ╰──────────╯
+  mail out  │             │  │                    ╭──────────╮
+&lt;───────────│&lt;────────────┴─&gt;│─────&gt; to MDA ─────&gt;│─────────&gt;│──&gt; to user&#39;s
+            │                │                    │ dovecot  │     mailbox
+            ╰────────────────╯                    ╰──────────╯
+</pre></div>
+
+
+<p>Normalement, ceci devrait être a peu près clair.
+Pour expliquer vite fait, les emails entrants (venant des utilisateurs mais
+aussi d&rsquo;autres correspondants) sont transmis a OpenSMTPd, qui envoie tout a<code>amavis</code>, qui vérifie a la fois les spams et les malwares pour les mails
+venants de l&rsquo;exterieur, et qui signe avec DKIM pour les mails venants de
+nos utilisateurs, puis qui rentransmet les mails filtrés/signés a OpenSMTPd,
+qui a ce moment-ci trie en fonction de la destination : les mails gérés 
+par le domaine vont via dovecot dans les boites mail des destinataires 
+locaux, les mails exterieurs vont directement vers le MTA du serveur 
+distant.</p>
+<p>Voyons comment mettre cela en place. Tout d&rsquo;abord, il faut décider de la façon
+dont les différents services vont communiquer.</p>
+<p>Déjà, amavis étant configuré par défaut pour écouter (en SMTP) sur le port
+10024 et répondre sur le port 10025 quand il s&rsquo;agit de filtrer et
+écouter sur le port 10026 et répondre sur le port 10027 quand il s&rsquo;agit de
+signer, nous allons profiter de cette configuration et donc lui parler en SMTP
+sur ces ports.</p>
+<p>Quand a Dovecot, nous allons lui transmettre les emails en LMTP (Local Mail
+Transfer Protocol), non pas sur un port mais via un socket (dans ce cas précis,
+<code>/var/run/dovecot/lmtp</code>).</p>
+<p>Ainsi, pour reprendre le schéma présenté plus haut :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">            ╭───────────────╮                    ╭───────────╮
+            │╭─────────────&gt;│──&gt; SMTP (10026) ──&gt;│─╮         │
+  SMTP in   ││              │                    │ │ amavis  │
+────────&gt; 25│╯ OpenSMTPd ╭──│&lt;── SMTP (10027) &lt;──│&lt;╯ (sign)  │
+            │            │  │                    ╰───────────╯
+  SMTP out  │            │  │
+25 &lt;────────│&lt;───────────╯  │
+            ╰───────────────╯
+</pre></div>
+
+
+<p>Pour les mails sortants; et</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">            ╭───────────────╮                    ╭────────────╮
+            │╭─────────────&gt;│──&gt; SMTP (10024) ──&gt;│─╮          │
+  SMTP in   ││              │                    │ │ amavis   │
+────────&gt; 25│╯ OpenSMTPd ╭──│&lt;── SMTP (10025) &lt;──│&lt;╯(filter)  │
+            │            │  │                    ╰────────────╯
+            │            │  │                    ╭────────────╮
+            │            ╰─&gt;│──&gt; LMTP (socket) ─&gt;│───────────&gt;│──&gt; to user&#39;s
+            │               │                    │  dovecot   │     mailbox
+            ╰───────────────╯                    ╰────────────╯
+</pre></div>
+
+
+<p>Pour les mails entrants.</p>
+<p>Maintenant que la théorie est claire, mettons en place tout cela. Je me baserai
+ici sur le fait que vous utilisiez une plateforme Debian ou OpenBSD. Pour
+d&rsquo;autres plateformes, la configuration devrait être sensiblement la même</p>
+<p>(Vous aurez besoin de certificats SSL pour ce guide, même auto-signés.
+Si vous ne savez pas comment en créer, vous pouvez aller voir <a href="http://wxcafe.net/posts/05/30/14/SSL-ou-la-securite-sur-internet/">ce
+post</a>)</p>
+<p>Tout d&rsquo;abord, commençons par installer les programmes nécessaires :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">sudo apt-get install opensmtpd dovecot dovecot-pigeonhole amavisd-new dovecot-managesieved
+sudo pkg_add dovecot dovecot-pigeonhole amavisd-new
+</pre></div>
+
+
+<p>Continuons en configurant OpenSMTPd tel que nous avons vu plus haut :</p>
+<p><code>/etc/smtpd.conf</code></p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e"># This is the smtpd server system-wide configuration file.</span>
+<span style="color: #75715e"># See smtpd.conf(5) for more information.</span>
+
+<span style="color: #75715e">## Certs</span>
+pki exem.pl certificate <span style="color: #e6db74">&quot;/etc/certs/exem.pl.crt&quot;</span>
+pki exem.pl key         <span style="color: #e6db74">&quot;/etc/certs/exem.pl.key&quot;</span>
+
+<span style="color: #75715e">## Ports to listen on, and how to listen on them</span>
+listen on eth0 port <span style="color: #ae81ff">25</span> tls pki exem.pl hostname exem.pl auth-optional
+listen on eth0 port <span style="color: #ae81ff">465</span> tls-require pki exem.pl hostname exem.pl auth mask-source
+listen on eth0 port <span style="color: #ae81ff">587</span> tls-require pki exem.pl hostname exem.pl auth mask-source
+
+<span style="color: #75715e">## Aliases</span>
+table aliases file:/etc/aliases
+
+<span style="color: #75715e"># coming from amavisd, checked for spam/malware</span>
+listen on lo port <span style="color: #ae81ff">10025</span> tag Filtered
+<span style="color: #75715e"># coming from amavisd, signed with DKIM</span>
+listen on lo port <span style="color: #ae81ff">10027</span> tag Signed
+
+<span style="color: #75715e">## Receiving</span>
+<span style="color: #75715e"># if the (incoming) mail has been through amavisd, then we can deliver it</span>
+accept tagged Filtered <span style="color: #66d9ef">for</span> any <span style="color: #f8f8f2">alias</span> &lt;aliases&gt; deliver to lmtp <span style="color: #e6db74">&quot;/var/run/dovecot/lmtp&quot;</span>
+<span style="color: #75715e"># we directly tranfer incoming mail to amavisd to be checked </span>
+accept from any <span style="color: #66d9ef">for</span> domain <span style="color: #e6db74">&quot;exem.pl&quot;</span> relay via <span style="color: #e6db74">&quot;smtp://localhost:10024&quot;</span>
+<span style="color: #75715e"># we have to put these lines in this order to avoid infinite loops</span>
+
+<span style="color: #75715e">## Sending</span>
+<span style="color: #75715e"># if the (outgoint) mail has been through amavisd, then we can deliver it</span>
+accept tagged Signed <span style="color: #66d9ef">for</span> any relay
+<span style="color: #75715e"># we tranfer the outgoing mail to amavisd to be signed</span>
+accept <span style="color: #66d9ef">for</span> any relay via <span style="color: #e6db74">&quot;smtp://localhost:10026&quot;</span>
+<span style="color: #75715e"># same, we have to put these lines in this order or infinite loops...</span>
+</pre></div>
+
+
+<p>Expliquons un peu ce fichier de configuration :</p>
+<ul>
+<li>Tout d&rsquo;abord, le paragraphe nommé &ldquo;Certs&rdquo; contient les déclaration
+  d&rsquo;emplacement des certificats SSL.</li>
+<li>Ensuite, le paragraphe contenant les ports externes sur lesquels nous écoutons :
+  port 25 avec TLS optionel et ports 465 et 587 avec TLS obligatoire</li>
+<li>Les alias sont définis juste après</li>
+<li>Le paragraphe suivant contient les ports locaux sur lesquels nous écoutons :
+  10025 (port de sortie du filtre de amavis) dont on taggue les mails sortants
+  comme &ldquo;Filtered&rdquo; et 10027 (port de sortie des mails signés par amavis) dont on
+  taggue les mails sortants comme &ldquo;Signed&rdquo;</li>
+<li>Nous avons ensuite le paragraphe qui traite les mails rentrants. Si le mail
+  traité est taggué comme Filtered, alors il a été vérifié par amavis, et on
+  peut donc le transmettre au destinataire. Sinon, c&rsquo;est qu&rsquo;il n&rsquo;a pas encore
+  été vérifié par amavis, donc on lui transmet pour analyse (sur le port 10024
+  donc). Il est important de mettre les déclarations dans ce sens, car la
+  première règle qui matche l&rsquo;état du paquet est appliquée. Ici, la deuxième
+  ligne matchant tous les mails arrivant et la première seulement ceux filtrés,
+  inverser leur sens voudrait dire que les mails seraient toujours renvoyés a
+  amavis</li>
+<li>Enfin, le dernier paragraphe traite les mails sortants. De la même façon que
+  pour le paragraphe précédent, si le mail sortant est déjà taggué comme Signed
+  on le transmet au MTA du destinataire, sinon il n&rsquo;a pas encore été signé par
+  DKIM par amavis et on le transmet donc a amavis pour qu&rsquo;il le signe. Le
+  problème de l&rsquo;ordre des lignes se pose encore, pour la même raison qu&rsquo;au
+  dessus.</li>
+</ul>
+<p>Nous allons maintenant configurer dovecot. Comme nous l&rsquo;avons vu, dovecot doit
+écouter en LMTP via la socket <code>/var/run/dovecot/lmtp</code> et transmettre les
+emails a la boite email de l&rsquo;utilisateur. Il serait aussi interessant
+qu&rsquo;il nous permette de récuperer les mails. Pour cette configuration, on ne
+mettra en place que du IMAPS. Cependant, si vous voulez mettre en place du
+POP3[s], différents guides sont trouvables facilement sur internet.</p>
+<p><code>/etc/dovecot/dovecot.conf</code></p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e">## Dovecot configuration file</span>
+
+<span style="color: #75715e"># basic config</span>
+<span style="color: #f8f8f2">info_log_path</span> <span style="color: #f92672">=</span> /var/log/dovecot-info.log
+<span style="color: #f8f8f2">log_path</span> <span style="color: #f92672">=</span> /var/log/dovecot.log
+<span style="color: #f8f8f2">log_timestamp</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;%Y-%m-%d %H:%M:%S &quot;</span>
+<span style="color: #f8f8f2">mail_location</span> <span style="color: #f92672">=</span> maildir:%h/mail
+
+<span style="color: #75715e"># authentication</span>
+passdb <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">driver</span> <span style="color: #f92672">=</span> pam
+<span style="color: #f92672">}</span>
+userdb <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">driver</span> <span style="color: #f92672">=</span> passwd
+<span style="color: #f92672">}</span>
+
+<span style="color: #75715e"># the protocols we use</span>
+<span style="color: #f8f8f2">protocols</span> <span style="color: #f92672">=</span> imap lmtp sieve
+
+<span style="color: #75715e"># ssl config</span>
+<span style="color: #f8f8f2">ssl_cert</span> <span style="color: #f92672">=</span> &lt;/etc/certs/exem.pl.cert
+<span style="color: #f8f8f2">ssl_key</span> <span style="color: #f92672">=</span> &lt;/etc/certs/exem.pl.key
+<span style="color: #f8f8f2">ssl_cipher_list</span> <span style="color: #f92672">=</span> HIGH+kEDH:HIGH+kEECDH:HIGH:!PSK:!SRP:!3DES:!aNULL
+<span style="color: #f8f8f2">ssl</span> <span style="color: #f92672">=</span> yes
+
+<span style="color: #75715e">## configuring services </span>
+<span style="color: #75715e"># disables imap login without SSL (yes dovecot is dumb that way)</span>
+service imap-login <span style="color: #f92672">{</span>
+    inet_listener imap <span style="color: #f92672">{</span>
+        <span style="color: #f8f8f2">port</span><span style="color: #f92672">=</span><span style="color: #ae81ff">0</span> 
+    <span style="color: #f92672">}</span>
+<span style="color: #f92672">}</span>
+
+service lmtp <span style="color: #f92672">{</span>
+    unix_listener lmtp <span style="color: #f92672">{</span>
+        <span style="color: #f8f8f2">mode</span> <span style="color: #f92672">=</span> 0666
+    <span style="color: #f92672">}</span>
+<span style="color: #f92672">}</span>
+
+<span style="color: #75715e">## configuring protocols</span>
+<span style="color: #75715e"># the dovecot lda, we set it to use sieve</span>
+protocol lda <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">mail_plugins</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">$mail_plugins</span> sieve
+<span style="color: #f92672">}</span>
+
+protocol lmtp <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">postmaster_address</span> <span style="color: #f92672">=</span>  whoever@exem.pl
+    <span style="color: #f8f8f2">mail_plugins</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">$mail_plugins</span> sieve
+<span style="color: #f92672">}</span>
+
+plugin <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">sieve</span> <span style="color: #f92672">=</span> ~/.dovecot.sieve
+    <span style="color: #f8f8f2">sieve_dir</span> <span style="color: #f92672">=</span> ~/sieve
+<span style="color: #f92672">}</span>
+</pre></div>
+
+
+<p><strong>ATTENTION: Sous OpenBSD, remplacez</strong></p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">passdb <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">driver</span> <span style="color: #f92672">=</span> pam
+<span style="color: #f92672">}</span>
+</pre></div>
+
+
+<p><strong>par</strong></p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%">passdb <span style="color: #f92672">{</span>
+    <span style="color: #f8f8f2">driver</span> <span style="color: #f92672">=</span> bsdauth
+<span style="color: #f92672">}</span>
+</pre></div>
+
+
+<p><strong>pour identifier les utilisateurs système</strong></p>
+<p>Ici aussi, voyons comment ce fichier est structuré :</p>
+<ul>
+<li>Tout d&rsquo;abord, les configurations de base : ou iront les logs, comment formater
+  leur datation, et l&rsquo;endroit ou seront stockés les mails des utilisateurs.</li>
+<li>Nous configurons ensuite la gestion de l&rsquo;authentification des utilisateurs.
+  Ici nous identifions les utilisateurs avec le fichier /etc/passwd et leurs
+  mots de passe avec PAM (ou BSDAuth)</li>
+<li>Nous configurons ensuite les protocoles que nous servons. Ici, nous voulons de
+  l&rsquo;IMAPS, du LMTP local et Sieve (qui sert pour trier les messages).</li>
+<li>Nous configurons le SSL</li>
+<li>Le section suivante contient la configuration des services. Nous avons en
+  premier lieu le service IMAP, dont la configuration sert uniquement a
+  désactiver IMAP. En effet, dovecot ne permet d&rsquo;activer IMAPS qu&rsquo;en activant
+  IMAP avec. Comme nous ne voulons pas d&rsquo;IMAP sans SSL, nous le désactivons.
+  La configuration de lmtp sert a attribuer des permissions plus correctes au
+  fifo qu&rsquo;il utilise</li>
+<li>Nous configurons maintenant les protocoles, pour faire fonctionner Sieve</li>
+<li>enfin, nous configurons le plugin sieve en lui indiquant quel fichier et
+  quel dossier utiliser pour sa configuration.</li>
+</ul>
+<p>Enfin, il nous reste a configurer amavis. Comme expliqué, amavis va nous servir
+a deux choses : signer les emails sortants, et filtrer les emails entrants. Il
+doit donc écouter sur les port 10026 pour les signatures et 10024 pour le
+filtrage, et répondre respectivement sur les ports 10027 et 10025 (le tout, en
+SMTP. Comme toutes les transactions se font sur le loopback, il n&rsquo;y a aucun
+risque a utiliser des protocoles non chiffrés.
+Pour OpenBSD, pensez a copier la configuration par défaut depuis<code>/usr/local/share/examples/amavisd-new/amavisd.conf</code> et ajoutez les
+modifications nécessaires a la fin du fichier.</p>
+<p><code>/etc/amavis/conf.d/99-local.conf</code> (debian)
+<code>/etc/amavis.conf</code> (OpenBSD)</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%"><span style="color: #66d9ef">use</span> <span style="color: #f8f8f2">strict;</span>
+
+<span style="color: #f8f8f2">$enable_dkim_verification</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">$enable_dkim_signing</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">;</span>
+<span style="color: #f8f8f2">dkim_key(</span><span style="color: #e6db74">&quot;exem.pl&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&quot;main&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&quot;/etc/certs/dkim.key&quot;</span> <span style="color: #f8f8f2">);</span>
+
+<span style="color: #f8f8f2">@dkim_signature_options_bysender_maps</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">(</span>
+    <span style="color: #f8f8f2">{</span> <span style="color: #e6db74">&#39;.&#39;</span> <span style="color: #f92672">=&gt;</span>
+        <span style="color: #f8f8f2">{</span> <span style="color: #f8f8f2">ttl</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">21</span><span style="color: #f92672">*</span><span style="color: #ae81ff">24</span><span style="color: #f92672">*</span><span style="color: #ae81ff">3600</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">c</span> <span style="color: #f92672">=&gt;</span> <span style="color: #e6db74">&#39;relaxed/simple&#39;</span> <span style="color: #f8f8f2">}</span>
+    <span style="color: #f8f8f2">}</span>
+<span style="color: #f8f8f2">);</span>
+
+<span style="color: #f8f8f2">$inet_socket_port</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">10024</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">10026</span><span style="color: #f8f8f2">];</span>
+<span style="color: #f8f8f2">$policy_bank{</span><span style="color: #e6db74">&#39;MYNETS&#39;</span><span style="color: #f8f8f2">}</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #f8f8f2">originating</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #f8f8f2">os_fingerprint_method</span> <span style="color: #f92672">=&gt;</span> <span style="color: #f8f8f2">undef,</span>
+<span style="color: #f8f8f2">};</span>
+
+<span style="color: #f8f8f2">$interface_policy{</span><span style="color: #e6db74">&#39;10026&#39;</span><span style="color: #f8f8f2">}</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&#39;ORIGINATING&#39;</span><span style="color: #f8f8f2">;</span>
+
+<span style="color: #f8f8f2">$policy_bank{</span><span style="color: #e6db74">&#39;ORIGINATING&#39;</span><span style="color: #f8f8f2">}</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span>
+        <span style="color: #f8f8f2">originating</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #f8f8f2">allow_disclaimers</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #f8f8f2">virus_admin_maps</span> <span style="color: #f92672">=&gt;</span> <span style="color: #f8f8f2">[</span><span style="color: #e6db74">&quot;root\@$mydomain&quot;</span><span style="color: #f8f8f2">],</span>
+        <span style="color: #f8f8f2">spam_admin_maps</span> <span style="color: #f92672">=&gt;</span> <span style="color: #f8f8f2">[</span><span style="color: #e6db74">&quot;root\@$mydomain&quot;</span><span style="color: #f8f8f2">],</span>
+        <span style="color: #f8f8f2">warnbadhsender</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #f8f8f2">forward_method</span> <span style="color: #f92672">=&gt;</span> <span style="color: #e6db74">&#39;smtp:localhost:10027&#39;</span><span style="color: #f8f8f2">,</span>
+        <span style="color: #f8f8f2">smtpd_discard_ehlo_keywords</span> <span style="color: #f92672">=&gt;</span> <span style="color: #f8f8f2">[</span><span style="color: #e6db74">&#39;8BITMIME&#39;</span><span style="color: #f8f8f2">],</span>
+        <span style="color: #f8f8f2">bypass_banned_checks_maps</span> <span style="color: #f92672">=&gt;</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">],</span>
+        <span style="color: #f8f8f2">terminate_dsn_on_notify_success</span> <span style="color: #f92672">=&gt;</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span>
+<span style="color: #f8f8f2">};</span>
+
+<span style="color: #75715e">#------------ Do not modify anything below this line -------------</span>
+<span style="color: #ae81ff">1</span><span style="color: #f8f8f2">;</span>  <span style="color: #75715e"># ensure a defined return</span>
+</pre></div>
+
+
+<p>A nouveau, expliquons ce fichier :
+- le premier paragraphe définit que nous voulons qu&rsquo;amavis signe les emails
+  sortants, vérifie la signature DKIM des emails rentrants, et l&rsquo;endroit ou se
+  trouve la clé privée servant a signer les emails.
+- le second définit les options DKIM que nous souhaitons utiliser comme défaut.
+  Je vous invite a consulter la <a href="https://tools.ietf.org/html/rfc4871">RFC 4871</a>
+- nous définissons ensuite les ports sur lesquels nous allons écouter, puis les
+  paramètres que nous utiliserons pour les emails venant de nos utilisateurs :
+  ils seront traités comme &ldquo;originating&rdquo; et nous ne vérifierons pas l&rsquo;OS duquel
+  ils viennent.
+- nous savons que les emails venants du port 10026 sont sortants, nous les
+  traitons donc comme tel
+- le paragraphe suivant décrit le traitement que nous faisons subir aux emails
+  sortants : tout d&rsquo;abord, nous réaffirmons qu&rsquo;ils viennent bien de notre
+  serveur. Nous autorisons les disclaimers (voire encore une fois la <a href="https://tools.ietf.org/html/rfc4871">RFC
+  4871</a>. Nous déclarons l&rsquo;adresse a
+  prévenir en cas de spam/virus venants de notre système, et que nous voulons
+  être prévenus. Nous déclarons ou envoyer les mails une fois signés et filtrés,
+  puis qu&rsquo;il est nécessaire de convertir les emails au format 7 bits avant de
+  les envoyer au MTA, que nous autorisons tous les types et noms de fichiers, et
+  les notifications de succès d&rsquo;envoi. Et voila!</p>
+<p>Vous avez pu remarquer qu&rsquo;a aucun moment nous ne configurions ni la signature
+des emails sortants ni le filtrage des emails entrants. Ces paramètres sont en
+fait inclus par défaut dans amavis.</p>
+<p>Il nous reste cependant quelques opérations a faire, encore.
+Tout d&rsquo;abord, il nous faut générer notre clé DKIM. Pour cela, il existe
+différentes méthodes, j&rsquo;ai personnellement utilisé opendkim (<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy">un
+tutorial</a>)
+mais de nombreuses autre méthodes existent.
+Il nous reste encore a configurer spamassassin :</p>
+<div class="codehilite" style="background: #272822"><pre style="line-height: 125%"><span style="color: #75715e">#rewrite_header Subject *****SPAM*****</span>
+<span style="color: #75715e"># report_safe 1</span>
+<span style="color: #f8f8f2">required_score</span> <span style="color: #ae81ff">2.0</span>
+<span style="color: #75715e"># use_bayes 1</span>
+<span style="color: #75715e"># bayes_auto_learn 1</span>
+<span style="color: #75715e"># bayes_ignore_header X-Bogosity</span>
+<span style="color: #75715e"># bayes_ignore_header X-Spam-Flag</span>
+<span style="color: #75715e"># bayes_ignore_header X-Spam-Status</span>
+<span style="color: #f8f8f2">ifplugin</span> <span style="color: #f8f8f2">Mail::SpamAssassin::Plugin::Shortcircuit</span>
+<span style="color: #75715e"># shortcircuit USER_IN_WHITELIST       on</span>
+<span style="color: #75715e"># shortcircuit USER_IN_DEF_WHITELIST   on</span>
+<span style="color: #75715e"># shortcircuit USER_IN_ALL_SPAM_TO     on</span>
+<span style="color: #75715e"># shortcircuit SUBJECT_IN_WHITELIST    on</span>
+<span style="color: #75715e"># shortcircuit USER_IN_BLACKLIST       on</span>
+<span style="color: #75715e"># shortcircuit USER_IN_BLACKLIST_TO    on</span>
+<span style="color: #75715e"># shortcircuit SUBJECT_IN_BLACKLIST    on</span>
+<span style="color: #f8f8f2">shortcircuit</span> <span style="color: #f8f8f2">ALL_TRUSTED</span>             <span style="color: #f8f8f2">off</span>
+<span style="color: #75715e"># shortcircuit BAYES_99                spam</span>
+<span style="color: #75715e"># shortcircuit BAYES_00                ham</span>
+
+<span style="color: #f8f8f2">endif</span> <span style="color: #75715e"># Mail::SpamAssassin::Plugin::Shortcircuit</span>
+</pre></div>
+
+
+<p>Comme vous pouvez le voir, les modifications se résument globalement a baisser
+le required_score pour ma part.</p>
+<p>Pour finir, activez les services nécessaires : opensmtpd, dovecot, amavisd, et
+spamassassin, et tout devrait fonctionner parfaitement</p>
+<p>Bon courage pour votre hosting de mail ensuite&hellip;</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

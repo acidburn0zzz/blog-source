@@ -102,6 +102,7 @@ serveur, et pas sur home., car elles sont sensiblement les mêmes. La différenc
 principale étant que l'un héberge en slave les masters de l'autre.
 Le fichier `named.conf.local` sur wxcafe.net contient donc 
 
+	::bash
     zone "wxcafe.net" {
         type master;
         file "/etc/bind/master/wxcafe.net";

@@ -30,6 +30,7 @@ zfsinstall, qui va se charger de tout le travail pour nous.
 
 Utilisez donc ce script ainsi : 
 
+	::bash
 	# tout d'abord, wipons le MBR :
 	dd < /dev/zero > /dev/da0 count=1
 	# maintenant, installons le système
@@ -43,6 +44,7 @@ convient pas.
 Une fois ceci fait, faites un chroot dans /mnt (ou doit se trouver le nouveau
 système) et éditez /etc/rc.conf :
 
+	::python
 	zfs_load="YES"
 	sshd_load="YES
 	hostname="whatever"
@@ -57,7 +59,7 @@ Voila, c'est la fin de ce tutoriel.
 (Cela dit, bon courage pour tester bhyve, vu que l'IPv6 chez online est... peu 
 crédible, disons)
 
-Bon sinon sur d'autres sujets, j'ai mis en place des bots twitter
+Bon sinon sur d'autres sujets, j'ai mis en place des bots twitter : 
 [wxcafe_ebooks](https://twitter.com/wxcafe_ebooks),
 [petitefanfare](https://twitter.com/petitefanfare),
 [capet_ebooks](https://twitter.com/capet_ebooks),

@@ -1,7 +1,7 @@
 Title: SSL ou la sécurité sur l'internet
 Date: 2014-05-30 08:25
 Author: Wxcafe
-Category: Notes
+Category: Note
 Slug: SSL-ou-la-securite-sur-internet
 
 *Disclaimer: Ce billet est écrit après le visionnage de la conférence de Moxie 
@@ -57,6 +57,7 @@ l'implémentation :
 Pour générer la clé, tout d'abord, il convient d'utiliser les commandes
 suivantes:  
 
+	::console
     sudo openssl genrsa -out example.key 4096
     # nous utilisons ici une clé de 4096 bits, la taille est laissée a votre appréciation
     sudo openssl req -new -key example.key -out example.csr
@@ -72,6 +73,7 @@ Je vais lister ici les methodes pour quelques services que j'utilise :
 
 ###apache : 
 
+	::apache
     # /etc/apache2/mods_enabled/ssl.conf
     # [...]
     SSLProtocol all -SSLv2 -SSLv3
@@ -89,6 +91,7 @@ Je vais lister ici les methodes pour quelques services que j'utilise :
 
 ###nginx :
 
+	::nginx
     # /etc/nginx/nginx.conf 
     # [...]
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -106,6 +109,7 @@ Je vais lister ici les methodes pour quelques services que j'utilise :
 
 ###prosody (jabber) :
 
+	::lua
     # tout d'abord, lancez la commande suivante :
     sudo openssl dhparam -out /etc/prosody/certs/dh-2048.pem 2048
     # ensuite, pour chaque VirtualHost dans /etc/prosody/prosody.conf :
@@ -118,6 +122,7 @@ Je vais lister ici les methodes pour quelques services que j'utilise :
 
 ###postfix (email) :
 
+	::shell
     # /etc/postfix/main.cf
     # [...]
     smtpd_tls_cert_file = /etc/certs/example.com.crt
@@ -133,6 +138,7 @@ Je vais lister ici les methodes pour quelques services que j'utilise :
 
 ###dovecot (imap) :
 
+	::shell
     # /etc/dovecot/dovecot.conf 
     # [...]
     ssl_cert = </etc/certs/example.com.crt

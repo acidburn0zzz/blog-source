@@ -7,7 +7,9 @@
 			<meta name="author" content="wxcafé">
 			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
     <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
 			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 			<script type="text/javascript">
 				/* <![CDATA[ */
 				(function() {
@@ -61,7 +63,7 @@
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-			 			<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</a>
 					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
 					<div class="nav-collapse">
@@ -81,7 +83,7 @@
 			<div class="row">
 				<div class="span9" id="content">
 			<div class="article">
-				<h1><a href="//wxcafe.net/posts/%D/plan-9-from-whichever-space/">Plan9 from whichever space</a></h1>
+				<h1><a href="//wxcafe.net/posts/plan-9-from-whichever-space/">Plan9 from whichever space</a></h1>
 				<div class="well small"><footer class="post-info">
 	<span class="label">Date</span>
 	<span class="published" title="2013-09-09T11:17:00+02:00">
@@ -100,375 +102,67 @@
 
 </footer><!-- /.post-info --></div>
 				<div class="summary"><p><a href="http://en.wikipedia.org/wiki/Plan_9_from_Outer_Space"><strong>Plan 9 from Outer Space</strong></a> est un film de série Z, produit en 1959 par Edward D. 
-Wood. Il est assez connu comme étant l'un des pires films jamais sortis. Rempli
-d'erreur de montage, d'effets spéciaux au rabais, et ayant même connu la mort
-d'un acteur, il a ainsi atteint le statut de film culte grâce a sa médiocrité.</p>
-<p><a href="http://plan9.bell-labs.com/plan9/"><strong>Plan 9 from Bell Labs</strong></a> est un OS venant de Bell Labs (comme son nom l'indique),
-et qui a été pensé comme le successeur d'Unix. Il est conçu comme une poursuite
-des concepts unixiens jusqu'à leur but naturel. Ainsi, c'est Plan9 qui a
-introduit le concept d'UnionFS, le protocole 9P qui permet d'acceder a des
-ressources appartenant a d'autres ordinateurs a distance, un support de
-l'unicode par défaut et sur tout le système (a l'inverse d'Unix, qui fonctionne
+Wood. Il est assez connu comme étant l&rsquo;un des pires films jamais sortis. Rempli
+d&rsquo;erreur de montage, d&rsquo;effets spéciaux au rabais, et ayant même connu la mort
+d&rsquo;un acteur, il a ainsi atteint le statut de film culte grâce a sa médiocrité.</p>
+<p><a href="http://plan9.bell-labs.com/plan9/"><strong>Plan 9 from Bell Labs</strong></a> est un OS venant de Bell Labs (comme son nom l&rsquo;indique),
+et qui a été pensé comme le successeur d&rsquo;Unix. Il est conçu comme une poursuite
+des concepts unixiens jusqu&rsquo;à leur but naturel. Ainsi, c&rsquo;est Plan9 qui a
+introduit le concept d&rsquo;UnionFS, le protocole 9P qui permet d&rsquo;acceder a des
+ressources appartenant a d&rsquo;autres ordinateurs a distance, un support de
+l&rsquo;unicode par défaut et sur tout le système (a l&rsquo;inverse d&rsquo;Unix, qui fonctionne
 a la base en ASCII), un support de ProcFS amélioré, une interface graphique par
-défaut, et d'autres améliorations sur les thèmes de base que propose Unix. </p>
-<p>Cependant, Plan9 n'a jamais été véritablement utilisé pour quoi que ce soit
-d'autre que la recherche en systèmes, et c'est dommage, parce que Plan9 a
-quelque chose de très intéressant à proposer. En effet, en ces jours d'intérêt
+défaut, et d&rsquo;autres améliorations sur les thèmes de base que propose Unix. </p>
+<p>Cependant, Plan9 n&rsquo;a jamais été véritablement utilisé pour quoi que ce soit
+d&rsquo;autre que la recherche en systèmes, et c&rsquo;est dommage, parce que Plan9 a
+quelque chose de très intéressant à proposer. En effet, en ces jours d&rsquo;intérêt
 grandissant pour le klaoude et la délocalisation a la fois du processing et des
-données, et bien que Plan9 ait été créé bien avant que le terme "cloud
-computing" n'apparaisse pour la première fois, il semble que ce système ait été
+données, et bien que Plan9 ait été créé bien avant que le terme &ldquo;cloud
+computing&rdquo; n&rsquo;apparaisse pour la première fois, il semble que ce système ait été
 conçu pour apporter cette délocalisation tant rêvée.</p>
-<p>En effet, même si l'on considère que les nouveautés qu'il apporte par rapport a 
-Unix ne sont pas extraordinaires en soit (alors qu'elles sont déjà
-conséquentes), lorsqu'on les prend ensemble, elles font de Plan9 le système
-d'exploitation ultime en terme de partage de ressources et de données. 
-Ainsi, le fait que 9P permette de considérer toutes les ressources d'un système
-distant comme n'étant qu'une poignée de fichiers permet de le monter comme
-n'importe quel système de fichier. Le fait que chaque utilisateur puisse accéder
+<p>En effet, même si l&rsquo;on considère que les nouveautés qu&rsquo;il apporte par rapport a 
+Unix ne sont pas extraordinaires en soit (alors qu&rsquo;elles sont déjà
+conséquentes), lorsqu&rsquo;on les prend ensemble, elles font de Plan9 le système
+d&rsquo;exploitation ultime en terme de partage de ressources et de données. 
+Ainsi, le fait que 9P permette de considérer toutes les ressources d&rsquo;un système
+distant comme n&rsquo;étant qu&rsquo;une poignée de fichiers permet de le monter comme
+n&rsquo;importe quel système de fichier. Le fait que chaque utilisateur puisse accéder
 a plusieurs namespaces de façon transparente (et donc de démarrer, arrêter et 
 gérer des processus sur chacun de ces namespaces) et que chaque namespace puisse
-interagir avec les autres, même s'ils sont hétérogènes (c'est a dire provenant
-de machines différentes), permet d'utiliser les ressources d'une machine
-distante comme si elle était présente localement. Le mécanisme d'UnionFS permet
+interagir avec les autres, même s&rsquo;ils sont hétérogènes (c&rsquo;est a dire provenant
+de machines différentes), permet d&rsquo;utiliser les ressources d&rsquo;une machine
+distante comme si elle était présente localement. Le mécanisme d&rsquo;UnionFS permet
 de rendre tout ça utilisable, en montant plusieurs systèmes de fichiers sur le
 même point de montage, en même temps, et de pouvoir ainsi accéder aux fichiers
 de plusieurs machines a la fois (ce qui permet une délocalisation des données
 bien plus poussée que Dropbox ou Google Drive, et ce en kernelspace).</p>
 <p>Le réseau fait donc partie intégrante de Plan9, et il devient plus difficile de
-parler d'ordinateur lorsque le concept même du système est d'être composé de 
+parler d&rsquo;ordinateur lorsque le concept même du système est d&rsquo;être composé de 
 clusters eux mêmes composés de machines hétérogènes. Le système de fichier
-virtuel /net fourni par le kernel de Plan9 permet d'implémenter très facilement
-différents concepts réseaux : en montant le /net d'un ordinateur du réseau local
-sur celui servant de gateway vers l'internet, on crée un NAT vers cet ordinateur
-du réseau local. En montant le /net d'un ordinateur distant sur un ordinateur
+virtuel /net fourni par le kernel de Plan9 permet d&rsquo;implémenter très facilement
+différents concepts réseaux : en montant le /net d&rsquo;un ordinateur du réseau local
+sur celui servant de gateway vers l&rsquo;internet, on crée un NAT vers cet ordinateur
+du réseau local. En montant le /net d&rsquo;un ordinateur distant sur un ordinateur
 local via le protocole 9P sécurisé, on crée un VPN : les connections locales se
-font en utilisant l'accès de l'ordinateur distant, et les connections entre les
+font en utilisant l&rsquo;accès de l&rsquo;ordinateur distant, et les connections entre les
 deux sont chiffrées. </p>
 <p>Bref, bien avant les clusters de Raspberry Pi qui utilisent une api python pour
-partager leur "puissance" de calcul en userspace, des superordinateurs pour
-lesquels le noyau Linux s'est doté du support de jusqu'à 4096 CPUs, des OS tels
-JoliOS qui promettent une integration du klaoude alors qu'ils ne sont en fait
+partager leur &ldquo;puissance&rdquo; de calcul en userspace, des superordinateurs pour
+lesquels le noyau Linux s&rsquo;est doté du support de jusqu&rsquo;à 4096 CPUs, des OS tels
+JoliOS qui promettent une integration du klaoude alors qu&rsquo;ils ne sont en fait
 que des navigateurs web a peine améliorés et des services de stockage en ligne
-qui promettent un accès universel a toutes nos données alors qu'ils ne proposent
+qui promettent un accès universel a toutes nos données alors qu&rsquo;ils ne proposent
 que de les garder a disposition par le web, Plan9 promettait une technologie de 
 partage des ressources système et de données, une intégration du réseau dans le
 système particulièrement poussée, un environnement graphique supporté par le
-basesystem et non greffé par dessus comme l'a été X11, et de nombreuses autres 
+basesystem et non greffé par dessus comme l&rsquo;a été X11, et de nombreuses autres 
 améliorations sur Unix.</p>
-<p>Malheureusement, il n'a jamais été adopté de façon véritablement significative,
-et ce pour une raison très Unixiènne : "worse is better". En effet, le parc de
+<p>Malheureusement, il n&rsquo;a jamais été adopté de façon véritablement significative,
+et ce pour une raison très Unixiènne : &ldquo;worse is better&rdquo;. En effet, le parc de
 machines Unix déjà installées était suffisamment performant et fonctionnel pour
 que des solutions soient développées au dessus du système pour remplir les 
 mêmes fonctions que remplit Plan9 <em>via</em> son kernel, tels le nouveau ProcFS de
-Linux, FUSE, etc...</p></div>
-			</div>
-			<hr />
-			<div class="article">
-				<h1><a href="//wxcafe.net/posts/%D/archlinux-made-simple/">Archlinux made simple</a></h1>
-				<div class="well small"><footer class="post-info">
-	<span class="label">Date</span>
-	<span class="published" title="2012-10-05T14:48:00+02:00">
-		<i class="icon-calendar"></i> Fri 05 October 2012
-	</span>
-	<br />
-		<span class="label">By</span>
-		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
-		<br />
-	<span class="label">Category</span>
-		<a href="//wxcafe.net/category/oses/"><i class="icon-folder-open"></i>OSes</a>
-	<br />
-
-
-
-
-</footer><!-- /.post-info --></div>
-				<div class="summary"><p>Archlinux est réputée être une distribution Linux très complexe a
-installer et a maintenir.</p>
-<p>Je vais tenter ici de vous convaincre que ce n'est pas le cas, et
-qu'elle peut se monter très intéressante et très instructive a installer
-tout autant qu'a utiliser.</p>
-<p>Il convient tout d'abord de rappeler a quels principes obéit Arch:</p>
-<ol>
-<li>
-<p>Le KISS : Keep It Simple and Stupid, Archlinux tente de faire des
-    programmes simples et utilisables par tous. Avec comme base de
-    simplicité les utilisateurs de LFS... Mais il n'empêche qu'avec un peu
-    de bonne volonté, la configuration n'est pas si compliquée!</p>
-</li>
-<li>
-<p>La philosophie UNIX : chaque programme est prévu pour ne remplir
-    qu'une seule tâche. Bien entendu, cela ne concerne que les programmes
-    conçus pour s’insérer dans la philosophie UNIX, et les installations de
-    dépendances avec le gestionnaire de paquet d'Arch fonctionnent
-    superbement bien.</p>
-</li>
-</ol>
-<p>De plus, posons les bases d'Arch : le gestionnaire de paquets s'appelle
-pacman, et les commandes de base sont :</p>
-<ul>
-<li>
-<p>recherche d'un paquet :</p>
-<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Ss</span> <span class="n">paquet</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>installation d'un paquet :</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">paquet</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>désinstallation d'un paquet :</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">paquet</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>mise a jour de tous les paquets installés :</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">paquet</span>
-</pre></div>
-
-
-</li>
-</ul>
-<p>Archlinux est une distribution dite "rolling release", ce qui signifie
-qu'il n'y a pas de version a proprement dites, et que les paquets se
-mettent a jour en permanence, sans jamais changer la "version" d'Arch.
-Il n'y a d'ailleurs qu'une seule version de l'installeur sur le site,
-puisqu'une version plus ancienne n'aurait aucun sens.</p>
-<p>Arch n'offre pas d'interface graphique par défaut : après avoir installé
-le système, vous n'aurez qu'une invite de commande. Heureusement, je
-vais ici vous guider a travers l'installation d'une interface graphique
-(mate, le fork de gnome 2)</p>
-<p>L'installation d'Arch se fait par le réseau, veillez a avoir une
-connection WiFi ou filaire a proximité avant de suivre ce guide.</p>
-<p>Ce guide utilise SystemV, alors qu'Arch va prochainement passer sous
-systemd. N'ayant pas encore eu le temps d’expérimenter assez avec ce
-dernier, je ferais un tutoriel pour passer votre Arch a systemd bientôt.</p>
-<p>Bon, passons a l'explication de l'installation proprement dite :</p>
-<p>Tout d'abord, téléchargeons l'iso d'arch la plus récente :</p>
-<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//mir.archlinux.fr/iso/2012.09.07/archlinux-2012.09.07-dual.iso</span>
-</pre></div>
-
-
-<p>Ensuite, gravons cette image sur un disque USB :</p>
-<div class="highlight"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="n">archlinux</span><span class="o">-</span><span class="mf">2012.09.07</span><span class="o">-</span><span class="n">dual</span><span class="p">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
-</pre></div>
-
-
-<p>Après reboot de la machine sur l'iso en question et choix de
-l'architecture, nous sommes accueillis par un shell root.</p>
-<p>La première chose a faire est de paramétrer le clavier :</p>
-<div class="highlight"><pre><span class="n">loadkeys</span> <span class="n">fr</span>
-</pre></div>
-
-
-<p>Puis nous pouvons passer a l'installation proprement dite.
-Partitionnement :</p>
-<div class="highlight"><pre><span class="n">cfdisk</span> <span class="err">#</span> <span class="n">cfdisk</span> <span class="n">est</span> <span class="n">suffisamment</span> <span class="n">clair</span> <span class="n">pour</span> <span class="n">ne</span> <span class="n">pas</span> <span class="n">n</span><span class="err">é</span><span class="n">cessiter</span> <span class="n">d</span><span class="err">&#39;</span><span class="n">explications</span>
-</pre></div>
-
-
-<p>formatage des partitions :</p>
-<div class="highlight"><pre><span class="n">mkfs</span><span class="p">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">root</span>
-
-<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="o">&amp;&amp;</span> <span class="n">mkfs</span><span class="p">.</span><span class="n">btrfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">home</span>
-
-<span class="n">mkswap</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="o">&amp;&amp;</span> <span class="n">swapon</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">de</span> <span class="n">swap</span>
-</pre></div>
-
-
-<p>Montons les partitions nouvellement créées, puis installons le système :</p>
-<div class="highlight"><pre><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="o">/</span><span class="n">mnt</span>
-
-<span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span>
-
-<span class="n">dhclient</span> <span class="n">eth0</span> <span class="err">#</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">utilisez</span> <span class="n">une</span> <span class="n">connection</span> <span class="n">filaire</span><span class="p">,</span> <span class="n">sinon</span> <span class="n">voire</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.archlinux.fr/Wifi#Configuration</span>
-
-<span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">base</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span>
-
-<span class="n">genfstab</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
-</pre></div>
-
-
-<p>Allons prendre un café le temps que ça charge, puis installons les
-quelques paquets nécessaires a notre installation et au premier
-démarrage:</p>
-<div class="highlight"><pre><span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">syslinux</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="n">wireless_tools</span> <span class="n">dhclient</span>
-</pre></div>
-
-
-<p>Maintenant, passons sur notre install toute fraîche d'Arch :</p>
-<div class="highlight"><pre><span class="n">arch</span><span class="o">-</span><span class="n">chroot</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">bash</span>
-</pre></div>
-
-
-<p>configurons les bases :</p>
-<div class="highlight"><pre><span class="n">echo</span> <span class="n">HOSTNAME</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostname</span>
-
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Europe</span><span class="o">/</span><span class="n">Paris</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
-
-<span class="n">date</span> <span class="n">MMJJhhmmAAAA</span>
-
-<span class="n">hwclock</span> <span class="o">--</span><span class="n">systohc</span>
-
-<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> <span class="err">#</span> <span class="n">D</span><span class="err">é</span><span class="n">commentez</span> <span class="n">les</span> <span class="n">lignes</span> <span class="n">correspondant</span> <span class="n">au</span> <span class="n">fran</span><span class="err">ç</span><span class="n">ais</span> <span class="o">:</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">et</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8859</span><span class="o">-</span><span class="mi">1</span>
-
-<span class="n">echo</span>  <span class="err">&#39;</span><span class="n">LANG</span><span class="o">=</span><span class="s">&quot;fr_FR.UTF-8&quot;</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">conf</span>
-
-<span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
-
-<span class="n">mkinitcpio</span> <span class="o">-</span><span class="n">p</span> <span class="n">linux</span>
-</pre></div>
-
-
-<p>Enfin, vérifions que syslinux est correctement configuré :</p>
-<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">syslinux</span><span class="o">/</span><span class="n">syslinux</span><span class="p">.</span><span class="n">cfg</span> <span class="err">#</span> <span class="n">il</span> <span class="n">devrait</span> <span class="n">y</span> <span class="n">avoir</span> <span class="s">&quot;append root=/dev/sda1&quot;</span>
-</pre></div>
-
-
-<p>Si tout est correct, installons syslinux, et paramétrons un mot de passe
-root :</p>
-<div class="highlight"><pre><span class="n">syslinux</span><span class="o">-</span><span class="n">install_update</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="o">-</span><span class="n">mia</span>
-
-<span class="n">passwd</span> <span class="n">root</span>
-</pre></div>
-
-
-<p>Et voila, l'installation est terminée! Plus qu'a quitter la session et a
-redémarrer l'ordinateur!</p>
-<div class="highlight"><pre> <span class="n">exit</span>
-<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> 
-<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
-<span class="n">reboot</span>
-</pre></div>
-
-
-<p>Fini!</p>
-<p>Prenons une petite pause. La partie suivante de ce tutoriel consister en
-un paramétrage des principaux services nécessaires a l'utilisation d'un
-OS, disons, moyen :</p>
-<ul>
-<li>
-<p>Installation de MATE, le gestionnaire de bureau (voir
-<a href="http://mate-desktop.org/">http://mate-desktop.org/</a>)</p>
-</li>
-<li>
-<p>Installation de sudo et de networkmanager pour faire fonctionner les
-composants essentiels du système sans avoir a tout activer a la main a
-chaque démarrage</p>
-</li>
-<li>
-<p>Installation de SLiM comme gestionnaire de login graphique, pour
-présenter une interface plus accueillante que la console, et
-configuration de celui-ci</p>
-</li>
-<li>
-<p>Installation des principaux logiciels utiles non inclus dans mate ni
-base (yaourt, chromium, thunderbird, etc...).</p>
-</li>
-</ul>
-<p>Ce guide est bien sur optionnel, si vous souhaitez utiliser Arch avec un
-gestionnaire de bureau autre que mate, ou sans, vous pouvez vous arrêter
-ici.</p>
-<p>Bon, reprenons.</p>
-<p>Nous sommes donc sur une demande de mot de passe. Entrez donc le mot de
-passe paramétré plus haut pour le root, puis retapez la commande
-utilisée plus tôt pour vous connecter a internet.</p>
-<p>Il convient d'ajouter le dépôt de MATE pour installer ce dernier, puis
-d'effectuer l'action en question :</p>
-<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
-
-
-<p>Ici, ajoutez les lignes suivantes :</p>
-<div class="highlight"><pre><span class="k">[mate]</span>
-<span class="na">Server</span> <span class="o">=</span> <span class="s">http://repo.mate-desktop.org/archlinux/$arch</span>
-</pre></div>
-
-
-<p>Installons maintenant les paquets :</p>
-<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">mate</span> <span class="n">mate</span><span class="o">-</span><span class="n">extras</span> <span class="n">dbus</span> <span class="n">dbus</span><span class="o">-</span><span class="n">core</span> <span class="n">alsa</span> <span class="n">networkmanager</span> <span class="n">sudo</span>
-</pre></div>
-
-
-<p>Ajoutons un compte utilisateur pour utiliser les composants du système
-sans tout crasher a chaque fois :</p>
-<div class="highlight"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">users</span> <span class="o">-</span><span class="n">G</span> <span class="n">wheel</span><span class="p">,</span><span class="n">audio</span><span class="p">,</span><span class="n">optical</span><span class="p">,</span><span class="n">lp</span><span class="p">,</span><span class="n">scanner</span><span class="p">,</span><span class="n">log</span><span class="p">,</span><span class="n">power</span><span class="p">,</span><span class="n">floppy</span><span class="p">,</span><span class="n">storage</span><span class="p">,</span><span class="n">games</span><span class="p">,</span><span class="n">video</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
-<span class="n">passwd</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
-<span class="n">su</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
-</pre></div>
-
-
-<p>Il faut maintenant éditer le fichier \~/.xinitrc pour préciser a X.org
-ce que l'on veut utiliser :</p>
-<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec ck-launch-session mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span>
-</pre></div>
-
-
-<p>Profitons en pour ajouter les démons système au lancement :</p>
-<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
-
-
-<p>Ajoutez donc <code>dbus, alsa. hwclock</code> et <code>networkmanager</code> dans la section
-DAEMONS (entre les parenthèses, après crond normalement)</p>
-<div class="highlight"><pre><span class="n">DAEMONS</span><span class="o">=</span><span class="p">(</span><span class="n">syslog</span><span class="o">-</span><span class="n">ng</span> <span class="n">network</span> <span class="n">crond</span> <span class="n">dbus</span> <span class="n">alsa</span> <span class="n">hwclock</span> <span class="n">networkmanager</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Pour éviter un reboot, il est ici possible de faire un</p>
-<div class="highlight"><pre><span class="n">su</span>
-</pre></div>
-
-
-<p>Puis un</p>
-<div class="highlight"><pre> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">dbus</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">alsa</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">networkmanager</span> <span class="n">start</span>
-</pre></div>
-
-
-<p>Sinon, il est possible de juste redémarrer.<br />
-Une fois cela fait, profitez de ce moment pour vous autoriser vous même
-a utiliser sudo. Loggez vous en root, et :</p>
-<div class="highlight"><pre> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
-</pre></div>
-
-
-<p>Décommentez la ligne qui commence par # %wheel ALL=(ALL)<br />
-Sauvegardez le fichier, puis, après un <code>su *votrenom*</code>, tentez de faire
-un sudo ls /<br />
-Normalement, vous devriez avoir un listing du dossier /<br />
-Bon, maintenant, pourquoi ne pas tenter de lancer MATE?<br />
-C'est simple comme bonjour :</p>
-<div class="highlight"><pre> <span class="n">startx</span>
-</pre></div>
-
-
-<p>Et PAF! Voila un MATE desktop flambant neuf a configurer!<br />
-Avant de faire ça, retournez sur un TTY (CTRL+ALT+Fx), loggez vous,
-puis installez SLiM (<code>sudo pacman -Syu slim</code>).<br />
-Configurons le:</p>
-<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec dbus-launch mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span> <span class="o">&amp;&amp;</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">slim</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
-
-
-<p>Éditez la ligne
-"<code>sessions            xfce4,icewm-session,wmaker,blackbox</code>" de facon a
-ce qu'elle ressemble a "<code>sessions            mate-session</code>"<br />
-Puis ajoutez slim dans /etc/rc.conf, dans la section DAEMONS.<br />
-Normalement, tout devrait fonctionner!<br />
-Ah oui, et pour installer thunderbird, firefox, chromium, etc...</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">chromium</span> <span class="n">thunderbird</span> <span class="n">xchat</span> <span class="n">firefox</span> <span class="n">rhythmbox</span> <span class="n">pidgin</span> <span class="n">transmission</span><span class="o">-</span><span class="n">gtk</span> <span class="n">vlc</span>
-</pre></div>
-
-
-<p>Voila! Et comme dirait <a href="https://twitter.com/spartition">@Spartition</a>, c'est sale, mais qu'est-ce que c'est
-bon!<br />
-A plus~</p></div>
+Linux, FUSE, etc&hellip;</p></div>
 			</div>
 			<hr />
 			<section id="content" class="body">
@@ -488,13 +182,8 @@ A plus~</p></div>
 				</a>
 			</li>
 			<li>
-				<a href="//wxcafe.net/category/language/">
-					    <i class="icon-folder-open icon-large"></i>Language
-				</a>
-			</li>
-			<li>
-				<a href="//wxcafe.net/category/notes/">
-					    <i class="icon-folder-open icon-large"></i>Notes
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
 				</a>
 			</li>
 			<li>
@@ -503,28 +192,18 @@ A plus~</p></div>
 				</a>
 			</li>
 			<li>
-				<a href="//wxcafe.net/category/programmation/">
-					    <i class="icon-folder-open icon-large"></i>Programmation
-				</a>
-			</li>
-			<li>
 				<a href="//wxcafe.net/category/ranting/">
 					    <i class="icon-folder-open icon-large"></i>Ranting
 				</a>
 			</li>
 			<li>
-				<a href="//wxcafe.net/category/teaching/">
-					    <i class="icon-folder-open icon-large"></i>Teaching
-				</a>
-			</li>
-			<li>
-				<a href="//wxcafe.net/category/tutorial/">
-					    <i class="icon-folder-open icon-large"></i>Tutorial
-				</a>
-			</li>
-			<li>
 				<a href="//wxcafe.net/category/tutoriel/">
 					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
 				</a>
 			</li>
 		<hr>
@@ -545,16 +224,14 @@ A plus~</p></div>
 			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
 			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
 			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
-			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
-			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
-			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
 
 		<hr>
 
 	<!-- Links -->
 		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
 			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
-			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
 			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
 		<hr>
 

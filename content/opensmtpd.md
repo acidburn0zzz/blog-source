@@ -1,7 +1,7 @@
 Title: OpenSMTPd comme serveur mail sous debian 
 Date: 2014-11-07 13:04
 Author: Wxcafé
-Category: Tutorial
+Category: Tutoriel
 Slug: opensmtpd-debian
 
 J'avais dit il y a un certain temps que j'allais écrire un tutoriel expliquant
@@ -29,21 +29,21 @@ le serveur, des yeux pour la lecture).
 
 Or ce qui nous intéresse ici, ce n'est pas simplement d'envoyer et de recevoir
 des emails mais bien aussi de pouvoir les récupérer et les lire, et c'est pour
-ça que ce tutoriel ne parlera pas que d'OpenSMTPd mais aussi de
+ça que ce tutoriel ne parlera pas que d'OpenSMTPd mais aussi de 
 [Dovecot](http://dovecot.org/) qui fait office de serveur IMAP et
 [amavis](http://www.ijs.si/software/amavisd/)/[spamassassin](http://spamassassin.apache.org/) 
 pour filtrer les mails entrants et sortants. 
 Le schéma suivant explique la façon dont les mails sont gérés sur le système
 
-                ╭────────────────╮                    ╭──────────╮
-                │╭──────────────>│────> to filter ───>│─╮        │
-      mail in   ││               │                    │ │ amavis │
-    ───────────>│╯ OpenSMTPd  ╭──│<─── from filter<───│<╯        │
-                │             │  │                    ╰──────────╯
-      mail out  │             │  │                    ╭──────────╮
-    <───────────│<────────────┴─>│─────> to MDA ─────>│─────────>│──> to user's
-                │                │                    │ dovecot  │     mailbox
-                ╰────────────────╯                    ╰──────────╯
+				╭────────────────╮                    ╭──────────╮
+				│╭──────────────>│────> to filter ───>│─╮        │
+	  mail in   ││               │                    │ │ amavis │
+	───────────>│╯ OpenSMTPd  ╭──│<─── from filter<───│<╯        │
+				│             │  │                    ╰──────────╯
+	  mail out  │             │  │                    ╭──────────╮
+	<───────────│<────────────┴─>│─────> to MDA ─────>│─────────>│──> to user's
+				│                │                    │ dovecot  │     mailbox
+				╰────────────────╯                    ╰──────────╯
 
 Normalement, ceci devrait être a peu près clair.
 Pour expliquer vite fait, les emails entrants (venant des utilisateurs mais
@@ -73,26 +73,26 @@ Transfer Protocol), non pas sur un port mais via un socket (dans ce cas précis,
 
 Ainsi, pour reprendre le schéma présenté plus haut :
 
-                ╭───────────────╮                    ╭───────────╮
-                │╭─────────────>│──> SMTP (10026) ──>│─╮         │
-      SMTP in   ││              │                    │ │ amavis  │
-    ────────> 25│╯ OpenSMTPd ╭──│<── SMTP (10027) <──│<╯ (sign)  │
-                │            │  │                    ╰───────────╯
-      SMTP out  │            │  │
-    25 <────────│<───────────╯  │
-                ╰───────────────╯
+				╭───────────────╮                    ╭───────────╮
+				│╭─────────────>│──> SMTP (10026) ──>│─╮         │
+	  SMTP in   ││              │                    │ │ amavis  │
+	────────> 25│╯ OpenSMTPd ╭──│<── SMTP (10027) <──│<╯ (sign)  │
+				│            │  │                    ╰───────────╯
+	  SMTP out  │            │  │
+	25 <────────│<───────────╯  │
+				╰───────────────╯
 
 Pour les mails sortants; et
 
-                ╭───────────────╮                    ╭────────────╮
-                │╭─────────────>│──> SMTP (10024) ──>│─╮          │
-      SMTP in   ││              │                    │ │ amavis   │
-    ────────> 25│╯ OpenSMTPd ╭──│<── SMTP (10025) <──│<╯(filter)  │
-                │            │  │                    ╰────────────╯
-                │            │  │                    ╭────────────╮
-                │            ╰─>│──> LMTP (socket) ─>│───────────>│──> to user's
-                │               │                    │  dovecot   │     mailbox
-                ╰───────────────╯                    ╰────────────╯
+				╭───────────────╮                    ╭────────────╮
+				│╭─────────────>│──> SMTP (10024) ──>│─╮          │
+	  SMTP in   ││              │                    │ │ amavis   │
+	────────> 25│╯ OpenSMTPd ╭──│<── SMTP (10025) <──│<╯(filter)  │
+				│            │  │                    ╰────────────╯
+				│            │  │                    ╭────────────╮
+				│            ╰─>│──> LMTP (socket) ─>│───────────>│──> to user's
+				│               │                    │  dovecot   │     mailbox
+				╰───────────────╯                    ╰────────────╯
 
 Pour les mails entrants.
 
@@ -100,7 +100,7 @@ Maintenant que la théorie est claire, mettons en place tout cela. Je me baserai
 ici sur le fait que vous utilisiez une plateforme Debian ou OpenBSD. Pour
 d'autres plateformes, la configuration devrait être sensiblement la même
 
-(Vous aurez besoin de certificats SSL pour ce guide, même self-signés.
+(Vous aurez besoin de certificats SSL pour ce guide, même auto-signés.
 Si vous ne savez pas comment en créer, vous pouvez aller voir [ce
 post](http://wxcafe.net/posts/05/30/14/SSL-ou-la-securite-sur-internet/))
 
@@ -113,6 +113,7 @@ Continuons en configurant OpenSMTPd tel que nous avons vu plus haut :
 
 `/etc/smtpd.conf`
 
+	::bash
 	# This is the smtpd server system-wide configuration file.
 	# See smtpd.conf(5) for more information.
 	
@@ -183,6 +184,7 @@ POP3[s], différents guides sont trouvables facilement sur internet.
 
 `/etc/dovecot/dovecot.conf`
 
+	::bash
 	## Dovecot configuration file
 	
 	# basic config
@@ -240,12 +242,14 @@ POP3[s], différents guides sont trouvables facilement sur internet.
 
 **ATTENTION: Sous OpenBSD, remplacez**
 
+	::bash
 	passdb {
 		driver = pam
 	}
 
 **par**
 
+	::bash
 	passdb {
 		driver = bsdauth
 	}
@@ -285,6 +289,7 @@ modifications nécessaires a la fin du fichier.
 `/etc/amavis/conf.d/99-local.conf` (debian)
 `/etc/amavis.conf` (OpenBSD)
 
+	::perl
 	use strict;
 	
 	$enable_dkim_verification = 1;
@@ -353,6 +358,7 @@ tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-and-co
 mais de nombreuses autre méthodes existent.
 Il nous reste encore a configurer spamassassin :
 
+	::perl
 	#rewrite_header Subject *****SPAM*****
 	# report_safe 1
 	required_score 2.0

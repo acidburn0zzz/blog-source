@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wxcafé</title><link>//wxcafe.net/</link><description></description><atom:link href="//wxcafe.net/feeds/feed.rss.ranting.xml" rel="self"></atom:link><lastBuildDate>Mon, 17 Feb 2014 05:02:00 +0100</lastBuildDate><item><title>NAT</title><link>//wxcafe.net/posts/%D/nat/</link><description>&lt;p&gt;NAT (Network Address Translation) in a word?&lt;br /&gt;
-It's complicated. Very. Don't do it, you'd damage your brain.  &lt;/p&gt;
-&lt;p&gt;Bon, sinon, prochain article serieux vite, bisous.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">wxcafé</dc:creator><pubDate>Mon, 17 Feb 2014 05:02:00 +0100</pubDate><guid>tag:wxcafe.net,2014-02-17:posts/%D/nat/</guid></item><item><title>Pourquoi je vais quitter linux pour passer a FreeBSD.</title><link>//wxcafe.net/posts/%D/pourquoi-je-vais-quitter-linux-pour-passer-a-freebsd/</link><description>&lt;p&gt;&lt;em&gt;This is subject to debate, and as most of the actors in this field are
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wxcafé</title><link>//wxcafe.net/</link><description></description><atom:link href="//wxcafe.net/feeds/feed.rss.ranting.xml" rel="self"></atom:link><lastBuildDate>Mon, 17 Feb 2014 05:02:00 +0100</lastBuildDate><item><title>NAT</title><link>//wxcafe.net/posts/nat/</link><description>&lt;p&gt;NAT (Network Address Translation) in a word?&lt;br /&gt;
+It&amp;rsquo;s complicated. Very. Don&amp;rsquo;t do it, you&amp;rsquo;d damage your brain.  &lt;/p&gt;
+&lt;p&gt;Bon, sinon, prochain article serieux vite, bisous.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">wxcafé</dc:creator><pubDate>Mon, 17 Feb 2014 05:02:00 +0100</pubDate><guid>tag:wxcafe.net,2014-02-17:posts/nat/</guid></item><item><title>Pourquoi je vais quitter linux pour passer a FreeBSD.</title><link>//wxcafe.net/posts/pourquoi-je-vais-quitter-linux-pour-passer-a-freebsd/</link><description>&lt;p&gt;&lt;em&gt;This is subject to debate, and as most of the actors in this field are
 not French-speaker, there is an English version of this text &lt;a href="http://data.wxcafe.net/archives/126"&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bon, voila. J'ai passé le cap. Je suis sous GNU/Linux depuis un certain
+&lt;p&gt;Bon, voila. J&amp;rsquo;ai passé le cap. Je suis sous GNU/Linux depuis un certain
 temps, maintenant, et depuis un certain temps je remarque des
-changements malvenus. Bien entendu, au début, je n'avais pas les
+changements malvenus. Bien entendu, au début, je n&amp;rsquo;avais pas les
 connaissances nécessaires pour comprendre ne serait-ce que ces
 modifications existaient. Et puis certaines sont arrivées avant que je
-n'ai même idée que quelque chose dans mon système d'exploitation avait
+n&amp;rsquo;ai même idée que quelque chose dans mon système d&amp;rsquo;exploitation avait
 cette fonction la. Par exemple, udev, ou policykit/consolekit/. A
-l'époque, je n'avais aucune idée de la façon dont les disques étaient
-montés sur mon système. Le premier système non-Windows que j'ai utilisé
+l&amp;rsquo;époque, je n&amp;rsquo;avais aucune idée de la façon dont les disques étaient
+montés sur mon système. Le premier système non-Windows que j&amp;rsquo;ai utilisé
 fut Ubuntu 9.10 Karmic Koala, et il était encore trop tôt pour que je
 cherche a démonter le système pour comprendre comment il fonctionnait en
-profondeur. Cependant, avec le temps, les connaissances s'accumulant et
-mon niveau de compréhension du système s'améliorant, j'ai commencé a
-remarquer que certain bouts de l'OS ne collaient pas exactement avec les
-autres. Bien sur, je ne saurais dire si cette réalisation s'est faite a
-cause de la recrudescence de ces bouts d'OS, ou bien juste a cause de ma
-compréhension plus poussée. Toujours est-il que ces petits bouts d'OS ne
+profondeur. Cependant, avec le temps, les connaissances s&amp;rsquo;accumulant et
+mon niveau de compréhension du système s&amp;rsquo;améliorant, j&amp;rsquo;ai commencé a
+remarquer que certain bouts de l&amp;rsquo;OS ne collaient pas exactement avec les
+autres. Bien sur, je ne saurais dire si cette réalisation s&amp;rsquo;est faite a
+cause de la recrudescence de ces bouts d&amp;rsquo;OS, ou bien juste a cause de ma
+compréhension plus poussée. Toujours est-il que ces petits bouts d&amp;rsquo;OS ne
 s’adaptant pas au reste du système se faisaient de plus en plus visible.
-Et puis, un jour, j'en ai eu marre de voir unity sur ma machine, et j'ai
-choisi de passer a Archlinux. C'était avant le passage a systemd. Ce
-système me convenait bien. Si je n'installais pas Gnome, ce que je ne
+Et puis, un jour, j&amp;rsquo;en ai eu marre de voir unity sur ma machine, et j&amp;rsquo;ai
+choisi de passer a Archlinux. C&amp;rsquo;était avant le passage a systemd. Ce
+système me convenait bien. Si je n&amp;rsquo;installais pas Gnome, ce que je ne
 comptais pas faire, il ne me forçait pas a installer un *kit
-quelconque, ni dbus. Oui, udev était toujours la, mais c'était le moins
+quelconque, ni dbus. Oui, udev était toujours la, mais c&amp;rsquo;était le moins
 envahissant de ceux la.&lt;/p&gt;
 &lt;p&gt;Mais Archlinux est passé a systemd. Attention hein, je ne critique ici
 ni systemd, ni udev, ni même les &lt;em&gt;kit, et surtout pas Archlinux. Les
 premiers sont probablement très efficaces dans leur domaine, et le
-second n'a pas &lt;strong&gt;vraiment&lt;/strong&gt; eu le choix, rapport a la philosophie de la
-distribution d'avoir au plus vite les dernières versions de tout.
+second n&amp;rsquo;a pas &lt;strong&gt;vraiment&lt;/strong&gt; eu le choix, rapport a la philosophie de la
+distribution d&amp;rsquo;avoir au plus vite les dernières versions de tout.
 Cependant, systemd, tout comme udev et les &lt;/em&gt;kits (bien que ce ne soient
-pas les seuls a faire ça...) ont un problème très précis, qui n'importe
+pas les seuls a faire ça&amp;hellip;) ont un problème très précis, qui n&amp;rsquo;importe
 pas a tout le monde, mais qui est très gênant pour ceux a qui il
 importe, et ce problème est que ces systèmes ne respectent absolument
 pas la philosophie UNIX. La philosophie UNIX, pour rappel, se résume en
@@ -42,332 +42,174 @@ ces 9 principes :&lt;/p&gt;
 &lt;li&gt;Ce qui est petit est beau&lt;/li&gt;
 &lt;li&gt;Faites en sorte que chaque programme fasse une chose, bien.&lt;/li&gt;
 &lt;li&gt;Faites un prototype aussi vite que possible&lt;/li&gt;
-&lt;li&gt;Choisissez la portabilité plutôt que l'efficacité&lt;/li&gt;
+&lt;li&gt;Choisissez la portabilité plutôt que l&amp;rsquo;efficacité&lt;/li&gt;
 &lt;li&gt;Stockez les données dans des fichiers textes.&lt;/li&gt;
 &lt;li&gt;Utilisez ce qui existe déjà a votre avantage. [&lt;strong&gt;1&lt;/strong&gt;]&lt;/li&gt;
 &lt;li&gt;Utilisez des scripts shells pour faciliter la portabilité et la
     réutilisation.&lt;/li&gt;
-&lt;li&gt;Évitez les UI qui "capturent" l'utilisateur.&lt;/li&gt;
+&lt;li&gt;Évitez les UI qui &amp;ldquo;capturent&amp;rdquo; l&amp;rsquo;utilisateur.&lt;/li&gt;
 &lt;li&gt;Faites de chaque programme un filtre.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Alors bien entendu, un système d'exploitation est fait pour évoluer, et
-on pourrait penser qu'UNIX a fait son temps. Cependant, ce n'est pas
-exactement la façon dont l'informatique fonctionne. Effectivement, les
-standards, les systèmes d'exploitation, les logiciels, tout doit évoluer
-- ou mourir - et UNIX ne fait pas exception a la règle. Mais ce n'est
-pas d'UNIX que nous parlons ici. C'est de la &lt;em&gt;philosophie&lt;/em&gt; UNIX. Et
-celle-ci n'a pas fait son temps, &lt;strong&gt;elle a fait ses preuves.&lt;/strong&gt; La
-philosophie UNIX, en plus d'être efficace sur le papier, a aussi 44 ans
-de tests derrière elle, et fonctionne aussi bien qu'au premier jour.&lt;br /&gt;
-La philosophie UNIX est aussi et surtout une garantie d'utilisabilité
+&lt;p&gt;Alors bien entendu, un système d&amp;rsquo;exploitation est fait pour évoluer, et
+on pourrait penser qu&amp;rsquo;UNIX a fait son temps. Cependant, ce n&amp;rsquo;est pas
+exactement la façon dont l&amp;rsquo;informatique fonctionne. Effectivement, les
+standards, les systèmes d&amp;rsquo;exploitation, les logiciels, tout doit évoluer
+- ou mourir - et UNIX ne fait pas exception a la règle. Mais ce n&amp;rsquo;est
+pas d&amp;rsquo;UNIX que nous parlons ici. C&amp;rsquo;est de la &lt;em&gt;philosophie&lt;/em&gt; UNIX. Et
+celle-ci n&amp;rsquo;a pas fait son temps, &lt;strong&gt;elle a fait ses preuves.&lt;/strong&gt; La
+philosophie UNIX, en plus d&amp;rsquo;être efficace sur le papier, a aussi 44 ans
+de tests derrière elle, et fonctionne aussi bien qu&amp;rsquo;au premier jour.&lt;br /&gt;
+La philosophie UNIX est aussi et surtout une garantie d&amp;rsquo;utilisabilité
 et de simplicité pour les administrateurs systèmes, pour les
-développeurs, bref pour tous ceux qui font de l'informatique
-&lt;em&gt;sérieusement&lt;/em&gt; (je ne dis pas que les autres métiers de l'informatique
+développeurs, bref pour tous ceux qui font de l&amp;rsquo;informatique&lt;em&gt;sérieusement&lt;/em&gt; (je ne dis pas que les autres métiers de l&amp;rsquo;informatique
 ne sont pas sérieux, je prend juste ceux-ci comme exemples parce que ce
 sont ceux qui sont les plus proches du système).&lt;/p&gt;
-&lt;p&gt;Tous OS se doit d'avoir un système standardisé pour faire communiquer
+&lt;p&gt;Tous OS se doit d&amp;rsquo;avoir un système standardisé pour faire communiquer
 les programmes entre eux. UNIX a un système de pipes, des sortes de
-fichiers spéciaux permettant d'échanger des informations. C'est
-efficace, ça respecte le "tout est fichier", c'est standard, c'est
+fichiers spéciaux permettant d&amp;rsquo;échanger des informations. C&amp;rsquo;est
+efficace, ça respecte le &amp;ldquo;tout est fichier&amp;rdquo;, c&amp;rsquo;est standard, c&amp;rsquo;est
 simple a comprendre, bref, ça fonctionne parfaitement. Dbus vient
-remplacer ça, avec une interface qui n'est explicitement pas faite pour
-être utilisée a la ligne de commande mais a l'aide d'APIs, et un
-programme monolithique qui effectue sa tache d'une façon complètement
-obscure pour l'utilisateur. Alors bien sur, il l'effectue d'une façon
-efficace, cette tache. Oui, ça va plus vite qu'avant. Oui, c'est plus
-"rangé", ça fait moins "fouillis". Mais c'est moins efficace. C'est
-&lt;em&gt;beaucoup&lt;/em&gt; moins utilisable pour l'utilisateur final. C'est
-horriblement chiant pour les sysadmins, parce qu'ils ne peuvent plus
-lire facilement les échanges entre programmes. C'est peu pratique, en
+remplacer ça, avec une interface qui n&amp;rsquo;est explicitement pas faite pour
+être utilisée a la ligne de commande mais a l&amp;rsquo;aide d&amp;rsquo;APIs, et un
+programme monolithique qui effectue sa tache d&amp;rsquo;une façon complètement
+obscure pour l&amp;rsquo;utilisateur. Alors bien sur, il l&amp;rsquo;effectue d&amp;rsquo;une façon
+efficace, cette tache. Oui, ça va plus vite qu&amp;rsquo;avant. Oui, c&amp;rsquo;est plus
+&amp;ldquo;rangé&amp;rdquo;, ça fait moins &amp;ldquo;fouillis&amp;rdquo;. Mais c&amp;rsquo;est moins efficace. C&amp;rsquo;est&lt;em&gt;beaucoup&lt;/em&gt; moins utilisable pour l&amp;rsquo;utilisateur final. C&amp;rsquo;est
+horriblement chiant pour les sysadmins, parce qu&amp;rsquo;ils ne peuvent plus
+lire facilement les échanges entre programmes. C&amp;rsquo;est peu pratique, en
 fin de compte. Et ça ne respecte pas du tout la philosophie UNIX.&lt;br /&gt;
 Systemd prend le même parti de créer une interface unifiée, accessible
 via des appels a des APIs uniquement, complètement obscure, extrêmement
 abstraite, bien entendu monolithique, et très peu ouverte a la
-modification par l'utilisateur final. Alors oui, il parait que ça
-augmente la vitesse de boot. Eh bien, au risque d'en choquer quelques
+modification par l&amp;rsquo;utilisateur final. Alors oui, il parait que ça
+augmente la vitesse de boot. Eh bien, au risque d&amp;rsquo;en choquer quelques
 uns, je préfère avoir un système qui boote &lt;em&gt;légèrement&lt;/em&gt; plus lentement
 et que je puisse modifier facilement, et qui soit ouvert, compréhensible
-et distribué. C'est presque comme si les projets freedesktop.org avaient
+et distribué. C&amp;rsquo;est presque comme si les projets freedesktop.org avaient
 pour but de remplacer la base UNIX de linux en créant un système
-concurrent, bâtard, bâti sur le kernel Linux mais n'employant plus les
-systèmes basiques d'UNIX.&lt;/p&gt;
-&lt;p&gt;Le problème est qu'il est facilement visible que la direction prise par
-la communauté Linux n'est pas celle du retour sur les systèmes UNIX ni
+concurrent, bâtard, bâti sur le kernel Linux mais n&amp;rsquo;employant plus les
+systèmes basiques d&amp;rsquo;UNIX.&lt;/p&gt;
+&lt;p&gt;Le problème est qu&amp;rsquo;il est facilement visible que la direction prise par
+la communauté Linux n&amp;rsquo;est pas celle du retour sur les systèmes UNIX ni
 celle du développement de solutions respectant la philosophie UNIX, mais
-remises au gout du jour (?), mais est bien d'accepter et de pousser les
+remises au gout du jour (?), mais est bien d&amp;rsquo;accepter et de pousser les
 changements apportés par les projets freedesktop.org directement dans le
 cœur du système lui même. Ainsi, Fedora (très près de Red Hat, dont font
 partie de nombreux développeurs de ces projets), a déjà adopté tous ces
-changements (archlinux aussi, mais pour d'autres raisons...), et on peut
-compter sur le fait que les autres distributions l'adopteront un jour ou
-l'autre.&lt;/p&gt;
-&lt;p&gt;Bon, maintenant que nous avons, si ce n'est démontré la nocivité de ces
-systèmes, tout du moins exprimé les raisons qui font qu'ils me
-déplaisent, on pourrait penser qu'il suffit de passer a une distribution
-n'incluant pas systemd, voire a une distribution n'incluant pas du tout
+changements (archlinux aussi, mais pour d&amp;rsquo;autres raisons&amp;hellip;), et on peut
+compter sur le fait que les autres distributions l&amp;rsquo;adopteront un jour ou
+l&amp;rsquo;autre.&lt;/p&gt;
+&lt;p&gt;Bon, maintenant que nous avons, si ce n&amp;rsquo;est démontré la nocivité de ces
+systèmes, tout du moins exprimé les raisons qui font qu&amp;rsquo;ils me
+déplaisent, on pourrait penser qu&amp;rsquo;il suffit de passer a une distribution
+n&amp;rsquo;incluant pas systemd, voire a une distribution n&amp;rsquo;incluant pas du tout
 de contenus freedesktop.org, et de vivre avec le fait de ne pas être sur
 archlinux. Cependant, avec un peu de réflexion, on voit que si des
 distributions comme archlinux et Fedora ont adopté systemd (et
-qu'OpenSUSE est en train de l’intégrer), il est probable que cela
+qu&amp;rsquo;OpenSUSE est en train de l’intégrer), il est probable que cela
 devienne un standard au fil des années, et que seuls survivent systemd
-et upstart, le gestionnaire de démarrage d'ubuntu, qui ne changera
+et upstart, le gestionnaire de démarrage d&amp;rsquo;ubuntu, qui ne changera
 probablement pas (je les vois mal revenir en arrière sur ce point.)
-Toujours est-il que l'init héritée du System V semble condamnée a mourir
+Toujours est-il que l&amp;rsquo;init héritée du System V semble condamnée a mourir
 sous Linux. Il pourrait être judicieux de passer sous debian squeeze,
 qui ne recevra probablement jamais la mise a jour, ou a wheezy, qui ne
 la recevra probablement que dans 2/3 ans. Cependant, cette période est
-toujours trop courte, et met sur mon système d'exploitation une date
-d'expiration, chose qui ne me plait que moyennement. Non, la solution
-est de passer sous un système autre, qui ait son propre système d'init
+toujours trop courte, et met sur mon système d&amp;rsquo;exploitation une date
+d&amp;rsquo;expiration, chose qui ne me plait que moyennement. Non, la solution
+est de passer sous un système autre, qui ait son propre système d&amp;rsquo;init
 (ou qui ne risque pas de passer sous systemd). Dans ce cas, deux options
-principales s'ouvrent a moi: OpenSolaris et *BSD. Minix n'est pas
-vraiment un choix, vu le peu de programmes qu'il permet de faire
-fonctionner et le fait qu'il ne soit disponible que sur i386, ce qui
-n'est pas vraiment avantageux au vu de mon système en x86_64. Haiku
-n'est pas un choix non plus, puisque le but est de rester dans une
+principales s&amp;rsquo;ouvrent a moi: OpenSolaris et *BSD. Minix n&amp;rsquo;est pas
+vraiment un choix, vu le peu de programmes qu&amp;rsquo;il permet de faire
+fonctionner et le fait qu&amp;rsquo;il ne soit disponible que sur i386, ce qui
+n&amp;rsquo;est pas vraiment avantageux au vu de mon système en x86_64. Haiku
+n&amp;rsquo;est pas un choix non plus, puisque le but est de rester dans une
 optique UNIX.&lt;/p&gt;
-&lt;p&gt;OpenSolaris est un système d'exploitation tout a fait valable. Je n'ai
+&lt;p&gt;OpenSolaris est un système d&amp;rsquo;exploitation tout a fait valable. Je n&amp;rsquo;ai
 en théorie aucun problème sur cet OS, sauf que certains choix de design
-ne correspondent pas du tout a l'idée que j'ai d'un OS. En effet,
+ne correspondent pas du tout a l&amp;rsquo;idée que j&amp;rsquo;ai d&amp;rsquo;un OS. En effet,
 OpenSolaris ressemble assez a Debian dans sa vision du fonctionnement de
 ses outils, avec des paquets modifiés pour les rendre plus simples a
 utiliser (fichiers de configuration fournis par défaut, par exemple, et
-autres patchs "release-only"), et une tendance a faire des scripts et
-des outils installés par défaut pour tout et n'importe quoi. Bref, cela
-n'est pas le sujet. Il convient aussi de voir qu'avec la récente
+autres patchs &amp;ldquo;release-only&amp;rdquo;), et une tendance a faire des scripts et
+des outils installés par défaut pour tout et n&amp;rsquo;importe quoi. Bref, cela
+n&amp;rsquo;est pas le sujet. Il convient aussi de voir qu&amp;rsquo;avec la récente
 acquisition de Sun par Oracle, il est possible que le projet OpenSolaris
-n'ait pas de très beaux jours devant lui (la &lt;a href="http://hub.opensolaris.org/bin/view/Main/"&gt;page d’accueil&lt;/a&gt; du
-projet affiche d'ailleurs un ÉNORME logo Oracle, du meilleur gout.)&lt;/p&gt;
-&lt;p&gt;Il reste donc *BSD. Pourquoi choisir FreeBSD plutôt qu'OpenBSD, NetBSD
-ou DragonFlyBSD (pour ne citer que les plus connus) ? Et bien c'est
+n&amp;rsquo;ait pas de très beaux jours devant lui (la &lt;a href="http://hub.opensolaris.org/bin/view/Main/"&gt;page d’accueil&lt;/a&gt; du
+projet affiche d&amp;rsquo;ailleurs un ÉNORME logo Oracle, du meilleur gout.)&lt;/p&gt;
+&lt;p&gt;Il reste donc *BSD. Pourquoi choisir FreeBSD plutôt qu&amp;rsquo;OpenBSD, NetBSD
+ou DragonFlyBSD (pour ne citer que les plus connus) ? Et bien c&amp;rsquo;est
 simple : pour aucune raison particulière. OpenBSD et NetBSD ont pour
-réputation d'être orientées sécurité, et d'après ce que j'ai pu en voir
-DFBSD ressemble aussi au système de l'assistance a l'user a outrance
-décris plus haut. Mais la vérité est que je n'ai pas fait suffisamment
+réputation d&amp;rsquo;être orientées sécurité, et d&amp;rsquo;après ce que j&amp;rsquo;ai pu en voir
+DFBSD ressemble aussi au système de l&amp;rsquo;assistance a l&amp;rsquo;user a outrance
+décris plus haut. Mais la vérité est que je n&amp;rsquo;ai pas fait suffisamment
 de recherches et que FreeBSD ne va me voir arriver que par hasard, parce
-qu'entre toutes les BSD ca me semble la plus sympa et la plus agréable a
-utiliser, plus le fait que le système de ports me convient bien (j'aime
+qu&amp;rsquo;entre toutes les BSD ca me semble la plus sympa et la plus agréable a
+utiliser, plus le fait que le système de ports me convient bien (j&amp;rsquo;aime
 pouvoir configurer mes logiciels de façon assez profonde.)&lt;/p&gt;
-&lt;p&gt;Voila, c'est mon avis sur ce "problème" actuel du monde de Linux. Bien
+&lt;p&gt;Voila, c&amp;rsquo;est mon avis sur ce &amp;ldquo;problème&amp;rdquo; actuel du monde de Linux. Bien
 entendu, je continuerai a utiliser Linux, et je ne peux qu’espérer que
 les systèmes tels que systemd ou dbus ne disparaissent, ou tout du moins
-n'apparaissent jamais chez certaines distributions, créant de ce fait un
+n&amp;rsquo;apparaissent jamais chez certaines distributions, créant de ce fait un
 choix pour les utilisateurs.&lt;br /&gt;
-[1]: Je n'ai pas trouvé de traduction satisfaisante a "software leveraging", mais l'idée est la...*&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Mon, 04 Feb 2013 17:41:00 +0100</pubDate><guid>tag:wxcafe.net,2013-02-04:posts/%D/pourquoi-je-vais-quitter-linux-pour-passer-a-freebsd/</guid></item><item><title>Update et pensées a propos du Raspberry Pi</title><link>//wxcafe.net/posts/%D/update-et-pensees-a-propos-du-raspberry-pi/</link><description>&lt;p&gt;Bon.&lt;br /&gt;
-J'ai annoncé il y a environ 20 jours que j'avais pour projet de faire
+[1]: Je n&amp;rsquo;ai pas trouvé de traduction satisfaisante a &amp;ldquo;software leveraging&amp;rdquo;, mais l&amp;rsquo;idée est la&amp;hellip;*&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Mon, 04 Feb 2013 17:41:00 +0100</pubDate><guid>tag:wxcafe.net,2013-02-04:posts/pourquoi-je-vais-quitter-linux-pour-passer-a-freebsd/</guid></item><item><title>Update et pensées a propos du Raspberry Pi</title><link>//wxcafe.net/posts/update-et-pensees-a-propos-du-raspberry-pi/</link><description>&lt;p&gt;Bon.&lt;br /&gt;
+J&amp;rsquo;ai annoncé il y a environ 20 jours que j&amp;rsquo;avais pour projet de faire
 une Piratebox basée sur un Raspberry Pi, &lt;del&gt;astucieusement&lt;/del&gt; nommée
-PiRatBox. Il se trouve qu'après de nombreux essais, un problème
-récurrent apparait: le Raspberry Pi n'est pas capable de fournir assez
+PiRatBox. Il se trouve qu&amp;rsquo;après de nombreux essais, un problème
+récurrent apparait: le Raspberry Pi n&amp;rsquo;est pas capable de fournir assez
 de courant par défaut pour faire fonctionner a la fois un disque dur et
 une antenne WiFi.&lt;br /&gt;
-Alors, autant il me semble évident qu'avec une
-alimentation provenant d'un port USB a 2A (max), je n'avais pas
-énormément de chances d'avoir 2A sur chacun des ports host du Raspi,
+Alors, autant il me semble évident qu&amp;rsquo;avec une
+alimentation provenant d&amp;rsquo;un port USB a 2A (max), je n&amp;rsquo;avais pas
+énormément de chances d&amp;rsquo;avoir 2A sur chacun des ports host du Raspi,
 autant avoir moins de 250 mA sur chacun de ces ports me semble un tout
 petit peu exagéré en terme de rentabilité.  &lt;/p&gt;
 &lt;p&gt;De même, le fait de ne pas pouvoir désactiver le port Ethernet (ne me
-servant a rien) (vous savez, celui qui est monté en USB...), qui
+servant a rien) (vous savez, celui qui est monté en USB&amp;hellip;), qui
 consomme énormément, est assez louche. Il devrait toujours être possible
 de désactiver une device USB, me semble-t-il, au niveau logiciel. La,
-bien qu'il soit surement possible de la désactiver au niveau du kernel,
-il n'est pas &lt;strong&gt;simplement&lt;/strong&gt; possible de la "débrancher". Ce qui est bien
+bien qu&amp;rsquo;il soit surement possible de la désactiver au niveau du kernel,
+il n&amp;rsquo;est pas &lt;strong&gt;simplement&lt;/strong&gt; possible de la &amp;ldquo;débrancher&amp;rdquo;. Ce qui est bien
 chiant, étant donné le besoin évident de puissance électrique dans
 lequel on se retrouve.  &lt;/p&gt;
-&lt;p&gt;Bon, je dois avouer n'avoir pas testé de lancer les différents services
+&lt;p&gt;Bon, je dois avouer n&amp;rsquo;avoir pas testé de lancer les différents services
 composant le système des piratebox sous arch, pour la simple &lt;del&gt;et
-bonne&lt;/del&gt; raison qu'arch utilise systemd et qu'il n'existe pas de wrapper
-systemd pour les daemons piratebox, et que j'ai la flemme d'en faire,
+bonne&lt;/del&gt; raison qu&amp;rsquo;arch utilise systemd et qu&amp;rsquo;il n&amp;rsquo;existe pas de wrapper
+systemd pour les daemons piratebox, et que j&amp;rsquo;ai la flemme d&amp;rsquo;en faire,
 parce que systemd est une horreur a utiliser avec les scripts init. Donc
-non, j'utiliserai debian. Le problème d'utiliser debian dans ce cas
+non, j&amp;rsquo;utiliserai debian. Le problème d&amp;rsquo;utiliser debian dans ce cas
 précis est que apt/dpkg a une gestion des dépendances dans un sens mais
-pas dans l'autre, en ce sens que si on installe un package "haut", c'est
+pas dans l&amp;rsquo;autre, en ce sens que si on installe un package &amp;ldquo;haut&amp;rdquo;, c&amp;rsquo;est
 a dire dépendant de plusieurs autres packages, apt/dpkg se charge
-efficacement d'installer toutes les dépendances nécessaires, tandis que
-si on désinstalle un package "bas", c'est a dire sur lequel de nombreux
+efficacement d&amp;rsquo;installer toutes les dépendances nécessaires, tandis que
+si on désinstalle un package &amp;ldquo;bas&amp;rdquo;, c&amp;rsquo;est a dire sur lequel de nombreux
 autres packages dépendent, apt/dpkg ne désinstalle pas ces packages
-"hauts", ce qui pose un vrai problème quand on se retrouve sur un
-Raspberry Pi, puisqu'il n'y a pas de moyen "facile" de choisir ce qui
-sera installé sur le système avant l'installation proprement dite
-(puisque le moyen "universel" d'installation sur Raspberry Pi est le dd
+&amp;ldquo;hauts&amp;rdquo;, ce qui pose un vrai problème quand on se retrouve sur un
+Raspberry Pi, puisqu&amp;rsquo;il n&amp;rsquo;y a pas de moyen &amp;ldquo;facile&amp;rdquo; de choisir ce qui
+sera installé sur le système avant l&amp;rsquo;installation proprement dite
+(puisque le moyen &amp;ldquo;universel&amp;rdquo; d&amp;rsquo;installation sur Raspberry Pi est le dd
 vers la SD qui sert de disque système.)&lt;/p&gt;
-&lt;p&gt;Il y a &lt;strong&gt;énormément&lt;/strong&gt; d'autres critiques que l'ont pourrait faire
-concernant le Raspberry Pi. Son système de démarrage a s'arracher les
+&lt;p&gt;Il y a &lt;strong&gt;énormément&lt;/strong&gt; d&amp;rsquo;autres critiques que l&amp;rsquo;ont pourrait faire
+concernant le Raspberry Pi. Son système de démarrage a s&amp;rsquo;arracher les
 cheveux, par exemple. En effet, plutôt que de faire comme tout pc
 normalement constitué ou la partie calcul démarre, lance le bootloader,
-cherche le kernel de l'OS qui lui même se lance, initialise le hardware,
-etc..., a un système bâtard du au fait que la puce au centre de la carte
+cherche le kernel de l&amp;rsquo;OS qui lui même se lance, initialise le hardware,
+etc&amp;hellip;, a un système bâtard du au fait que la puce au centre de la carte
 est a la base une puce graphique a laquelle on a greffé un cœur de
-calcul (probablement au fond d'une cour d'immeuble, dans les quartiers
-pauvres de Bratislava, vu la propreté de la greffe...), et le moyen le
-plus efficace qu'aient trouvé les personnes ayant implémenté cette
+calcul (probablement au fond d&amp;rsquo;une cour d&amp;rsquo;immeuble, dans les quartiers
+pauvres de Bratislava, vu la propreté de la greffe&amp;hellip;), et le moyen le
+plus efficace qu&amp;rsquo;aient trouvé les personnes ayant implémenté cette
 atrocité de gérer le boot est donc de faire démarrer le cœur graphique
 en premier, ce dernier exécute un code propriétaire pour démarrer le
 cœur de calcul, qui a son tour lance le bootloader qui cherche le kernel
-etc...  &lt;/p&gt;
+etc&amp;hellip;  &lt;/p&gt;
 &lt;p&gt;Ce qui non seulement complique énormément le boot, non seulement ajoute
-du code propriétaire a un projet se disant libre, mais en plus n'est
-&lt;strong&gt;visiblement&lt;/strong&gt; pas fait pour être utilisé de cette manière. Le hack,
-oui, mais uniquement quand c'est bien réalisé, sinon je dis non.  &lt;/p&gt;
-&lt;p&gt;Enfin, le projet que j'avais est toujours en cours de réalisation. Je
-le terminerai dès que j'aurai récupéré les outils nécessaires pour
+du code propriétaire a un projet se disant libre, mais en plus n&amp;rsquo;est&lt;strong&gt;visiblement&lt;/strong&gt; pas fait pour être utilisé de cette manière. Le hack,
+oui, mais uniquement quand c&amp;rsquo;est bien réalisé, sinon je dis non.  &lt;/p&gt;
+&lt;p&gt;Enfin, le projet que j&amp;rsquo;avais est toujours en cours de réalisation. Je
+le terminerai dès que j&amp;rsquo;aurai récupéré les outils nécessaires pour
 monter mon alimentation personnalisée pour le Raspberry Pi. Et une fois
 que cela sera fait, ce Raspi restera une Piratebox pour le reste de sa
-vie. Les problèmes qu'il m'a posé, qu'il n'aurait pas du me poser, m'ont
-trop agacé pour que j'aie envie de le sortir et de jouer avec une fois
+vie. Les problèmes qu&amp;rsquo;il m&amp;rsquo;a posé, qu&amp;rsquo;il n&amp;rsquo;aurait pas du me poser, m&amp;rsquo;ont
+trop agacé pour que j&amp;rsquo;aie envie de le sortir et de jouer avec une fois
 sa mission remplie.  &lt;/p&gt;
-&lt;p&gt;Dommage.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Sun, 27 Jan 2013 01:55:00 +0100</pubDate><guid>tag:wxcafe.net,2013-01-27:posts/%D/update-et-pensees-a-propos-du-raspberry-pi/</guid></item><item><title>La séparation des églises et de l'état, une idée qu'elle est bonne?</title><link>//wxcafe.net/posts/%D/la-separation-des-eglises-et-de-letat-une-idee-quelle-est-bonne/</link><description>&lt;p&gt;Aujourd'hui, et depuis 1901 (j'ai révisé mon histoire récemment), il
-existe une loi dite de séparation des églises et de l'état, qui consiste
-a faire en sorte que l'état n'ait rien a voir avec les differentes
-églises, pour de sombres histoires d'indépendance et de laïcité.
-(principes qui sont aujourd'hui en voie de disparition, mais ce n'est
-pas le propos qui nous occupe ici). Cela dit, cette bonne idée
-politique, si elle a évité a ses auteurs de nombreux tracas, et leur a
-surement permis de conserver une tête en état de fonctionnement bien
-reliée a leur colonne vertébrale, ne vous interesse que moyennement, et
-vous voudriez retourner répondre a vos mails sur Gmail et micro-blogguer
-(quel mot horrible...) sur twitter?&lt;/p&gt;
-&lt;p&gt;Ça tombe bien, vous abordez justement le sujet véritable de cet article
-(non, mon blog n'est pas devenu un histoblog, désolé aux déçus...), a savoir 
-la centralisation qui se met progressivement en place sur internet depuis
-quelques années : Twitter, Google, Facebook, Micro$oft, Apple, tous ces
-acteurs du web (et pas que, pour certains...) ont commencé a prendre
-pour manie de centraliser vos données : pour prendre un exemple simple,
-si vous utilisez Gmail (qui depuis quelque temps, lit aussi vos mails
-pour accorder la publicité, dites adieu a votre vie privée), vous avez
-un compte Google Talk, probablement aussi un Google+.  &lt;/p&gt;
-&lt;p&gt;L'outil le plus pratique aujourd'hui pour aggreger des flux RSS est
-Google Reader, et vous l'utilisez aussi probablement. Votre téléphone
-est un android? Ah, un Nexus? Vous avez donc toutes les applications
-google installées, et Chrome mobile comme navigateur par défaut, qui est
-synchronisé avec la version qui tourne sur votre PC (via les serveurs de
-Google, bien sur). 
-Depuis peu, les recherches sur le moteur de recherche
-sont elles aussi ajoutées a votre profil, enregistrées a jamais par
-Google (qui n'est pas touchée, en tant que société américaine, par la
-"loi des 10 ans" francaise.). Vous commencez a voir le truc? Non, ne
-jetez pas ce telephone, enfin! (je refuse de rembourser tout smartphone
-ayant été perdu a cause de cet article) J'ai pris ici comme exemple
-Google, parce que c'est celui qui propose le plus de services, mais
-Apple avec iCloud, iTunes et son iPhone fait pareil, tout comme M$ avec
-WP8 et Skydrive. &lt;/p&gt;
-&lt;p&gt;Twitter et Facebook n'ont de rôle dans ce sujet qu'en ce que vous leur 
-fournissez des informations dont ils s'empressent de devenir seuls 
-propriétaires (cf les Conditions d'Utilisation de ces deux services), 
-puis de les revendre a des annonceurs faisant de la publicité
-ciblée. Le problème est simple a apprehender, vous ne voulez pas que
-l'un de ces services connaisse trop de choses sur vous (et ils recoupent
-très bien les informations venant de sources differentes), car il est 
-évident qu'ils les vendent a des entreprises peu scrupuleuses quand 
-a leurs engagements de confidentialité, quand a leurs securité 
-aussi; mais surtout parce que depuis le 11 Septembre 2001 et le 
-Patriot Act, toute entreprise américaine &lt;strong&gt;doit&lt;/strong&gt;fournir toutes ses 
-informations au gouvernement américain &lt;strong&gt;sans aucune intervention d'un 
-juge, ou de quelque institution de controle que ce soit.&lt;/strong&gt;  &lt;/p&gt;
-&lt;p&gt;Ce qui est, comme vous pouvez le comprendre, relativement
-problématique. (pour ceux qui a ce point se disent "je n'ai rien a
-cacher, donc je m'en fous si le gouvernement américain sait tout de
-moi", je vous conseille d'aller lire &lt;a href="http://www.internetactu.net/2009/03/12/la-vie-privee-un-probleme-de-vieux-cons/"&gt;cet article&lt;/a&gt; de Jean Marc
-Manach, plein de bon sens...) Pour éviter cela, vous avez plusieurs
-possibilités: utiliser des services concurrents pour tout (Facebook
-Mail, Skydrive, Twitter et Google Reader par exemple), tout en vous
-souvenant que comme ces entreprises sont toutes américaines, le
-gouvenrnement américain détient tout de même vos informations, et que ca
-lui prendra juste un peu plus de temps. &lt;/p&gt;
-&lt;p&gt;Vous pouvez aussi n'utiliser que des entreprises francaises, 
-mais cela ne regle que le problème du Patriot Act, et pas celui de 
-la revente de vos données. Et puis essayez de trouver un service équivalent 
-a Google Reader et fourni par une entreprise française, on en reparlera.
-Non, la véritable alternative, c'est d'héberger vos services vous 
-même, d'avoir votre propre serveur sur lequel vous possedez le plus 
-de services possibles, et d'utiliser des concurents ou des services 
-libres au maximum pour les autres, ceux qui ne sont pas distribuables 
-(par exemple, les cartes sont difficiles a mettre en commun, 
-or plusieurs alternatives existent: Google Maps, &lt;code&gt;&amp;lt;troll&amp;gt;&lt;/code&gt;Apple 
-Maps&lt;code&gt;&amp;lt;/troll&amp;gt;&lt;/code&gt;, Bing Maps, OpenStreetMaps, etc...).
-Beaucoup de ces services sont cependant très facilement
-décentralisables, surement parce qu'ils ont a la base étés conçus comme
-des services décentralisés. Ainsi les emails, le web, le chat (via XMPP)
-par exemple sont basés sur un système décentralisé. &lt;/p&gt;
-&lt;p&gt;De plus, votre serveur peut vous servir a beaucoup d'autres des 
-choses que vous feriez habituellement sur votre ordinateur 
-personnel: conserver une présence sur IRC, compiler du code, faire 
-du rendu vidéo, etc... En bref, un serveur peut vous servir 
-a effectuer toutes les opérations que vous effectuez sur votre 
-ordinateur sans les inconvénients de la consommation éléctrique 
-ni du bruit, mais vous permet aussi de ne dépendre aucunement
-d'une entreprise américaine, et cependant de disposer de tous les
-services utiles offerts par ces dernières. &lt;/p&gt;
-&lt;p&gt;Un serveur peut de plus vous permettre de controller parfaitement 
-tous ces services, sans aucune limitation d'aucune sorte, 
-voire de vous créer une page web. Bien entendu, il est bien plus 
-utile d'avoir un serveur si vous avez aussi un nom de domaine.
-Heureusement, ils sont peu chers et souvent fournis avec le serveur.  &lt;/p&gt;
-&lt;p&gt;Dans de prochains articles, je vous expliquerai comment louer puis
-configurer votre serveur pour qu'il serve de serveur mail (IMAP/SMTP),
-web, base de données, et proxy. Cela dit, comme c'est un serveur sous
-linux, vous pouvez l'utiliser pour a peu près n'importe quoi.&lt;br /&gt;
-Voila, a bientôt!&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Thu, 13 Dec 2012 03:08:00 +0100</pubDate><guid>tag:wxcafe.net,2012-12-13:posts/%D/la-separation-des-eglises-et-de-letat-une-idee-quelle-est-bonne/</guid></item><item><title>L'informatique a l'école</title><link>//wxcafe.net/posts/%D/linformatique-a-lecole/</link><description>&lt;p&gt;Après avoir lu &lt;a href="http://t.co/5PTfe6zu"&gt;cet article&lt;/a&gt; paru sur écrans.fr, et au vu des
-nombreuses réflexions que j'ai eu sur ce sujet au cours des années, je
-commence a me demander si la réponse logique ne serait pas d'enseigner
-les bases de l'informatique (bases d’électronique, de programmation et
-de logique formelle) dès le collège.&lt;/p&gt;
-&lt;p&gt;En effet, l'exemple qui me revient toujours est celui des technoprêtres
-de warhammer 40 000, dans un univers ou la technologie est ritualisée et
-incomprise même des plus savants, qui se contentent de reproduire ce qui
-existe, et parfois par chance de retrouver un schéma explicatif lisible
-par une machine, et qu'ils ne comprennent pas eux mêmes, ou toute
-technologie est ointe d'onguents sacrés, entourée d'encens avant d'être
-péniblement actionnée par des assistants ne comprenant rien a cette
-technologie (ayant lu &lt;a href="http://en.wikipedia.org/wiki/Hackers:_Heroes_of_the_Computer_Revolution"&gt;Hackers - Heroes of the Computer Revolution&lt;/a&gt; de
-Steven Levy, c'est l'ambiance que l'on retrouve quand l'auteur décrit
-l'ambiance près des machines IBM au MIT, au début de l'ouvrage), et il
-me semble que de plus en plus la société se rapproche de cela.&lt;/p&gt;
-&lt;p&gt;Cette culture de l’ingénierie, qui existait beaucoup lors des débuts de
-l'informatique (telle que décrite par exemple par Steve Wozniak dans son
-livre &lt;a href="http://en.wikipedia.org/wiki/IWoz"&gt;iWoz&lt;/a&gt;) disparait pour laisser place a une culture de la
-consommation et de l'utilisation de contenus existants, et même a une
-certaine peur de la compréhension de la technologie. Ceux qui s'y
-intéressent sont considérés comme marginaux (combien de hackers créent
-des outils sur lesquels seront construits tous les systèmes du siècle a
-venir, tels des Dennis Ritchie en puissance? Combien d'entre eux ne sont
-pas intégrés a la société dite "normale"?), et on peut souvent observer
-les réactions de peur que lancent les actions des hackers, ne serait-ce
-que dans les journaux (combien de journaux 'mainstream' ont-ils parlés
-des hackers en bien, c'est a dire tels qu'ils sont réellement, depuis
-les années 80?) ou a la télévision. &lt;/p&gt;
-&lt;p&gt;Ainsi, la culture et la connaissance de ces appareils que 
-sont les ordinateurs, qui aujourd'hui se trouvent du fond de nos 
-poches a dans l'espace en passant par l’intérieur des pacemakers 
-jusqu’à être une composante indispensable de la société, se perdent et 
-rendent ainsi la compréhension de ces appareils impossible (j'ai eu 
-la désagréable surprise récemment de voir un camarade de classe
-me poser ingénument la question "Ah, mais en fait, quand tu installes
-Linux, ça change le fond d'écran et les icônes?". Au-delà du niveau, 
-la misère de cette question est que cette personne n'avait probablement 
-aucune idée de la façon dont fonctionnait son ordinateur, a part 
-pour le fond d'écran en question et pour les fameuses icônes.) pour
-le grand public, et cet évolution crée de fait une sorte d'oligarchie de
-techno-comprenants, seuls capables de manier et de créer la technologie.&lt;/p&gt;
-&lt;p&gt;C'est pour cela qu'il me semble intéressant, important, peut être même
-requis, d'inclure au programme du collège puis du lycée des cours
-d’électronique et d'informatique tels que décrits plus haut, de façon a
-ce que les élèves comprennent le monde qui les entoure. Car c'est la le
-but du cycle scolaire secondaire, me semble-t-il, et non pas de former
-des futurs travailleurs. Sinon, pourquoi y aurait-il des cours de
-musique, d'arts plastiques, ou encore de philosophie? Si le but du cycle
-secondaire est bien d'ouvrir l'esprit des élèves sur le monde et sur ce
-qui les entoure, alors les cours sur l'informatique s'imposent comme une
-évidence, puisque ceux-ci nous entourent aujourd'hui bien plus que quoi
-que soit d'autre...&lt;/p&gt;
-&lt;p&gt;Ces cours seraient susceptibles de s’insérer en un mélange entre des
-cours de technologie (qui aujourd'hui sont bien plus orientés physique
-et machines-outils qu'informatique ou électronique, alors que la
-technologie d'aujourd'hui et vraisemblablement de demain aussi est
-l'informatique) et de physique, pour le côté électronique, et de façon a
-donner enfin aux cours de physique un intérêt quelconque, sortir au delà
-de la théorie et de l'abstraction complète que sont actuellement ces
-cours et passer un peu dans la réalisation, avec des arduinos par
-exemple.&lt;/p&gt;
-&lt;p&gt;Vous aussi, intéressez vous a cela, de façon a ce que les jeunes ne
-finissent pas par ne rien comprendre a ce qui est aujourd'hui l'une des
-composante les plus importantes du monde tel qu'il est programmé.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Mon, 15 Oct 2012 20:34:00 +0200</pubDate><guid>tag:wxcafe.net,2012-10-15:posts/%D/linformatique-a-lecole/</guid></item></channel></rss>
+&lt;p&gt;Dommage.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafe</dc:creator><pubDate>Sun, 27 Jan 2013 01:55:00 +0100</pubDate><guid>tag:wxcafe.net,2013-01-27:posts/update-et-pensees-a-propos-du-raspberry-pi/</guid></item></channel></rss>

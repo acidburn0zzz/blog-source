@@ -1,7 +1,7 @@
 Title: Update
 Date: 2013-01-05 18:32
 Author: Wxcafe
-Category: Notes 
+Category: Note
 Slug: update
 
 Juste une petite note pour annoncer le prochain article, consacré a la

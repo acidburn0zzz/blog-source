@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Pourquoi je vais quitter linux pour passer a FreeBSD.</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="//wxcafe.net/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/extra.css" type="text/css" />
+			<link rel="stylesheet" href="//wxcafe.net/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="//wxcafe.net/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="//wxcafe.net/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="//wxcafe.net/theme/images/favicon.ico">
+
+			<link href="//wxcafe.net/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="//wxcafe.net/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="//wxcafe.net/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="//wxcafe.net/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Pourquoi je vais quitter linux pour passer a FreeBSD.">Pourquoi je vais quitter linux pour passer a FreeBSD.</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2013-02-04T17:41:00+01:00">
+		<i class="icon-calendar"></i> Mon 04 February 2013
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="//wxcafe.net/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="//wxcafe.net/category/ranting/"><i class="icon-folder-open"></i>Ranting</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p><em>This is subject to debate, and as most of the actors in this field are
+not French-speaker, there is an English version of this text <a href="http://data.wxcafe.net/archives/126">here</a></em></p>
+<p>Bon, voila. J&rsquo;ai passé le cap. Je suis sous GNU/Linux depuis un certain
+temps, maintenant, et depuis un certain temps je remarque des
+changements malvenus. Bien entendu, au début, je n&rsquo;avais pas les
+connaissances nécessaires pour comprendre ne serait-ce que ces
+modifications existaient. Et puis certaines sont arrivées avant que je
+n&rsquo;ai même idée que quelque chose dans mon système d&rsquo;exploitation avait
+cette fonction la. Par exemple, udev, ou policykit/consolekit/. A
+l&rsquo;époque, je n&rsquo;avais aucune idée de la façon dont les disques étaient
+montés sur mon système. Le premier système non-Windows que j&rsquo;ai utilisé
+fut Ubuntu 9.10 Karmic Koala, et il était encore trop tôt pour que je
+cherche a démonter le système pour comprendre comment il fonctionnait en
+profondeur. Cependant, avec le temps, les connaissances s&rsquo;accumulant et
+mon niveau de compréhension du système s&rsquo;améliorant, j&rsquo;ai commencé a
+remarquer que certain bouts de l&rsquo;OS ne collaient pas exactement avec les
+autres. Bien sur, je ne saurais dire si cette réalisation s&rsquo;est faite a
+cause de la recrudescence de ces bouts d&rsquo;OS, ou bien juste a cause de ma
+compréhension plus poussée. Toujours est-il que ces petits bouts d&rsquo;OS ne
+s’adaptant pas au reste du système se faisaient de plus en plus visible.
+Et puis, un jour, j&rsquo;en ai eu marre de voir unity sur ma machine, et j&rsquo;ai
+choisi de passer a Archlinux. C&rsquo;était avant le passage a systemd. Ce
+système me convenait bien. Si je n&rsquo;installais pas Gnome, ce que je ne
+comptais pas faire, il ne me forçait pas a installer un *kit
+quelconque, ni dbus. Oui, udev était toujours la, mais c&rsquo;était le moins
+envahissant de ceux la.</p>
+<p>Mais Archlinux est passé a systemd. Attention hein, je ne critique ici
+ni systemd, ni udev, ni même les <em>kit, et surtout pas Archlinux. Les
+premiers sont probablement très efficaces dans leur domaine, et le
+second n&rsquo;a pas <strong>vraiment</strong> eu le choix, rapport a la philosophie de la
+distribution d&rsquo;avoir au plus vite les dernières versions de tout.
+Cependant, systemd, tout comme udev et les </em>kits (bien que ce ne soient
+pas les seuls a faire ça&hellip;) ont un problème très précis, qui n&rsquo;importe
+pas a tout le monde, mais qui est très gênant pour ceux a qui il
+importe, et ce problème est que ces systèmes ne respectent absolument
+pas la philosophie UNIX. La philosophie UNIX, pour rappel, se résume en
+ces 9 principes :</p>
+<ol>
+<li>Ce qui est petit est beau</li>
+<li>Faites en sorte que chaque programme fasse une chose, bien.</li>
+<li>Faites un prototype aussi vite que possible</li>
+<li>Choisissez la portabilité plutôt que l&rsquo;efficacité</li>
+<li>Stockez les données dans des fichiers textes.</li>
+<li>Utilisez ce qui existe déjà a votre avantage. [<strong>1</strong>]</li>
+<li>Utilisez des scripts shells pour faciliter la portabilité et la
+    réutilisation.</li>
+<li>Évitez les UI qui &ldquo;capturent&rdquo; l&rsquo;utilisateur.</li>
+<li>Faites de chaque programme un filtre.</li>
+</ol>
+<p>Alors bien entendu, un système d&rsquo;exploitation est fait pour évoluer, et
+on pourrait penser qu&rsquo;UNIX a fait son temps. Cependant, ce n&rsquo;est pas
+exactement la façon dont l&rsquo;informatique fonctionne. Effectivement, les
+standards, les systèmes d&rsquo;exploitation, les logiciels, tout doit évoluer
+- ou mourir - et UNIX ne fait pas exception a la règle. Mais ce n&rsquo;est
+pas d&rsquo;UNIX que nous parlons ici. C&rsquo;est de la <em>philosophie</em> UNIX. Et
+celle-ci n&rsquo;a pas fait son temps, <strong>elle a fait ses preuves.</strong> La
+philosophie UNIX, en plus d&rsquo;être efficace sur le papier, a aussi 44 ans
+de tests derrière elle, et fonctionne aussi bien qu&rsquo;au premier jour.<br />
+La philosophie UNIX est aussi et surtout une garantie d&rsquo;utilisabilité
+et de simplicité pour les administrateurs systèmes, pour les
+développeurs, bref pour tous ceux qui font de l&rsquo;informatique<em>sérieusement</em> (je ne dis pas que les autres métiers de l&rsquo;informatique
+ne sont pas sérieux, je prend juste ceux-ci comme exemples parce que ce
+sont ceux qui sont les plus proches du système).</p>
+<p>Tous OS se doit d&rsquo;avoir un système standardisé pour faire communiquer
+les programmes entre eux. UNIX a un système de pipes, des sortes de
+fichiers spéciaux permettant d&rsquo;échanger des informations. C&rsquo;est
+efficace, ça respecte le &ldquo;tout est fichier&rdquo;, c&rsquo;est standard, c&rsquo;est
+simple a comprendre, bref, ça fonctionne parfaitement. Dbus vient
+remplacer ça, avec une interface qui n&rsquo;est explicitement pas faite pour
+être utilisée a la ligne de commande mais a l&rsquo;aide d&rsquo;APIs, et un
+programme monolithique qui effectue sa tache d&rsquo;une façon complètement
+obscure pour l&rsquo;utilisateur. Alors bien sur, il l&rsquo;effectue d&rsquo;une façon
+efficace, cette tache. Oui, ça va plus vite qu&rsquo;avant. Oui, c&rsquo;est plus
+&ldquo;rangé&rdquo;, ça fait moins &ldquo;fouillis&rdquo;. Mais c&rsquo;est moins efficace. C&rsquo;est<em>beaucoup</em> moins utilisable pour l&rsquo;utilisateur final. C&rsquo;est
+horriblement chiant pour les sysadmins, parce qu&rsquo;ils ne peuvent plus
+lire facilement les échanges entre programmes. C&rsquo;est peu pratique, en
+fin de compte. Et ça ne respecte pas du tout la philosophie UNIX.<br />
+Systemd prend le même parti de créer une interface unifiée, accessible
+via des appels a des APIs uniquement, complètement obscure, extrêmement
+abstraite, bien entendu monolithique, et très peu ouverte a la
+modification par l&rsquo;utilisateur final. Alors oui, il parait que ça
+augmente la vitesse de boot. Eh bien, au risque d&rsquo;en choquer quelques
+uns, je préfère avoir un système qui boote <em>légèrement</em> plus lentement
+et que je puisse modifier facilement, et qui soit ouvert, compréhensible
+et distribué. C&rsquo;est presque comme si les projets freedesktop.org avaient
+pour but de remplacer la base UNIX de linux en créant un système
+concurrent, bâtard, bâti sur le kernel Linux mais n&rsquo;employant plus les
+systèmes basiques d&rsquo;UNIX.</p>
+<p>Le problème est qu&rsquo;il est facilement visible que la direction prise par
+la communauté Linux n&rsquo;est pas celle du retour sur les systèmes UNIX ni
+celle du développement de solutions respectant la philosophie UNIX, mais
+remises au gout du jour (?), mais est bien d&rsquo;accepter et de pousser les
+changements apportés par les projets freedesktop.org directement dans le
+cœur du système lui même. Ainsi, Fedora (très près de Red Hat, dont font
+partie de nombreux développeurs de ces projets), a déjà adopté tous ces
+changements (archlinux aussi, mais pour d&rsquo;autres raisons&hellip;), et on peut
+compter sur le fait que les autres distributions l&rsquo;adopteront un jour ou
+l&rsquo;autre.</p>
+<p>Bon, maintenant que nous avons, si ce n&rsquo;est démontré la nocivité de ces
+systèmes, tout du moins exprimé les raisons qui font qu&rsquo;ils me
+déplaisent, on pourrait penser qu&rsquo;il suffit de passer a une distribution
+n&rsquo;incluant pas systemd, voire a une distribution n&rsquo;incluant pas du tout
+de contenus freedesktop.org, et de vivre avec le fait de ne pas être sur
+archlinux. Cependant, avec un peu de réflexion, on voit que si des
+distributions comme archlinux et Fedora ont adopté systemd (et
+qu&rsquo;OpenSUSE est en train de l’intégrer), il est probable que cela
+devienne un standard au fil des années, et que seuls survivent systemd
+et upstart, le gestionnaire de démarrage d&rsquo;ubuntu, qui ne changera
+probablement pas (je les vois mal revenir en arrière sur ce point.)
+Toujours est-il que l&rsquo;init héritée du System V semble condamnée a mourir
+sous Linux. Il pourrait être judicieux de passer sous debian squeeze,
+qui ne recevra probablement jamais la mise a jour, ou a wheezy, qui ne
+la recevra probablement que dans 2/3 ans. Cependant, cette période est
+toujours trop courte, et met sur mon système d&rsquo;exploitation une date
+d&rsquo;expiration, chose qui ne me plait que moyennement. Non, la solution
+est de passer sous un système autre, qui ait son propre système d&rsquo;init
+(ou qui ne risque pas de passer sous systemd). Dans ce cas, deux options
+principales s&rsquo;ouvrent a moi: OpenSolaris et *BSD. Minix n&rsquo;est pas
+vraiment un choix, vu le peu de programmes qu&rsquo;il permet de faire
+fonctionner et le fait qu&rsquo;il ne soit disponible que sur i386, ce qui
+n&rsquo;est pas vraiment avantageux au vu de mon système en x86_64. Haiku
+n&rsquo;est pas un choix non plus, puisque le but est de rester dans une
+optique UNIX.</p>
+<p>OpenSolaris est un système d&rsquo;exploitation tout a fait valable. Je n&rsquo;ai
+en théorie aucun problème sur cet OS, sauf que certains choix de design
+ne correspondent pas du tout a l&rsquo;idée que j&rsquo;ai d&rsquo;un OS. En effet,
+OpenSolaris ressemble assez a Debian dans sa vision du fonctionnement de
+ses outils, avec des paquets modifiés pour les rendre plus simples a
+utiliser (fichiers de configuration fournis par défaut, par exemple, et
+autres patchs &ldquo;release-only&rdquo;), et une tendance a faire des scripts et
+des outils installés par défaut pour tout et n&rsquo;importe quoi. Bref, cela
+n&rsquo;est pas le sujet. Il convient aussi de voir qu&rsquo;avec la récente
+acquisition de Sun par Oracle, il est possible que le projet OpenSolaris
+n&rsquo;ait pas de très beaux jours devant lui (la <a href="http://hub.opensolaris.org/bin/view/Main/">page d’accueil</a> du
+projet affiche d&rsquo;ailleurs un ÉNORME logo Oracle, du meilleur gout.)</p>
+<p>Il reste donc *BSD. Pourquoi choisir FreeBSD plutôt qu&rsquo;OpenBSD, NetBSD
+ou DragonFlyBSD (pour ne citer que les plus connus) ? Et bien c&rsquo;est
+simple : pour aucune raison particulière. OpenBSD et NetBSD ont pour
+réputation d&rsquo;être orientées sécurité, et d&rsquo;après ce que j&rsquo;ai pu en voir
+DFBSD ressemble aussi au système de l&rsquo;assistance a l&rsquo;user a outrance
+décris plus haut. Mais la vérité est que je n&rsquo;ai pas fait suffisamment
+de recherches et que FreeBSD ne va me voir arriver que par hasard, parce
+qu&rsquo;entre toutes les BSD ca me semble la plus sympa et la plus agréable a
+utiliser, plus le fait que le système de ports me convient bien (j&rsquo;aime
+pouvoir configurer mes logiciels de façon assez profonde.)</p>
+<p>Voila, c&rsquo;est mon avis sur ce &ldquo;problème&rdquo; actuel du monde de Linux. Bien
+entendu, je continuerai a utiliser Linux, et je ne peux qu’espérer que
+les systèmes tels que systemd ou dbus ne disparaissent, ou tout du moins
+n&rsquo;apparaissent jamais chez certaines distributions, créant de ce fait un
+choix pour les utilisateurs.<br />
+[1]: Je n&rsquo;ai pas trouvé de traduction satisfaisante a &ldquo;software leveraging&rdquo;, mais l&rsquo;idée est la&hellip;*</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="//wxcafe.net/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/note/">
+					    <i class="icon-folder-open icon-large"></i>Note
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="//wxcafe.net/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="//wxcafe.net"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url://wxcafe.net;
+				title://wxcafe.net;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="//wxcafe.net">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://pub.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="https://www.openstreetmap.org/relation/105146"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="//wxcafe.net/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="//wxcafe.net/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>
