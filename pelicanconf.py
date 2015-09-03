@@ -5,11 +5,7 @@ from __future__ import unicode_literals
 # Misc Settings
 AUTHOR = u'wxcafé'
 SITENAME = u'Wxcafé'
-<<<<<<< HEAD
 SITEURL = '//wxcafe.net'
-=======
-SITEURL = 'file:///home/wxcafe/code/blog-source/output'
->>>>>>> origin/master
 TIMEZONE = 'Europe/Paris'
 DEFAULT_LANG = u'fr'
 DEFAULT_PAGINATION = 10
@@ -39,10 +35,6 @@ MD_EXTENSIONS = [
 # Blogroll
 LINKS = (
 		('Source!', 'https://github.com/wxcafe/blog-source', 'code'),
-<<<<<<< HEAD
-=======
-		('Zerobin', 'http://paste.wxcafe.net', 'paste'),
->>>>>>> origin/master
 		('Public Git', 'http://git.wxcafe.net', 'github-sign'),
 		)
 
@@ -51,14 +43,8 @@ SOCIAL = (
 		('Twitter', 'https://twitter.com/wxcafe', 'twitter'),
 		('Github', 'https://github.com/wxcafe', 'github'),
 		('Email', 'mailto://wxcafe@wxcafe.net', 'envelope'),
-<<<<<<< HEAD
 		('Gpg', 'https://pub.wxcafe.net/wxcafe.asc', 'key'),
         ('IRL', 'https://www.openstreetmap.org/relation/105146', 'map-marker')
-=======
-		('Gpg', 'https://data.wxcafe.net/wxcafe.asc', 'key'),
-		('Finger', 'finger://wxcafe@wxcafe.net', 'terminal'),
-		('IRL', 'http://leloop.org/where.html', 'map-marker')
->>>>>>> origin/master
 		)
 
 # Categories on right-side bar but not on top menu
