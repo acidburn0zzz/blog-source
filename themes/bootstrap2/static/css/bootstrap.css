@@ -1021,7 +1021,11 @@ pre.prettyprint {
 
 pre code {
   padding: 0;
+<<<<<<< HEAD
   color: #f8f8f2;
+=======
+  color: inherit;
+>>>>>>> origin/master
   white-space: pre;
   white-space: pre-wrap;
   background-color: transparent;

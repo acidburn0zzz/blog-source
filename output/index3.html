@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Wxcafé</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="file:///home/wxcafe/code/blog-source/output/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="file:///home/wxcafe/code/blog-source/output/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="file:///home/wxcafe/code/blog-source/output/theme/images/favicon.ico">
+
+			<link href="file:///home/wxcafe/code/blog-source/output/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="file:///home/wxcafe/code/blog-source/output/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="file:///home/wxcafe/code/blog-source/output/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="file:///home/wxcafe/code/blog-source/output/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/archlinux-made-simple/">Archlinux made simple</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-10-05T14:48:00+02:00">
+		<i class="icon-calendar"></i> Fri 05 October 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/oses/"><i class="icon-folder-open"></i>OSes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Archlinux est réputée être une distribution Linux très complexe a
+installer et a maintenir.</p>
+<p>Je vais tenter ici de vous convaincre que ce n'est pas le cas, et
+qu'elle peut se monter très intéressante et très instructive a installer
+tout autant qu'a utiliser.</p>
+<p>Il convient tout d'abord de rappeler a quels principes obéit Arch:</p>
+<ol>
+<li>
+<p>Le KISS : Keep It Simple and Stupid, Archlinux tente de faire des
+    programmes simples et utilisables par tous. Avec comme base de
+    simplicité les utilisateurs de LFS... Mais il n'empêche qu'avec un peu
+    de bonne volonté, la configuration n'est pas si compliquée!</p>
+</li>
+<li>
+<p>La philosophie UNIX : chaque programme est prévu pour ne remplir
+    qu'une seule tâche. Bien entendu, cela ne concerne que les programmes
+    conçus pour s’insérer dans la philosophie UNIX, et les installations de
+    dépendances avec le gestionnaire de paquet d'Arch fonctionnent
+    superbement bien.</p>
+</li>
+</ol>
+<p>De plus, posons les bases d'Arch : le gestionnaire de paquets s'appelle
+pacman, et les commandes de base sont :</p>
+<ul>
+<li>
+<p>recherche d'un paquet :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Ss</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>installation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>désinstallation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>mise a jour de tous les paquets installés :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+</ul>
+<p>Archlinux est une distribution dite "rolling release", ce qui signifie
+qu'il n'y a pas de version a proprement dites, et que les paquets se
+mettent a jour en permanence, sans jamais changer la "version" d'Arch.
+Il n'y a d'ailleurs qu'une seule version de l'installeur sur le site,
+puisqu'une version plus ancienne n'aurait aucun sens.</p>
+<p>Arch n'offre pas d'interface graphique par défaut : après avoir installé
+le système, vous n'aurez qu'une invite de commande. Heureusement, je
+vais ici vous guider a travers l'installation d'une interface graphique
+(mate, le fork de gnome 2)</p>
+<p>L'installation d'Arch se fait par le réseau, veillez a avoir une
+connection WiFi ou filaire a proximité avant de suivre ce guide.</p>
+<p>Ce guide utilise SystemV, alors qu'Arch va prochainement passer sous
+systemd. N'ayant pas encore eu le temps d’expérimenter assez avec ce
+dernier, je ferais un tutoriel pour passer votre Arch a systemd bientôt.</p>
+<p>Bon, passons a l'explication de l'installation proprement dite :</p>
+<p>Tout d'abord, téléchargeons l'iso d'arch la plus récente :</p>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//mir.archlinux.fr/iso/2012.09.07/archlinux-2012.09.07-dual.iso</span>
+</pre></div>
+
+
+<p>Ensuite, gravons cette image sur un disque USB :</p>
+<div class="highlight"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="n">archlinux</span><span class="o">-</span><span class="mf">2012.09.07</span><span class="o">-</span><span class="n">dual</span><span class="p">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
+</pre></div>
+
+
+<p>Après reboot de la machine sur l'iso en question et choix de
+l'architecture, nous sommes accueillis par un shell root.</p>
+<p>La première chose a faire est de paramétrer le clavier :</p>
+<div class="highlight"><pre><span class="n">loadkeys</span> <span class="n">fr</span>
+</pre></div>
+
+
+<p>Puis nous pouvons passer a l'installation proprement dite.
+Partitionnement :</p>
+<div class="highlight"><pre><span class="n">cfdisk</span> <span class="err">#</span> <span class="n">cfdisk</span> <span class="n">est</span> <span class="n">suffisamment</span> <span class="n">clair</span> <span class="n">pour</span> <span class="n">ne</span> <span class="n">pas</span> <span class="n">n</span><span class="err">é</span><span class="n">cessiter</span> <span class="n">d</span><span class="err">&#39;</span><span class="n">explications</span>
+</pre></div>
+
+
+<p>formatage des partitions :</p>
+<div class="highlight"><pre><span class="n">mkfs</span><span class="p">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">root</span>
+
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="o">&amp;&amp;</span> <span class="n">mkfs</span><span class="p">.</span><span class="n">btrfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">home</span>
+
+<span class="n">mkswap</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="o">&amp;&amp;</span> <span class="n">swapon</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">de</span> <span class="n">swap</span>
+</pre></div>
+
+
+<p>Montons les partitions nouvellement créées, puis installons le système :</p>
+<div class="highlight"><pre><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="o">/</span><span class="n">mnt</span>
+
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span>
+
+<span class="n">dhclient</span> <span class="n">eth0</span> <span class="err">#</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">utilisez</span> <span class="n">une</span> <span class="n">connection</span> <span class="n">filaire</span><span class="p">,</span> <span class="n">sinon</span> <span class="n">voire</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.archlinux.fr/Wifi#Configuration</span>
+
+<span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">base</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span>
+
+<span class="n">genfstab</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+
+
+<p>Allons prendre un café le temps que ça charge, puis installons les
+quelques paquets nécessaires a notre installation et au premier
+démarrage:</p>
+<div class="highlight"><pre><span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">syslinux</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="n">wireless_tools</span> <span class="n">dhclient</span>
+</pre></div>
+
+
+<p>Maintenant, passons sur notre install toute fraîche d'Arch :</p>
+<div class="highlight"><pre><span class="n">arch</span><span class="o">-</span><span class="n">chroot</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">bash</span>
+</pre></div>
+
+
+<p>configurons les bases :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="n">HOSTNAME</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostname</span>
+
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Europe</span><span class="o">/</span><span class="n">Paris</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
+
+<span class="n">date</span> <span class="n">MMJJhhmmAAAA</span>
+
+<span class="n">hwclock</span> <span class="o">--</span><span class="n">systohc</span>
+
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> <span class="err">#</span> <span class="n">D</span><span class="err">é</span><span class="n">commentez</span> <span class="n">les</span> <span class="n">lignes</span> <span class="n">correspondant</span> <span class="n">au</span> <span class="n">fran</span><span class="err">ç</span><span class="n">ais</span> <span class="o">:</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">et</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8859</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">echo</span>  <span class="err">&#39;</span><span class="n">LANG</span><span class="o">=</span><span class="s">&quot;fr_FR.UTF-8&quot;</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="n">mkinitcpio</span> <span class="o">-</span><span class="n">p</span> <span class="n">linux</span>
+</pre></div>
+
+
+<p>Enfin, vérifions que syslinux est correctement configuré :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">syslinux</span><span class="o">/</span><span class="n">syslinux</span><span class="p">.</span><span class="n">cfg</span> <span class="err">#</span> <span class="n">il</span> <span class="n">devrait</span> <span class="n">y</span> <span class="n">avoir</span> <span class="s">&quot;append root=/dev/sda1&quot;</span>
+</pre></div>
+
+
+<p>Si tout est correct, installons syslinux, et paramétrons un mot de passe
+root :</p>
+<div class="highlight"><pre><span class="n">syslinux</span><span class="o">-</span><span class="n">install_update</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="o">-</span><span class="n">mia</span>
+
+<span class="n">passwd</span> <span class="n">root</span>
+</pre></div>
+
+
+<p>Et voila, l'installation est terminée! Plus qu'a quitter la session et a
+redémarrer l'ordinateur!</p>
+<div class="highlight"><pre> <span class="n">exit</span>
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> 
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">reboot</span>
+</pre></div>
+
+
+<p>Fini!</p>
+<p>Prenons une petite pause. La partie suivante de ce tutoriel consister en
+un paramétrage des principaux services nécessaires a l'utilisation d'un
+OS, disons, moyen :</p>
+<ul>
+<li>
+<p>Installation de MATE, le gestionnaire de bureau (voir
+<a href="http://mate-desktop.org/">http://mate-desktop.org/</a>)</p>
+</li>
+<li>
+<p>Installation de sudo et de networkmanager pour faire fonctionner les
+composants essentiels du système sans avoir a tout activer a la main a
+chaque démarrage</p>
+</li>
+<li>
+<p>Installation de SLiM comme gestionnaire de login graphique, pour
+présenter une interface plus accueillante que la console, et
+configuration de celui-ci</p>
+</li>
+<li>
+<p>Installation des principaux logiciels utiles non inclus dans mate ni
+base (yaourt, chromium, thunderbird, etc...).</p>
+</li>
+</ul>
+<p>Ce guide est bien sur optionnel, si vous souhaitez utiliser Arch avec un
+gestionnaire de bureau autre que mate, ou sans, vous pouvez vous arrêter
+ici.</p>
+<p>Bon, reprenons.</p>
+<p>Nous sommes donc sur une demande de mot de passe. Entrez donc le mot de
+passe paramétré plus haut pour le root, puis retapez la commande
+utilisée plus tôt pour vous connecter a internet.</p>
+<p>Il convient d'ajouter le dépôt de MATE pour installer ce dernier, puis
+d'effectuer l'action en question :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ici, ajoutez les lignes suivantes :</p>
+<div class="highlight"><pre><span class="k">[mate]</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">http://repo.mate-desktop.org/archlinux/$arch</span>
+</pre></div>
+
+
+<p>Installons maintenant les paquets :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">mate</span> <span class="n">mate</span><span class="o">-</span><span class="n">extras</span> <span class="n">dbus</span> <span class="n">dbus</span><span class="o">-</span><span class="n">core</span> <span class="n">alsa</span> <span class="n">networkmanager</span> <span class="n">sudo</span>
+</pre></div>
+
+
+<p>Ajoutons un compte utilisateur pour utiliser les composants du système
+sans tout crasher a chaque fois :</p>
+<div class="highlight"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">users</span> <span class="o">-</span><span class="n">G</span> <span class="n">wheel</span><span class="p">,</span><span class="n">audio</span><span class="p">,</span><span class="n">optical</span><span class="p">,</span><span class="n">lp</span><span class="p">,</span><span class="n">scanner</span><span class="p">,</span><span class="n">log</span><span class="p">,</span><span class="n">power</span><span class="p">,</span><span class="n">floppy</span><span class="p">,</span><span class="n">storage</span><span class="p">,</span><span class="n">games</span><span class="p">,</span><span class="n">video</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">passwd</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">su</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+</pre></div>
+
+
+<p>Il faut maintenant éditer le fichier \~/.xinitrc pour préciser a X.org
+ce que l'on veut utiliser :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec ck-launch-session mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span>
+</pre></div>
+
+
+<p>Profitons en pour ajouter les démons système au lancement :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ajoutez donc <code>dbus, alsa. hwclock</code> et <code>networkmanager</code> dans la section
+DAEMONS (entre les parenthèses, après crond normalement)</p>
+<div class="highlight"><pre><span class="n">DAEMONS</span><span class="o">=</span><span class="p">(</span><span class="n">syslog</span><span class="o">-</span><span class="n">ng</span> <span class="n">network</span> <span class="n">crond</span> <span class="n">dbus</span> <span class="n">alsa</span> <span class="n">hwclock</span> <span class="n">networkmanager</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Pour éviter un reboot, il est ici possible de faire un</p>
+<div class="highlight"><pre><span class="n">su</span>
+</pre></div>
+
+
+<p>Puis un</p>
+<div class="highlight"><pre> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">dbus</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">alsa</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">networkmanager</span> <span class="n">start</span>
+</pre></div>
+
+
+<p>Sinon, il est possible de juste redémarrer.<br />
+Une fois cela fait, profitez de ce moment pour vous autoriser vous même
+a utiliser sudo. Loggez vous en root, et :</p>
+<div class="highlight"><pre> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+</pre></div>
+
+
+<p>Décommentez la ligne qui commence par # %wheel ALL=(ALL)<br />
+Sauvegardez le fichier, puis, après un <code>su *votrenom*</code>, tentez de faire
+un sudo ls /<br />
+Normalement, vous devriez avoir un listing du dossier /<br />
+Bon, maintenant, pourquoi ne pas tenter de lancer MATE?<br />
+C'est simple comme bonjour :</p>
+<div class="highlight"><pre> <span class="n">startx</span>
+</pre></div>
+
+
+<p>Et PAF! Voila un MATE desktop flambant neuf a configurer!<br />
+Avant de faire ça, retournez sur un TTY (CTRL+ALT+Fx), loggez vous,
+puis installez SLiM (<code>sudo pacman -Syu slim</code>).<br />
+Configurons le:</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec dbus-launch mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span> <span class="o">&amp;&amp;</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">slim</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Éditez la ligne
+"<code>sessions            xfce4,icewm-session,wmaker,blackbox</code>" de facon a
+ce qu'elle ressemble a "<code>sessions            mate-session</code>"<br />
+Puis ajoutez slim dans /etc/rc.conf, dans la section DAEMONS.<br />
+Normalement, tout devrait fonctionner!<br />
+Ah oui, et pour installer thunderbird, firefox, chromium, etc...</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">chromium</span> <span class="n">thunderbird</span> <span class="n">xchat</span> <span class="n">firefox</span> <span class="n">rhythmbox</span> <span class="n">pidgin</span> <span class="n">transmission</span><span class="o">-</span><span class="n">gtk</span> <span class="n">vlc</span>
+</pre></div>
+
+
+<p>Voila! Et comme dirait <a href="https://twitter.com/spartition">@Spartition</a>, c'est sale, mais qu'est-ce que c'est
+bon!<br />
+A plus~</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/les-systemes-de-fichiers/">Les systèmes de fichiers</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-25T10:28:00+02:00">
+		<i class="icon-calendar"></i> Tue 25 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/"><i class="icon-folder-open"></i>Teaching</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Un système de fichiers. Vous en avez surement déjà entendu parlé si vous
+avec déjà installé Linux, ou formaté une clé USB. Dans ces cas, vous
+connaissez surement NTFS, EXT4, ou encore FAT32.</p>
+<p>Ces différents noms désignent en effet des systèmes de fichiers. Mais
+qu'est-ce qu'un système de fichiers?</p>
+<p>Pour comprendre cela, il faut déjà savoir ce qu'est exactement un
+fichier. Un fichier est un ensemble de blocs (les blocs sont l'unité la
+plus petite traitable par le matériel, ils font généralement 1 ou 4 Kio
+(<a href="http://fr.wikipedia.org/wiki/Kibioctet#Multiples_normalis.C3.A9s">kibioctet</a>), en fonction du système de fichier utilisé.), qui est
+donc composé de bits, interprétés différemment en fonction du type de
+fichier. Cependant, seul, le fichier n'est pas accessible, puisqu'il
+n'est pas indexé, c'est a dire que l'OS ne sait pas qu'il est présent,
+ou il commence ni où il s'arrête (je schématise un peu, mais c'est
+l'idée). </p>
+<p>Ainsi, le système de fichier donne un cadre et un standard à
+l'arborescence des fichiers. Par exemple, le système de fichier ext4
+utilise des blocs de 1 Kio, et de ce fait, toutes les partitions de
+disque dur formatées en ext4 peuvent prendre comme unité de base 1 Kio
+et mesurer la taille des fichiers en blocs de cette façon. Les systèmes
+de fichiers nécessitent l'inclusion de drivers dans le noyau pour
+pouvoir être pris en compte. </p>
+<p>Le noyau linux inclut par défaut les drivers pour ext2/3/4, btrfs, 
+reiserfs, ntfs, fat16/32 et hfsx, ce qui permet de monter a peu 
+près tout type de partition récente.</p>
+<p>Il convient de bien faire la différence entre le système de fichier et
+l'arborescence des fichiers. Si l'arborescence des fichiers est en fait
+une entité virtuelle englobant la racine / et tous les fichiers et
+dossiers contenus dedans, le système de fichier permet a votre système
+GNU/Linux de distinguer les différents fichiers composants cette
+arborescence.</p>
+<p>Détaillons maintenant les types de fichiers les plus répandus:</p>
+<ul>
+<li>
+<p>FAT16/32 : Les systèmes de fichier FAT (pour File Allocation Table,
+    soit la définition d'un système de fichier), remplissent leur rôle le
+    plus simplement possible. Ne permettant (historiquement) que des noms de
+    8 caractères (plus extension de trois caractères), ni chiffrement, ni
+    système de distinction d'utilisateurs (DOS étant un système
+    mono-utilisateur), Il fut décliné par microsoft en FAT16 et en FAT32,
+    utlisants respectivement des blocs de 16 et 32 Kio.</p>
+</li>
+<li>
+<p>NTFS :. Le NTFS (pour New Technology File System, rapport a Windows
+    NT) est un système de fichier qui est apparu avec Windows XP, et qui
+    était une mise a jour nécessaire du FAT32 vieillissant. NTFS ajoute a
+    FAT différentes capacités dont le chiffrement, les liens symboliques, la
+    compression et les quotas pour les volumes, permettant de limiter la
+    taille maximum occupée dans une partition.</p>
+</li>
+<li>
+<p>ReFS : ReFS est le système de fichiers introduit dans Windows Server 2012.
+    Ne différant pas énormément de NTFS, je le mentionne principalement 
+    parce qu'il est prévu qu'il soit le défaut pour Windows 8. 
+    Il apporte principalement la redondance, c'est a dire que chaque
+    fichier possède une somme de contrôle en 64 bits stockée dans un fichier
+    séparé pour éviter les corruption de disque.</p>
+</li>
+<li>
+<p>Ext2/3/4 : les systèmes ext (extended) sont les systèmes de fichiers
+    les plus utilisés sous linux pour le grand public. (Je traiterai ici
+    d'ext4, puisque c'est le plus récent.) Il dispose de toutes les
+    fonctions que l'on peut attendre d'un système de fichiers moderne, ni
+    plus ni moins. Ainsi, ext4 est un système de fichiers journalisé,
+    acceptant les capacités jusqu’à 1 Exioctet, et utilise l'allocation dite
+    "par extent", ce qui signifie que la création d'un fichier réserve
+    automatiquement les zones contiguës de façon a réduire la fragmentation.</p>
+</li>
+<li>
+<p>ReiserFS : ce système de fichiers, créé par le (légèrement mégalo)
+    programmeur Hans Reiser, est a retenir pour avoir été le premier système
+    de fichiers journalisé, et accepte un nombre de fichiers de l'ordre des
+    4 milliards. Le but de ce système est de créer un système polyvalent, a
+    la fois système de fichiers et base de donnée (de part sa grande
+    capacité en terme de nombre de fichiers et de l'utilisation d'un
+    journal.)</p>
+</li>
+<li>
+<p>Btrfs : ce système est l'évolution logique d'ext4, et inclut lui aussi
+    l'allocation par extent, mais possède de plus un système de
+    sous-volumes, qui permet d’accéder a plusieurs arborescences de fichiers
+    montées en même temps (système pratique et utile pour faire des
+    snapshots de systèmes.). Il permet aussi de redimensionner a chaud la
+    taille des partitions, en les agrandissant ou en les rétrécissant, est
+    compatible avec <a href="http://fr.wikipedia.org/wiki/LVM">LVM</a>, a un système de checking intégré (btrfsck), et
+    utilise un algorithme de compression appelé LZ4, qui accélère les accès
+    aux fichiers compressés d'environ 30% par rapport a LZO, le système
+    utilisé dans ext4.</p>
+</li>
+<li>
+<p>HFS+ : le système de fichier présent sur tous les macs a des capacités
+    relativement standards, et ressemble énormément a l'ext3. Il supporte
+    cependant les liens directs vers les dossiers, fonction rare sur les
+    systèmes de fichiers actuels. Il est possible qu'il évolue a nouveau
+    dans les années a venir</p>
+</li>
+<li>
+<p>ZFS : Ce système de fichier, venu de Solaris mais utilisable par Linux
+    et *BSD, est, tel Btrfs, a la fois un système de fichier et un
+    remplaçant/compatible avec LVM, C'est un système de fichiers conçu
+    principalement pour les serveurs, et il intègre ainsi un système de
+    redondance des données pour éviter les corruptions, un mode RAID-Z
+    (apparenté au RAID5), des checks d’intégrité en continu, des snapshots,
+    etc...</p>
+</li>
+</ul>
+<p>Comme on a pu le voir, les systèmes de fichiers disponibles sont
+légions. Cependant, le plus adapté a Linux et a une utilisation grand
+public aujourd'hui est probablement Btrfs. Malheureusement, ce dernier
+n'est pas aujourd'hui proposé par défaut sur les distributions les plus
+utilisées, au profit de l'ext4, qui commence a accuser son âge...</p>
+<p>Les systèmes de fichiers, s'ils peuvent ne pas sembler primordiaux au
+fonctionnement du système, sont en fait de première importance, et ce
+choix ne devrait pas être laissé au hasard, et être mis a jour
+régulièrement (pour éviter les failles de sécurité...)</p>
+<p>Bon courage, et bon choix pour votre prochain système.</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/le-quenya-episode-o/">Le Quenya - Épisode ø</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-18T19:07:00+02:00">
+		<i class="icon-calendar"></i> Tue 18 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/language/"><i class="icon-folder-open"></i>Language</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Le Quenya est, pour ceux qui ne connaissent pas (comme moi jusqu’à il y
+a peu...), le nom que donnait Tolkien au dialecte principal parlé par
+les Elfes dans les différentes œuvres de l'auteur, dont Le Seigneur des
+Anneaux, le Hobbit, ou encore le Silmarillion. Il faut se rendre compte
+avant de commencer cet article que l'une des œuvres les plus
+impressionnantes de Tolkien, si ce n'est la plus grande, est
+l'impressionnant travail linguistique passé sur les différentes langues
+présentes dans son œuvre littéraire : L'elfique, qui est donc le quenya,
+la langue des nains, qui est appelé le khazalide, etc. </p>
+<p>En effet, a contrario des "langues" développées dans d'autres œuvres littéraires
+telles Eragon ou Harry Potter, où l'auteur-e se contente de lier un mot
+de français (ou d'anglais) a un mot de sa "langue", les langues de
+l'oeuvre de Tolkien sont des langues complètes. Elles possèdent des
+racines logiques, des systèmes de grammaire et de conjugaison propres,
+une logique inhérente dans la prononciation ou l'orthographe, et ainsi
+de suite. </p>
+<p>Un véritable rêve de linguiste donc, puisque ces langues sont
+pratiquement entièrement documentées par Tolkien lui même (voir
+l'appendice E du SdA, particulièrement instructif a ce sujet.)</p>
+<p>J'ai donc décidé d'apprendre le Quenya récemment, et je vais donc poster
+ici des résumés des cours que je suis ( disponibles <a href="http://folk.uib.no/hnohf/qcourse.htm">ici</a> , une
+traduction en français est disponible <a href="http://www.ambar-eldaron.com/telechargements/integraleshelge.pdf">la</a> en pdf ), et des infos ici
+toutes les deux semaines.</p>
+<p>Si ce sujet vous intéresse, le compte twitter @Quenya101 poste
+régulièrement des informations sur le sujet, et pour plus d'infos sur le
+sujet, vous pouvez en trouver <a href="olk.uib.no/hnohf/quenya.htm">par ici</a>.</p>
+<p>Et en tant que première leçon, vous pouvez apprendre que ce mot que vous
+avez prononcé comme le Kenya tout le long de cet article se prononce en
+fait [Kwenïa], ou bien Qwenya!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/update-a-propos-du-blog/">Update a propos du blog</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-18T16:57:00+02:00">
+		<i class="icon-calendar"></i> Tue 18 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/notes/"><i class="icon-folder-open"></i>Notes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Bonsoir! Un petit post pour faire un peu le point sur ce blog.<br />
+Comme vous avez pu le remarquer, j'ai un peu de mal a tenir les délais
+que je m'étais fixés pour ce blog (un post tous les 8 jours), et après y
+avoir un tantinet réfléchi, ceci est du a deux points principaux :</p>
+<ul>
+<li>
+<p>Tout d'abord, le manque d'inspiration, tout simplement. C'est assez
+compliqué de trouver des sujets intéressants liés a l'informatique, et
+qui méritent un article. Je vous invite d'ailleurs a me suggérer des
+sujets via les commentaires ou twitter (<a href="https://twitter.com/wxcafe">@Wxcafe</a>)</p>
+</li>
+<li>
+<p>Ensuite, le délai de 8 jours est trop court pour me permettre de faire
+les recherches nécessaires, tout en manageant mes cours et mon temps
+libre.</p>
+</li>
+</ul>
+<p>A cause de cela, j'ai pris la décision de changer le rythme de parution
+des articles a un *minimum* d'un post tous les 10 jours. Bien entendu,
+si j'ai de l'inspiration en trop, plus de posts sont envisageables.</p>
+<p>Voila. A part ca, je tiens a vous remercier de me lire (c'est assez
+étonnant de voir ca...), et je précise que je vais ajouter une page
+About Me, qui bien entendu rassemblera des informations sur moi, ma vie,
+mon oeuvre :P</p>
+<p>Ceci dit, je vais bosser un peu sur le prochain article.</p>
+<p>A plus tard!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/introduction-a-bash-en-tant-que-language-de-programmation/">Introduction a bash en tant que language de programmation.</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-08T18:15:00+02:00">
+		<i class="icon-calendar"></i> Sat 08 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/programmation/"><i class="icon-folder-open"></i>Programmation</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>L’interpréteur de commandes bash (Bourne Again SHell)
+est possiblement le shell le plus connu, notamment grâce a son
+intégration en tant que shell par défaut dans les distributions Linux
+les plus répandues (Debian - Ubuntu, Fedora, OpenSUSE, Mandriva -
+Mageia, etc...).</p>
+<p>Cependant, il n'est souvent connu qu'en tant qu’interpréteur de
+commande. Alors qu'en réalité, le bash est un langage de programmation
+(presque) complet! Ainsi, il intègre les structures de contrôle
+habituelles ( pour mémoire, les structures de contrôle comprennent les
+conditions (les ifs), les boucles (les while), et les choix (les case),
+entre autres.), et est donc ce que l'on pourrait appeler un langage de
+script, interprété, de la même façon que python, a la difference près
+qu'il contient un prompt (un système d'entrée de commande interactif)
+bien plus complet et développé que python.  </p>
+<p>Cependant, les programmes en bash ne sont executables que dans un
+environnement de type UNIX, et donc pas sous Windows (cygwin
+(cygwin.com) propose ceci dit un système permettant d'utiliser bash sous
+windows. Il faut malgré tout convenir que cet environnement est bien
+plus compliqué a manipuler, et globalement ne permet pas d'acceder a des
+portages de qualité satisfaisante.)</p>
+<p>Ainsi, il est possible de créer des fichiers .sh, contenant des
+instructions bash mises a la suite (de la même façon qu'un script BATCH
+Windows .bat), et faisant appel autant aux commandes internes de bash,
+aussi bien que les commandes externes mises en place par les programmes
+installés sur le système, exactement comme dans une invite de commande.
+Ainsi, pour appeller firefox, la commande 'firefox' lancera le petit
+panda roux directement dans la boite magique, tandis qu'un if
+[condition] suivi d'un then (quelque chose) lancera le fameux quelque
+chose suscité si la condition est vérifiée. Un peu comme en C, quoi.  </p>
+<p>De cette façon, et avec quelques informations et connaissances, il est
+facile de comprendre le fonctionnement de la programmation en bash.
+Quelques exemples commentés:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash </span>
+<span class="c"># La ligne du dessus est très importante, c&#39;est elle qui dit a bash quel doit être </span>
+<span class="c"># l&#39;interpreteur des commandes écrites dans ce script. Ici, on dit a bash d&#39;interpréter </span>
+<span class="c"># lui même les commandes comprises dans ce script. On aurait tout de fois pu lui faire </span>
+<span class="c"># executer du python, par exemple, en mettant #!/usr/bin/python a la place.</span>
+<span class="nb">echo</span> <span class="s2">&quot;this is a test of bash as a simple script manager&quot;</span> <span class="c"># echo est une commande d&#39;affichage de message.</span>
+<span class="nb">echo</span> <span class="s2">&quot;what&#39;s your name, user?&quot;</span> 
+<span class="nb">read </span>your_name <span class="c"># la commande read permet de demander a l&#39;utilisateur de donner une </span>
+<span class="c"># information, stockée dans la variable en paramètre. </span>
+<span class="nb">echo</span> <span class="nv">$your_name</span> <span class="s2">&quot;is your name&quot;</span> <span class="c"># echo permet aussi d&#39;afficher la valeur de variables. </span>
+<span class="c"># Ici, on renvoie la variable remplie précédemment, suivie d&#39;un message. </span>
+<span class="nb">exit</span> <span class="c"># cet appel a exit n&#39;est pas obligatoire, mais donne un aspect plus </span>
+<span class="c"># propre au code. Il ne quittera pas la session de terminal, cependant.</span>
+</pre></div>
+</td></tr></table>
+
+<p>Voila. Ce script bash ne sert pas a grand chose, mais il a le mérite
+d'être clair quand aux capacités et a la simplicité du bash en tant que
+language de programmation. Alors en effet, nous n'avons ici absolument
+pas utilisé les capacités de bash en lui même, et n'avons fait que le
+renvoyer a des programmes externes (sauf read, il est vrai). Voyons
+maintenant la syntaxe de bash quand il s'agit d'utiliser les structures
+de contrôle:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash </span>
+<span class="nb">echo</span> <span class="s2">&quot;welcome to this second bash program. would you please kindly enter the name of the machine you&#39;re running this on?&quot;</span> 
+<span class="nb">read </span>host_name 
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$host_name</span> <span class="o">==</span> <span class="nv">$HOSTNAME</span> <span class="o">]</span> <span class="c">## voici la syntaxe du if. Attention a bien penser a mettre les espaces avant la première variable, et après la seconde. La variable $HOSTNAME ici utilisée est une variable présente par défaut sur le système. </span>
+<span class="k">then </span><span class="nb">echo</span> <span class="s2">&quot;you told the truth!&quot;</span> 
+<span class="k">fi</span> <span class="c">## le fi est la commande fermant le if, tout comme le EndIf en basic. C&#39;est un peu vieillot, mais important en bash. </span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$host_name</span> !<span class="o">=</span> <span class="nv">$HOSTNAME</span> <span class="o">]</span> <span class="c">## l&#39;opérateur != est l&#39;inverse de ==, il vérifie donc si les deux variables ne sont pas les mêmes. </span>
+<span class="k">then </span><span class="nb">echo</span> <span class="s2">&quot;you lied!&quot;</span> 
+<span class="k">fi </span>
+<span class="nb">exit</span>
+</pre></div>
+</td></tr></table>
+
+<p>Voila un petit programme permettant d'apprendre la syntaxe du if en
+bash. comme vous pouvez le voir, le language est plutôt lite, et la
+structure if n'est pas très difficile a prendre en main.</p>
+<p>Passons maintenant au while:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;what is your name?&quot;</span>
+<span class="nb">read </span>name
+<span class="k">while</span> <span class="o">[</span> 1 &lt; 10 <span class="o">]</span>    <span class="c">## le while se présente sous la forme while (truc); do (machin); done. Les [] sont en fait des programmes differents, inclus dans bash.</span>
+<span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;i love&quot;</span> <span class="nv">$name</span>
+<span class="k">done</span>
+<span class="nb">exit</span>
+</pre></div>
+</td></tr></table>
+
+<p>Ce petit programme permet d'observer les bases de while (qui est la
+boucle de base en bash).</p>
+<p>Le troisième opérateur de bash est case. Voyons:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;please enter a number between one and five&quot;</span>
+<span class="nb">read </span>number
+<span class="k">case</span> <span class="nv">$number</span> in 
+1<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;the choosen number was one&quot;</span>
+;;
+2<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;the choosen number was two&quot;</span>
+;;
+3<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;the choosen number was three&quot;</span>
+;;
+4<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;the choosen number was four&quot;</span>
+;;
+5<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;the choosen number was five&quot;</span>
+;;
+*<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;this number is not correct&quot;</span>
+;; 
+<span class="k">esac</span>
+<span class="nb">exit</span>
+</pre></div>
+</td></tr></table>
+
+<p>case est un opérateur plus complexe a utiliser a bon escient, et sert a
+faire des ifs multiples sans avoir a taper des dizaines de lignes de
+code.<br />
+(pour ceux qui auraient du mal avec cet opérateur, il faut comprendre
+que le code vérifie chacune des conditions : le 1) est validé si la
+valeur de \$number est 1, le 2) est validé si cette valeur est 2, etc..
+le *) désigne toutes les valeurs, et est donc validé si aucune autre
+valeur n'a précédemment acceptée.</p>
+<p>Quelques notions manquent ici:<br />
+- les nombres aléatoires sont générés par un appel a la variable
+\$RANDOM, qui renvoie un nombre aléatoire entre 0 et 32767 (un entier a
+16 bits donc). il est possible de faire des invocations a des nombres
+aléatoires plus grands, mais les méthodes permettant de faire cela sont
+plus complexes, et je ne les aborderai donc pas ici.<br />
+- comme vous avez pu le constater, les variables sont désignées en tant
+que telles par l'utilisation d'un symbole \$ au début de leur nom.
+Ainsi, echo number renverra "number", tandis que echo \$number renverra
+le résultat de la variable \$number.<br />
+être utilisées dans un programme bash.<br />
+- comme vous avez pu le constater, les commandes doivent tenir en
+théorie en une ligne. Cependant, le caractère \ permet de retourner a
+la ligne en faisant considérer a bash qu'il s'agit de la même ligne.</p>
+<p>Globalement, il faut admettre que bash n'a pas vocation a être un
+langage de programmation extrêmement développé. Sans framework
+graphique, avec peu de manières d'utiliser de grandes variables, ou
+encore une gestion de la mémoire risible, bash n'a rien d'un langage de
+développement professionnel.<br />
+Cependant, le simple fait qu'il soit considéré comme un langage de
+programmation a part entière font de lui un langage de script d'une
+puissance incontestable, et sa simplicité et sa grande popularité font
+de lui un langage de choix pour apprendre la programmation simplement et
+sans trop se prendre la tête.</p>
+<p>J'espère que cet article aura été utile a certain-e-s, et je vous
+souhaite bonne chance dans votre découverte de la programmation (n'allez
+pas voir ceux qui font de l'orienté objet, c'est des méchants :3)</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/les-differentes-couches-dun-systeme-dexploitation/">Les différentes couches d'un système d'exploitation</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-09-06T23:29:00+02:00">
+		<i class="icon-calendar"></i> Thu 06 September 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/"><i class="icon-folder-open"></i>Teaching</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Étant utilisateur plus ou moins fidèle de GNU/Linux depuis quelques
+années (plus ou moins, parce que j'ai toujours un Windows en dual boot,
+principalement pour les jeux (possiblement plus pour longtemps, avec
+l'arrivée de Steam pour Linux... ) ), je commence a connaître plus ou
+moins bien mon système. Or il y a plusieurs choses a savoir sur les
+systèmes d'exploitation, et celle dont je vais parler aujourd'hui, c'est
+le système de couches.</p>
+<p>Un système d'exploitation (de type UNIX, \&lt;troll>enfin un vrai système quoi.
+\&lt;/troll>) incorpore plusieurs systèmes de couches.</p>
+<p>Ainsi, Linux (le noyau) a commencé en étant un kernel monolithique,
+c'est a dire que tous les composants sont intégrés au kernel. Ce qui
+signifie que rien ne peut être ajouté au noyau sans recompiler celui ci.
+Or, quand on sait que le noyau comprend entre autres les drivers du
+matériel et des systèmes de fichier, cela peut poser des problèmes quand
+a la taille du kernel et a la licence libre de ce dernier. </p>
+<p>Depuis un certain temps, le kernel linux est devenu un kernel modulaire, ce qui
+signifie que des modules peuvent être chargé a tout moment en cours
+d’exécution, ce qui permet l'utilisation de nouveaux systèmes de
+fichiers a chaud, ou l'insertion de matériel et l'installation de
+drivers sans interrompre l’exécution du système (Windows utilise un
+système de fausse installation de drivers pour le matériel externe, et
+un système de pré-installation des drivers pour les périphériques dits
+"plug and play")</p>
+<p>Après le noyau intervient le système. Or, au tous premiers instants du
+boot, les systèmes GNU/Linux utilisent un système permettant de limiter
+l'utilisation de ressources systèmes si elles ne sont pas nécessaires,
+et incorpore ainsi un système dit de "runlevels"</p>
+<p>Ainsi, au runlevel 0, le système s'éteint après avoir booté. Ainsi, ce
+runlevel permet de tester le bon démarrage du système sans avoir a
+effectuer de manipulation pour le ré-éteindre</p>
+<p>Le runlevel 1 est appelé mode single user, et c'est un nom plutôt adapté
+étant donné que ce runlevel donne accès a un système en étant
+automatiquement loggé en tant que root, avec tous les autres
+utilisateurs désactivés, de même que tous les systèmes de réseaux</p>
+<p>Le runlevel 2 est appelé mode multi user, et vous mets en face d'un
+système classique. en ligne de commande, mais avec tous les systèmes de
+réseau désactivés.</p>
+<p>Le runlevel 3 est le même que le 2, mais avec les systèmes de réseaux
+activés.</p>
+<p>Le runlevel 4 n'est pas officiellement défini, et est censé être
+activable en fonction des besoins de l'utilisateur. Sur la plupart des
+distributions grand public, ce runlevel est lié au...</p>
+<p>Runlevel 5! Multi-user, networking, with working GUI! c'est le système
+tel que vous le connaissez, avec l'interface graphique et le système de
+login graphique.</p>
+<p>Le runlevel 6, enfin, est le bien nommé "reboot", qui reboot la machine
+quand il devient le runlevel courant.</p>
+<p>(Il est a noter que Debian, et donc toutes les distribs qui en sont
+dérivées, ne font pas de distinction entre les differents runlevels du 2
+au 5. Ainsi, Ubuntu fonctionne par défaut au runlevel 2, avec un login
+et une interface graphique, et un mode réseau fonctionnel, bref avec des
+fonctionnalités qui ne sont normalement disponibles que sous le runlevel 5.)</p>
+<p>Il est possible de changer de runlevel grâce a la commande runlevel
+(oui, c'est évident...)</p>
+<p>Les systèmes Linux utilisent aussi un système dit de SandBox , qui en
+informatique est un système permettant d'isoler les processus les uns
+des autres. Ainsi, la pile réseau, qui est le système auquel les
+différents processus envoient les différents paquets qui doivent sortir
+de la machine , et qui redistribue ces paquets, est isolée du reste du
+système, en cela qu'aucun des autres processus ne peuvent modifier cette
+pile hors du runlevel 1 ou 2.</p>
+<p>De la même façon, le navigateur chrom/ium fait fonctionner tous les
+onglets, ainsi que toutes les extensions, dans des processus différents.
+Certaines distributions linux implémentent un système de cette sorte
+pour toutes les applications, ou seulement pour certaines. ainsi Chakra
+Linux a un système d'installation d'applications dans des disques
+virtuels, ce qui permet une sécurité totale du processus.</p>
+<p>Voila, j'espère vous en avoir appris un peu sur le fonctionnement des
+différentes couches de linux, et j'espère que cet article vous poussera
+a tester un peu votre système et a vous amuser avec les différents
+runlevels</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/la-programmation-expliquee-simplement/">La programmation expliquée simplement</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-08-27T00:22:00+02:00">
+		<i class="icon-calendar"></i> Mon 27 August 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/"><i class="icon-folder-open"></i>Teaching</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Salut!<br />
+Tout d'abord, je tiens a m'excuser de ne pas avoir eu le temps d'écrire
+récement, mais j'ai eu la chance d'avoir un PC a monter, donc j'ai passé
+pas mal de temps assez occupé.  </p>
+<p>Enfin, après un certain temps a farfouiller au millieu des connecteurs
+SATA et a apprendre que, oui, l'alimentation sert aussi pour les disques
+durs, je suis de retour pour un court article.<br />
+Du coup, je m'étais dit que j'allais reprendre sur le thème de
+l'informatique expliquée au grand public, en tentant d'aller un peu plus
+loin que la dernière fois sur le thème de la programmation<br />
+Ce qu'il faut comprendre, c'est la facon dont fonctionne un ordinateur.
+Si a peu près tout le monde sait que "les ordinateurs, ils ne
+comprennent que les 1 et les 0!", peu de gens savent comment cela
+fonctionne en détail.  </p>
+<p>Si vous êtes sur ce blog, il y a pas mal de chance que vous ayez déjà
+des notions de base en informatique. Ainsi, vous savez surement que les
+ordinateurs fonctionnent avec des programmes, qui sont composés de
+code.<br />
+Ainsi, il faut comprendre que le code (source) est "compilé" en un
+fichier "binaire". Un fichier binaire est un fichier comprenant les
+instructions telles qu’exécutées par le processeur, et donc absolument
+illisible pour un humain.  </p>
+<p>La compilation est le processus qui transforme le code source en
+binaire executable. Les binaires ont, sous Windows, l'extension .exe,
+tandis que sous les systèmes UNIX-like, ils n'ont pas d'extension
+particulière.<br />
+Ceci étant dit, il faut comprendre que certains langages sont plus
+proches que d'autres du langage processeur, les langages les plus
+proches sont dits de "bas niveau". Les langages les plus éloignés sont
+donc dits de haut niveau.  </p>
+<p>Par exemple, l'assembleur est l'un des languages de plus bas niveau,
+tandis que python par exemple est un langage de plus haut niveau. Les
+langages de haut niveau sont souvent bien plus simples a comprendre et a
+apprendre que les langages de bas niveau  </p>
+<p>Ainsi, en C, un langage de niveau relativement bas, pour afficher
+"hello world" sur l'écran, le code nécessaire est :</p>
+<div class="highlight"><pre><span class="cp">#include </span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">);</span>
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>le même programme en python s'écrit :</p>
+<div class="highlight"><pre><span class="n">print</span> <span class="s">&quot;hello world&quot;</span>
+</pre></div>
+
+
+<p>et n'a pas besoin d'être compilé , puisqu'il peut être intepreté
+directement.  </p>
+<p>Python utilise en effet un système similaire a Java en ayant un
+interpréteur dit "runtime" ou "temps réel", qui interprète le programme
+sans le compiler. Java utilise un système légèrement différent, puisque
+le code a besoin d'être compilé, mais est interpreté par un interpréteur
+et non par le processeur.  </p>
+<p>Cette méthode permet le fameux "code once, run everywhere", ce qui
+signifie que le même code est exécutable sur quasiment tous les systèmes
+d'exploitation (en fait, tous ceux sur lesquels l’interpréteur est
+disponible.)</p>
+<p>Voila, je vous laisse sur le fonctionnement de Java et de Python, et je
+vais me coucher.<br />
+A bientôt!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/gnulinux-pour-les-non-technophiles-ou-los-libre-pour-votre-grand-mere/">GNU/Linux pour les non technophiles, ou l'OS libre pour votre grand-mère</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-08-22T20:33:00+02:00">
+		<i class="icon-calendar"></i> Wed 22 August 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/"><i class="icon-folder-open"></i>Teaching</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>GNU/Linux est un vaste et extraordinaire territoire technologique, mais
+je ne vais pas m'attarder ici sur les aspects profondément techniques de
+ce territoire pour faire plutôt une sorte d'introduction a ce qu'est
+vraiment GNU/Linux, pour les gens n'ayant aucune ou très peu de
+connaissances en informatique.</p>
+<p>GNU/Linux, que j’abrégerai ici en Linux pour plus de simplicité, est un
+Système d'Exploitation. Un système d'exploitation est, pour simplifier,
+un ensemble d'outils informatiques qui vous permettent d'utiliser votre
+ordinateur, ainsi, Windows est un système d'exploitation. L'abréviation
+de système d'exploitation (Operating System en anglais) est OS. Les 4
+principaux OS existants aujourd'hui sont Windows, Mac OS, GNU/Linux, et
+Solaris. Les trois derniers sont issus d'un autre système, plus ancien,
+nommé UNIX.</p>
+<p>De ce fait, on pourrait penser que Linux remplace complètement Windows
+une fois installé, et comprend une interface graphique, et toutes sortes
+d'utilitaires permettant a l'utilisateur d'utiliser le système (sous
+Windows, pensez a l'explorateur de fichiers, ou a Internet Explorer.
+Pour l'interface graphique, pensez a... Pensez que votre système affiche
+autre chose que des lignes de commande.) Or non, une fois installé,
+Linux en lui même ne vous afficherait aucune interface graphique, et
+s'il est effectivement livré avec des utilitaires, ils ne sont que des
+programmes en ligne de commande. Autant les utilisateurs avancés sauront
+s'en servir, et pourront argumenter que c'est plus efficace ou plus
+rapide, autant les utilisateurs basiques préfèrent une interface
+graphique. Alors comment en obtenir une?</p>
+<p>Ici, il convient de faire une précision importante. Si il n'existe
+qu'une seule version de Windows, ou de Mac OS, il existe en fait
+plusieurs centaines de "versions" différentes de Linux. Appelées
+distributions, ces dernière sont développées par des groupes
+complètement séparés, et se basent sur le fait que Linux soit
+entièrement placé sous licence libre (ce qui leur permet de l'utiliser a
+leur guise, a condition que leur travail soit lui aussi placé sous
+licence libre). De ce fait, de nombreuses distributions existent et se
+développent en parallèle. On peut ainsi citer <a href="http://debian.org">Debian</a>, qui est l'une
+des distributions les plus importantes, ou encore <a href="http://ubuntu.com">Ubuntu</a>, qui est
+l'une des plus connues et des plus simples a utiliser.</p>
+<p>Ainsi, ces distributions intègrent une interface graphique. Cependant,
+grâce a la liberté dont bénéficient les développeurs sous Linux, il
+existe de nombreuses interfaces graphiques différentes : <a href="unity.ubuntu.com">Unity</a>, la
+nouvelle interface d'Ubuntu; <a href="gnome.org">GNOME</a> , une interface qui vise a la
+simplicité; ou encore <a href="http://kde.org/">KDE</a>, une interface utilisateur ressemblant a
+Windows 7.</p>
+<p>Ainsi, le choix astronomique de distributions Linux a bien un sens :
+chacune d'entre elle intègre des outils différents. Par exemple, Debian
+intègre GNOME 2, qui est l'ancienne version de GNOME, ce qui la rend
+particulièrement stable. Ubuntu intègre Unity, ce qui en fait une
+distribution particulièrement intuitive. Linux Mint intègre Cinnamon,
+qui est une version dérivée de GNOME 3, ce qui permet encore une autre
+expérience. Et Arch Linux n'intègre pas d'interface graphique du tout,
+ce qui permet a l'utilisateur de choisir entre les multiples interfaces
+existantes.</p>
+<p>Ce qu'il est important de retenir de cela, c'est que Linux est un OS
+complètement libre, ce qui signifie que n'importe qui peut modifier et
+utiliser tout le code de Linux gratuitement et comme il l'entend. Ainsi,
+Linux est un OS qui est véritablement créé par des passionnés, pour tous
+et toutes. Surtout, il convient de retenir que Linux n'est pas compliqué
+a utiliser, ni a installer. Windows et Mac OS ne le sont pas non plus.
+Cependant, Linux donne la possibilité a l'utilisateur de le rendre
+affreusement complexe, mais aussi de le rendre adapté a ses besoins,
+quels que soient ceux ci. Et c'est la que réside l'incroyable puissance
+de ce Système d'Exploitation. Il est extraordinairement adaptable.</p>
+<p>N'hésitez donc pas a le présenter a vos proches, même s'ils ne sont pas
+technophiles. Ils pourraient adorer, et peut être même le devenir :)</p>
+<p>A bientôt!</p></div>
+			</div>
+			<hr />
+			<div class="article">
+				<h1><a href="file:///home/wxcafe/code/blog-source/output/posts/debuts-presentation-etc/">Débuts, présentation, etc...</a></h1>
+				<div class="well small"><footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-08-18T20:27:00+02:00">
+		<i class="icon-calendar"></i> Sat 18 August 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/notes/"><i class="icon-folder-open"></i>Notes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info --></div>
+				<div class="summary"><p>Bonjour!</p>
+<p>Je m'appelle Wxcafé, et ça fait pas mal de temps que je sévis sur
+Twitter, mais aussi sur IRC (Je traîne pas mal sur
+irc.freenode.net/##nolife et #debian-fr)</p>
+<p>J'ai 17 ans, je suis donc étudiant (bac général), je vis a Paris, et je
+fais partie de ce genre de personne qui sont capables d'investir tout
+leur temps et leur énergie a s’intéresser a un sujet en particulier, et
+qui ne peuvent pas vivre sans leurs passions, avec une petite différence
+cependant, qui est que je m’intéresse a plusieurs choses :
+l'informatique, qui est un champ tellement large qu'on peut passer une
+vie a apprendre des choses dessus, et plus particulièrement à
+l'informatique avancée (Noyaux dérivés d'UNIX et de Linux, outils libres
+{bien que n'étant pas un barbu intégriste [ceci est un troll assumé. Les
+trolls seront a partir de maintenant indiqués avec le tag [tr]] du
+libre, je préfère utiliser de l'open-source si c'est possible},
+programmation en C, python et java, etc...) , mais aussi a
+l’électronique. </p>
+<p>Dans un tout autre registre, je m’intéresse aussi
+beaucoup aux différents aspects du féminisme et des égalités sexuelles
+(anti-homophobie/transphobie/biphobie/etc , anti-sexisme, et cætera) ,
+et a la culture dite "geek" en général.</p>
+<p>Je tenterai de poster ici le plus souvent possible, mais j'ai de gros
+problèmes en terme de régularité de post, donc ne vous inquiétez pas si
+vous ne voyez rien pendant deux semaines.</p>
+<p>Merci beaucoup de votre attention, et a bientôt!</p></div>
+			</div>
+			<hr />
+		<div class="pagination">
+			<ul>
+					<li class="prev"><a href="file:///home/wxcafe/code/blog-source/output/index2.html">&larr; Previous</a></li>
+					<li class="">
+						<a href="file:///home/wxcafe/code/blog-source/output/index.html">1</a>
+					</li>
+					<li class="">
+						<a href="file:///home/wxcafe/code/blog-source/output/index2.html">2</a>
+					</li>
+					<li class="active">
+						<a href="file:///home/wxcafe/code/blog-source/output/index3.html">3</a>
+					</li>
+					<li class="next disabled"><a href="#">&rarr; Next</a></li>
+			</ul>
+		</div>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="file:///home/wxcafe/code/blog-source/output"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url:file:///home/wxcafe/code/blog-source/output;
+				title:file:///home/wxcafe/code/blog-source/output;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="file:///home/wxcafe/code/blog-source/output">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="file:///home/wxcafe/code/blog-source/output/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="file:///home/wxcafe/code/blog-source/output/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>

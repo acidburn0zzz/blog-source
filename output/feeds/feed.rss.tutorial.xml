@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Wxcafé</title><link>file:///home/wxcafe/code/blog-source/output/</link><description></description><atom:link href="file:///home/wxcafe/code/blog-source/output/feeds/feed.rss.tutorial.xml" rel="self"></atom:link><lastBuildDate>Fri, 07 Nov 2014 13:04:00 +0100</lastBuildDate><item><title>OpenSMTPd comme serveur mail sous debian</title><link>file:///home/wxcafe/code/blog-source/output/posts/opensmtpd-debian/</link><description>&lt;p&gt;J'avais dit il y a un certain temps que j'allais écrire un tutoriel expliquant
+comment gérer ses mails soi-même.  Il se trouve que j'ai récemment décidé de
+changer le serveur qui héberge (entre autres) ce blog, et que ce dernier héberge
+aussi mes emails. J'ai donc totalement changé d'infrastructure quand a la
+gestion de mon système de mails.&lt;/p&gt;
+&lt;p&gt;Ainsi, j'ai décidé de passer de Postfix a OpenSMTPd, changement que je voulais
+effectuer depuis un certain temps.  &lt;a href="https://opensmtpd.org"&gt;OpenSMTPd&lt;/a&gt; est un
+projet originaire d'&lt;a href="http://openbsd.org"&gt;OpenBSD&lt;/a&gt; qui a pour but de fournir un
+serveur SMTP fiable, simple, rapide, et surtout sécurisé (les même buts que ceux
+qu'a le projet OpenBSD, globalement).&lt;/p&gt;
+&lt;p&gt;Pour rappel, le système d'emails fonctionne d'une façon très simple : votre MUA
+(Mail User Agent, ou client email) contacte le MTA (Mail Transport Agent, ou
+serveur SMTP) de votre fournisseur email, qui contacte le MTA du fournisseur du
+destinataire, qui lui même contacte le MDA (Mail Delivery Agent) qui délivre le
+mail au destinataire.&lt;/p&gt;
+&lt;p&gt;Si vous avez bien suivi, vous pouvez voir que je n'ai pas parlé de récupération
+ni de lecture des mails. C'est pour une raison simple, qui est que ces taches
+sont remplies par d'autres services encore (IMAP/POP pour la récupération depuis
+le serveur, des yeux pour la lecture).&lt;/p&gt;
+&lt;p&gt;Or ce qui nous intéresse ici, ce n'est pas simplement d'envoyer et de recevoir
+des emails mais bien aussi de pouvoir les récupérer et les lire, et c'est pour
+ça que ce tutoriel ne parlera pas que d'OpenSMTPd mais aussi de
+&lt;a href="http://dovecot.org/"&gt;Dovecot&lt;/a&gt; qui fait office de serveur IMAP et
+&lt;a href="http://www.ijs.si/software/amavisd/"&gt;amavis&lt;/a&gt;/&lt;a href="http://spamassassin.apache.org/"&gt;spamassassin&lt;/a&gt; 
+pour filtrer les mails entrants et sortants. 
+Le schéma suivant explique la façon dont les mails sont gérés sur le système&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;            &lt;span class="err"&gt;╭────────────────╮&lt;/span&gt;                    &lt;span class="err"&gt;╭──────────╮&lt;/span&gt;
+            &lt;span class="err"&gt;│╭──────────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt; &lt;span class="err"&gt;───&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│─╮&lt;/span&gt;        &lt;span class="err"&gt;│&lt;/span&gt;
+  &lt;span class="n"&gt;mail&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;   &lt;span class="err"&gt;││&lt;/span&gt;               &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="n"&gt;amavis&lt;/span&gt; &lt;span class="err"&gt;│&lt;/span&gt;
+&lt;span class="err"&gt;───────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│╯&lt;/span&gt; &lt;span class="n"&gt;OpenSMTPd&lt;/span&gt;  &lt;span class="err"&gt;╭──│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;───&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;───│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;╯&lt;/span&gt;        &lt;span class="err"&gt;│&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;             &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;╰──────────╯&lt;/span&gt;
+  &lt;span class="n"&gt;mail&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;             &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;╭──────────╮&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;───────────│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;────────────┴─&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│─────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;MDA&lt;/span&gt; &lt;span class="err"&gt;─────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│─────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;                &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;     &lt;span class="n"&gt;mailbox&lt;/span&gt;
+            &lt;span class="err"&gt;╰────────────────╯&lt;/span&gt;                    &lt;span class="err"&gt;╰──────────╯&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Normalement, ceci devrait être a peu près clair.
+Pour expliquer vite fait, les emails entrants (venant des utilisateurs mais
+aussi d'autres correspondants) sont transmis a OpenSMTPd, qui envoie tout a
+&lt;code&gt;amavis&lt;/code&gt;, qui vérifie a la fois les spams et les malwares pour les mails
+venants de l'exterieur, et qui signe avec DKIM pour les mails venants de
+nos utilisateurs, puis qui rentransmet les mails filtrés/signés a OpenSMTPd,
+qui a ce moment-ci trie en fonction de la destination : les mails gérés 
+par le domaine vont via dovecot dans les boites mail des destinataires 
+locaux, les mails exterieurs vont directement vers le MTA du serveur 
+distant.&lt;/p&gt;
+&lt;p&gt;Voyons comment mettre cela en place. Tout d'abord, il faut décider de la façon
+dont les différents services vont communiquer.&lt;/p&gt;
+&lt;p&gt;Déjà, amavis étant configuré par défaut pour écouter (en SMTP) sur le port
+10024 et répondre sur le port 10025 quand il s'agit de filtrer et
+écouter sur le port 10026 et répondre sur le port 10027 quand il s'agit de
+signer, nous allons profiter de cette configuration et donc lui parler en SMTP
+sur ces ports.&lt;/p&gt;
+&lt;p&gt;Quand a Dovecot, nous allons lui transmettre les emails en LMTP (Local Mail
+Transfer Protocol), non pas sur un port mais via un socket (dans ce cas précis,
+&lt;code&gt;/var/run/dovecot/lmtp&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Ainsi, pour reprendre le schéma présenté plus haut :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;            &lt;span class="err"&gt;╭───────────────╮&lt;/span&gt;                    &lt;span class="err"&gt;╭───────────╮&lt;/span&gt;
+            &lt;span class="err"&gt;│╭─────────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10026&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│─╮&lt;/span&gt;         &lt;span class="err"&gt;│&lt;/span&gt;
+  &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;   &lt;span class="err"&gt;││&lt;/span&gt;              &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="n"&gt;amavis&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;
+&lt;span class="err"&gt;────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="err"&gt;│╯&lt;/span&gt; &lt;span class="n"&gt;OpenSMTPd&lt;/span&gt; &lt;span class="err"&gt;╭──│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;──&lt;/span&gt; &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10027&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;──│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;╯&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sign&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;            &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;╰───────────╯&lt;/span&gt;
+  &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;            &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;
+&lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;────────│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;───────────╯&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;
+            &lt;span class="err"&gt;╰───────────────╯&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pour les mails sortants; et&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;            &lt;span class="err"&gt;╭───────────────╮&lt;/span&gt;                    &lt;span class="err"&gt;╭────────────╮&lt;/span&gt;
+            &lt;span class="err"&gt;│╭─────────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10024&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│─╮&lt;/span&gt;          &lt;span class="err"&gt;│&lt;/span&gt;
+  &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;   &lt;span class="err"&gt;││&lt;/span&gt;              &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="err"&gt;│&lt;/span&gt; &lt;span class="n"&gt;amavis&lt;/span&gt;   &lt;span class="err"&gt;│&lt;/span&gt;
+&lt;span class="err"&gt;────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="err"&gt;│╯&lt;/span&gt; &lt;span class="n"&gt;OpenSMTPd&lt;/span&gt; &lt;span class="err"&gt;╭──│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;──&lt;/span&gt; &lt;span class="n"&gt;SMTP&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10025&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;──│&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="err"&gt;╯&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;            &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;╰────────────╯&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;            &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;╭────────────╮&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;            &lt;span class="err"&gt;╰─&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;LMTP&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;─&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│───────────&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;│──&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+            &lt;span class="err"&gt;│&lt;/span&gt;               &lt;span class="err"&gt;│&lt;/span&gt;                    &lt;span class="err"&gt;│&lt;/span&gt;  &lt;span class="n"&gt;dovecot&lt;/span&gt;   &lt;span class="err"&gt;│&lt;/span&gt;     &lt;span class="n"&gt;mailbox&lt;/span&gt;
+            &lt;span class="err"&gt;╰───────────────╯&lt;/span&gt;                    &lt;span class="err"&gt;╰────────────╯&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pour les mails entrants.&lt;/p&gt;
+&lt;p&gt;Maintenant que la théorie est claire, mettons en place tout cela. Je me baserai
+ici sur le fait que vous utilisiez une plateforme Debian ou OpenBSD. Pour
+d'autres plateformes, la configuration devrait être sensiblement la même&lt;/p&gt;
+&lt;p&gt;(Vous aurez besoin de certificats SSL pour ce guide, même self-signés.
+Si vous ne savez pas comment en créer, vous pouvez aller voir &lt;a href="http://wxcafe.net/posts/05/30/14/SSL-ou-la-securite-sur-internet/"&gt;ce
+post&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Tout d'abord, commençons par installer les programmes nécessaires :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;opensmtpd&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pigeonhole&lt;/span&gt; &lt;span class="n"&gt;amavisd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;managesieved&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pkg_add&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt; &lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pigeonhole&lt;/span&gt; &lt;span class="n"&gt;amavisd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Continuons en configurant OpenSMTPd tel que nous avons vu plus haut :&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/smtpd.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;This&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;smtpd&lt;/span&gt; &lt;span class="nx"&gt;server&lt;/span&gt; &lt;span class="nx"&gt;system&lt;/span&gt;&lt;span class="na"&gt;-wide&lt;/span&gt; &lt;span class="nx"&gt;configuration&lt;/span&gt; &lt;span class="nx"&gt;file.&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;See&lt;/span&gt; &lt;span class="nx"&gt;smtpd.conf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;more&lt;/span&gt; &lt;span class="nx"&gt;information.&lt;/span&gt;
+
+&lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="nx"&gt;Certs&lt;/span&gt;
+&lt;span class="nx"&gt;pki&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nx"&gt;certificate&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/etc/certs/exem.pl.crt&amp;quot;&lt;/span&gt;
+&lt;span class="nx"&gt;pki&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;key&lt;/span&gt;         &lt;span class="s2"&gt;&amp;quot;/etc/certs/exem.pl.key&amp;quot;&lt;/span&gt;
+
+&lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="nx"&gt;Ports&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;how&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;them&lt;/span&gt;
+&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;eth0&lt;/span&gt; &lt;span class="nb"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="nx"&gt;tls&lt;/span&gt; &lt;span class="nx"&gt;pki&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;hostname&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;auth&lt;/span&gt;&lt;span class="na"&gt;-optional&lt;/span&gt;
+&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;eth0&lt;/span&gt; &lt;span class="nb"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;465&lt;/span&gt; &lt;span class="nx"&gt;tls&lt;/span&gt;&lt;span class="na"&gt;-require&lt;/span&gt; &lt;span class="nx"&gt;pki&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;hostname&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;auth&lt;/span&gt; &lt;span class="nx"&gt;mask&lt;/span&gt;&lt;span class="na"&gt;-source&lt;/span&gt;
+&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;eth0&lt;/span&gt; &lt;span class="nb"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;587&lt;/span&gt; &lt;span class="nx"&gt;tls&lt;/span&gt;&lt;span class="na"&gt;-require&lt;/span&gt; &lt;span class="nx"&gt;pki&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;hostname&lt;/span&gt; &lt;span class="nx"&gt;exem.pl&lt;/span&gt; &lt;span class="nb"&gt;auth&lt;/span&gt; &lt;span class="nx"&gt;mask&lt;/span&gt;&lt;span class="na"&gt;-source&lt;/span&gt;
+
+&lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="nx"&gt;Aliases&lt;/span&gt;
+&lt;span class="nb"&gt;table&lt;/span&gt; &lt;span class="nx"&gt;aliases&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="p"&gt;:/&lt;/span&gt;&lt;span class="nx"&gt;etc&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;aliases&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;coming&lt;/span&gt; &lt;span class="nb"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;checked&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;spam&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;malware&lt;/span&gt;
+&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;lo&lt;/span&gt; &lt;span class="nb"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;10025&lt;/span&gt; &lt;span class="kt"&gt;tag&lt;/span&gt; &lt;span class="nx"&gt;Filtered&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;coming&lt;/span&gt; &lt;span class="nb"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;signed&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nx"&gt;DKIM&lt;/span&gt;
+&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt; &lt;span class="nx"&gt;lo&lt;/span&gt; &lt;span class="nb"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;10027&lt;/span&gt; &lt;span class="kt"&gt;tag&lt;/span&gt; &lt;span class="nx"&gt;Signed&lt;/span&gt;
+
+&lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="nx"&gt;Receiving&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;incoming&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;mail&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="nx"&gt;been&lt;/span&gt; &lt;span class="nx"&gt;through&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;then&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;can&lt;/span&gt; &lt;span class="nx"&gt;deliver&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt;
+&lt;span class="nb"&gt;accept&lt;/span&gt; &lt;span class="nx"&gt;tagged&lt;/span&gt; &lt;span class="nx"&gt;Filtered&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt; &lt;span class="nx"&gt;alias&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;aliases&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;deliver&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;lmtp&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/run/dovecot/lmtp&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;directly&lt;/span&gt; &lt;span class="nx"&gt;tranfer&lt;/span&gt; &lt;span class="nx"&gt;incoming&lt;/span&gt; &lt;span class="nx"&gt;mail&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;be&lt;/span&gt; &lt;span class="nb"&gt;checked&lt;/span&gt; 
+&lt;span class="nb"&gt;accept&lt;/span&gt; &lt;span class="nb"&gt;from&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;domain&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;exem.pl&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;relay&lt;/span&gt; &lt;span class="nx"&gt;via&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp://localhost:10024&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;have&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;put&lt;/span&gt; &lt;span class="nx"&gt;these&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;this&lt;/span&gt; &lt;span class="k"&gt;order&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;avoid&lt;/span&gt; &lt;span class="nx"&gt;infinite&lt;/span&gt; &lt;span class="nx"&gt;loops&lt;/span&gt;
+
+&lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="nx"&gt;Sending&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;outgoint&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;mail&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="nx"&gt;been&lt;/span&gt; &lt;span class="nx"&gt;through&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;then&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;can&lt;/span&gt; &lt;span class="nx"&gt;deliver&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt;
+&lt;span class="nb"&gt;accept&lt;/span&gt; &lt;span class="nx"&gt;tagged&lt;/span&gt; &lt;span class="nx"&gt;Signed&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt; &lt;span class="nx"&gt;relay&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;tranfer&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;outgoing&lt;/span&gt; &lt;span class="nx"&gt;mail&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;amavisd&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;be&lt;/span&gt; &lt;span class="nx"&gt;signed&lt;/span&gt;
+&lt;span class="nb"&gt;accept&lt;/span&gt; &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="nb"&gt;any&lt;/span&gt; &lt;span class="nx"&gt;relay&lt;/span&gt; &lt;span class="nx"&gt;via&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp://localhost:10026&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;same&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;we&lt;/span&gt; &lt;span class="nx"&gt;have&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;put&lt;/span&gt; &lt;span class="nx"&gt;these&lt;/span&gt; &lt;span class="n"&gt;lines&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;this&lt;/span&gt; &lt;span class="k"&gt;order&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;infinite&lt;/span&gt; &lt;span class="nx"&gt;loops...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Expliquons un peu ce fichier de configuration :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tout d'abord, le paragraphe nommé "Certs" contient les déclaration
+  d'emplacement des certificats SSL.&lt;/li&gt;
+&lt;li&gt;Ensuite, le paragraphe contenant les ports externes sur lesquels nous écoutons :
+  port 25 avec TLS optionel et ports 465 et 587 avec TLS obligatoire&lt;/li&gt;
+&lt;li&gt;Les alias sont définis juste après&lt;/li&gt;
+&lt;li&gt;Le paragraphe suivant contient les ports locaux sur lesquels nous écoutons :
+  10025 (port de sortie du filtre de amavis) dont on taggue les mails sortants
+  comme "Filtered" et 10027 (port de sortie des mails signés par amavis) dont on
+  taggue les mails sortants comme "Signed"&lt;/li&gt;
+&lt;li&gt;Nous avons ensuite le paragraphe qui traite les mails rentrants. Si le mail
+  traité est taggué comme Filtered, alors il a été vérifié par amavis, et on
+  peut donc le transmettre au destinataire. Sinon, c'est qu'il n'a pas encore
+  été vérifié par amavis, donc on lui transmet pour analyse (sur le port 10024
+  donc). Il est important de mettre les déclarations dans ce sens, car la
+  première règle qui matche l'état du paquet est appliquée. Ici, la deuxième
+  ligne matchant tous les mails arrivant et la première seulement ceux filtrés,
+  inverser leur sens voudrait dire que les mails seraient toujours renvoyés a
+  amavis&lt;/li&gt;
+&lt;li&gt;Enfin, le dernier paragraphe traite les mails sortants. De la même façon que
+  pour le paragraphe précédent, si le mail sortant est déjà taggué comme Signed
+  on le transmet au MTA du destinataire, sinon il n'a pas encore été signé par
+  DKIM par amavis et on le transmet donc a amavis pour qu'il le signe. Le
+  problème de l'ordre des lignes se pose encore, pour la même raison qu'au
+  dessus.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous allons maintenant configurer dovecot. Comme nous l'avons vu, dovecot doit
+écouter en LMTP via la socket &lt;code&gt;/var/run/dovecot/lmtp&lt;/code&gt; et transmettre les
+emails a la boite email de l'utilisateur. Il serait aussi interessant
+qu'il nous permette de récuperer les mails. Pour cette configuration, on ne
+mettra en place que du IMAPS. Cependant, si vous voulez mettre en place du
+POP3[s], différents guides sont trouvables facilement sur internet.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/dovecot/dovecot.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;## Dovecot configuration file&lt;/span&gt;
+
+&lt;span class="cp"&gt;# basic config&lt;/span&gt;
+&lt;span class="n"&gt;info_log_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;span class="n"&gt;log_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;
+&lt;span class="n"&gt;log_timestamp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%Y-%m-%d %H:%M:%S &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;mail_location&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;maildir&lt;/span&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mail&lt;/span&gt;
+
+&lt;span class="cp"&gt;# authentication&lt;/span&gt;
+&lt;span class="n"&gt;passdb&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pam&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;userdb&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;passwd&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;# the protocols we use&lt;/span&gt;
+&lt;span class="n"&gt;protocols&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;imap&lt;/span&gt; &lt;span class="n"&gt;lmtp&lt;/span&gt; &lt;span class="n"&gt;sieve&lt;/span&gt;
+
+&lt;span class="cp"&gt;# ssl config&lt;/span&gt;
+&lt;span class="n"&gt;ssl_cert&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;exem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cert&lt;/span&gt;
+&lt;span class="n"&gt;ssl_key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;exem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;
+&lt;span class="n"&gt;ssl_cipher_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HIGH&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;kEDH&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;HIGH&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;kEECDH&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;HIGH&lt;/span&gt;&lt;span class="o"&gt;:!&lt;/span&gt;&lt;span class="n"&gt;PSK&lt;/span&gt;&lt;span class="o"&gt;:!&lt;/span&gt;&lt;span class="n"&gt;SRP&lt;/span&gt;&lt;span class="o"&gt;:!&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="n"&gt;DES&lt;/span&gt;&lt;span class="o"&gt;:!&lt;/span&gt;&lt;span class="n"&gt;aNULL&lt;/span&gt;
+&lt;span class="n"&gt;ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;yes&lt;/span&gt;
+
+&lt;span class="cp"&gt;## configuring services &lt;/span&gt;
+&lt;span class="cp"&gt;# disables imap login without SSL (yes dovecot is dumb that way)&lt;/span&gt;
+&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;imap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;login&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;inet_listener&lt;/span&gt; &lt;span class="n"&gt;imap&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; 
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;lmtp&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;unix_listener&lt;/span&gt; &lt;span class="n"&gt;lmtp&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mo"&gt;0666&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;## configuring protocols&lt;/span&gt;
+&lt;span class="cp"&gt;# the dovecot lda, we set it to use sieve&lt;/span&gt;
+&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;lda&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;mail_plugins&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;mail_plugins&lt;/span&gt; &lt;span class="n"&gt;sieve&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;lmtp&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;postmaster_address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;  &lt;span class="n"&gt;whoever&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;exem&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pl&lt;/span&gt;
+    &lt;span class="n"&gt;mail_plugins&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;mail_plugins&lt;/span&gt; &lt;span class="n"&gt;sieve&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;plugin&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;sieve&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dovecot&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sieve&lt;/span&gt;
+    &lt;span class="n"&gt;sieve_dir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;sieve&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;ATTENTION: Sous OpenBSD, remplacez&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;passdb&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pam&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;par&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;passdb&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bsdauth&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;pour identifier les utilisateurs système&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ici aussi, voyons comment ce fichier est structuré :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tout d'abord, les configurations de base : ou iront les logs, comment formater
+  leur datation, et l'endroit ou seront stockés les mails des utilisateurs.&lt;/li&gt;
+&lt;li&gt;Nous configurons ensuite la gestion de l'authentification des utilisateurs.
+  Ici nous identifions les utilisateurs avec le fichier /etc/passwd et leurs
+  mots de passe avec PAM (ou BSDAuth)&lt;/li&gt;
+&lt;li&gt;Nous configurons ensuite les protocoles que nous servons. Ici, nous voulons de
+  l'IMAPS, du LMTP local et Sieve (qui sert pour trier les messages).&lt;/li&gt;
+&lt;li&gt;Nous configurons le SSL&lt;/li&gt;
+&lt;li&gt;Le section suivante contient la configuration des services. Nous avons en
+  premier lieu le service IMAP, dont la configuration sert uniquement a
+  désactiver IMAP. En effet, dovecot ne permet d'activer IMAPS qu'en activant
+  IMAP avec. Comme nous ne voulons pas d'IMAP sans SSL, nous le désactivons.
+  La configuration de lmtp sert a attribuer des permissions plus correctes au
+  fifo qu'il utilise&lt;/li&gt;
+&lt;li&gt;Nous configurons maintenant les protocoles, pour faire fonctionner Sieve&lt;/li&gt;
+&lt;li&gt;enfin, nous configurons le plugin sieve en lui indiquant quel fichier et
+  quel dossier utiliser pour sa configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Enfin, il nous reste a configurer amavis. Comme expliqué, amavis va nous servir
+a deux choses : signer les emails sortants, et filtrer les emails entrants. Il
+doit donc écouter sur les port 10026 pour les signatures et 10024 pour le
+filtrage, et répondre respectivement sur les ports 10027 et 10025 (le tout, en
+SMTP. Comme toutes les transactions se font sur le loopback, il n'y a aucun
+risque a utiliser des protocoles non chiffrés.
+Pour OpenBSD, pensez a copier la configuration par défaut depuis
+&lt;code&gt;/usr/local/share/examples/amavisd-new/amavisd.conf&lt;/code&gt; et ajoutez les
+modifications nécessaires a la fin du fichier.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/amavis/conf.d/99-local.conf&lt;/code&gt; (debian)
+&lt;code&gt;/etc/amavis.conf&lt;/code&gt; (OpenBSD)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;strict&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;enable_dkim_verification&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;enable_dkim_signing&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;dkim_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;exem.pl&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/etc/certs/dkim.key&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;dkim_signature_options_bysender_maps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;ttl&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;24&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;3600&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;relaxed&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;simple&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;inet_socket_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10024&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10026&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;policy_bank&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;MYNETS&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;originating&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;os_fingerprint_method&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;undef&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;interface_policy&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mi"&gt;10026&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;ORIGINATING&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;policy_bank&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;ORIGINATING&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;originating&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;allow_disclaimers&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;virus_admin_maps&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;root\@$mydomain&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;spam_admin_maps&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;root\@$mydomain&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;warnbadhsender&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;forward_method&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;smtp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10027&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="n"&gt;smtpd_discard_ehlo_keywords&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="n"&gt;BITMIME&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;bypass_banned_checks_maps&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+        &lt;span class="n"&gt;terminate_dsn_on_notify_success&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="cp"&gt;#------------ Do not modify anything below this line -------------&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;ensure&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;defined&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A nouveau, expliquons ce fichier :
+- le premier paragraphe définit que nous voulons qu'amavis signe les emails
+  sortants, vérifie la signature DKIM des emails rentrants, et l'endroit ou se
+  trouve la clé privée servant a signer les emails.
+- le second définit les options DKIM que nous souhaitons utiliser comme défaut.
+  Je vous invite a consulter la &lt;a href="https://tools.ietf.org/html/rfc4871"&gt;RFC 4871&lt;/a&gt;
+- nous définissons ensuite les ports sur lesquels nous allons écouter, puis les
+  paramètres que nous utiliserons pour les emails venant de nos utilisateurs :
+  ils seront traités comme "originating" et nous ne vérifierons pas l'OS duquel
+  ils viennent.
+- nous savons que les emails venants du port 10026 sont sortants, nous les
+  traitons donc comme tel
+- le paragraphe suivant décrit le traitement que nous faisons subir aux emails
+  sortants : tout d'abord, nous réaffirmons qu'ils viennent bien de notre
+  serveur. Nous autorisons les disclaimers (voire encore une fois la &lt;a href="https://tools.ietf.org/html/rfc4871"&gt;RFC
+  4871&lt;/a&gt;. Nous déclarons l'adresse a
+  prévenir en cas de spam/virus venants de notre système, et que nous voulons
+  être prévenus. Nous déclarons ou envoyer les mails une fois signés et filtrés,
+  puis qu'il est nécessaire de convertir les emails au format 7 bits avant de
+  les envoyer au MTA, que nous autorisons tous les types et noms de fichiers, et
+  les notifications de succès d'envoi. Et voila!&lt;/p&gt;
+&lt;p&gt;Vous avez pu remarquer qu'a aucun moment nous ne configurions ni la signature
+des emails sortants ni le filtrage des emails entrants. Ces paramètres sont en
+fait inclus par défaut dans amavis.&lt;/p&gt;
+&lt;p&gt;Il nous reste cependant quelques opérations a faire, encore.
+Tout d'abord, il nous faut générer notre clé DKIM. Pour cela, il existe
+différentes méthodes, j'ai personnellement utilisé opendkim (&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy"&gt;un
+tutorial&lt;/a&gt;)
+mais de nombreuses autre méthodes existent.
+Il nous reste encore a configurer spamassassin :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#rewrite_header Subject *****SPAM*****&lt;/span&gt;
+&lt;span class="cp"&gt;# report_safe 1&lt;/span&gt;
+&lt;span class="n"&gt;required_score&lt;/span&gt; &lt;span class="mf"&gt;2.0&lt;/span&gt;
+&lt;span class="cp"&gt;# use_bayes 1&lt;/span&gt;
+&lt;span class="cp"&gt;# bayes_auto_learn 1&lt;/span&gt;
+&lt;span class="cp"&gt;# bayes_ignore_header X-Bogosity&lt;/span&gt;
+&lt;span class="cp"&gt;# bayes_ignore_header X-Spam-Flag&lt;/span&gt;
+&lt;span class="cp"&gt;# bayes_ignore_header X-Spam-Status&lt;/span&gt;
+&lt;span class="n"&gt;ifplugin&lt;/span&gt; &lt;span class="n"&gt;Mail&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;SpamAssassin&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Plugin&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Shortcircuit&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit USER_IN_WHITELIST       on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit USER_IN_DEF_WHITELIST   on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit USER_IN_ALL_SPAM_TO     on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit SUBJECT_IN_WHITELIST    on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit USER_IN_BLACKLIST       on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit USER_IN_BLACKLIST_TO    on&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit SUBJECT_IN_BLACKLIST    on&lt;/span&gt;
+&lt;span class="n"&gt;shortcircuit&lt;/span&gt; &lt;span class="n"&gt;ALL_TRUSTED&lt;/span&gt;             &lt;span class="n"&gt;off&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit BAYES_99                spam&lt;/span&gt;
+&lt;span class="cp"&gt;# shortcircuit BAYES_00                ham&lt;/span&gt;
+
+&lt;span class="n"&gt;endif&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;Mail&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;SpamAssassin&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Plugin&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Shortcircuit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Comme vous pouvez le voir, les modifications se résument globalement a baisser
+le required_score pour ma part.&lt;/p&gt;
+&lt;p&gt;Pour finir, activez les services nécessaires : opensmtpd, dovecot, amavisd, et
+spamassassin, et tout devrait fonctionner parfaitement&lt;/p&gt;
+&lt;p&gt;Bon courage pour votre hosting de mail ensuite...&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wxcafé</dc:creator><pubDate>Fri, 07 Nov 2014 13:04:00 +0100</pubDate><guid>tag:,2014-11-07:home/wxcafe/code/blog-source/output/posts/opensmtpd-debian/</guid></item></channel></rss>

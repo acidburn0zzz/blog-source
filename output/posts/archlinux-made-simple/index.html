@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+			<title>Archlinux made simple</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="author" content="wxcafé">
+			<link rel="icon" type="image/png" href="file:///home/wxcafe/code/blog-source/output/theme/img/favicon.ico">
+    <!-- Le styles -->
+			<link rel="stylesheet" href="file:///home/wxcafe/code/blog-source/output/theme/css/bootstrap.css" type="text/css" />
+			<link href='http://fonts.googleapis.com/css?family=Oswald&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+			<script type="text/javascript">
+				/* <![CDATA[ */
+				(function() {
+					var s = document.createElement('script');
+					var t = document.getElementsByTagName('script')[0];
+
+					s.type = 'text/javascript';
+					s.async = true;
+					s.src = '//api.flattr.com/js/0.6/load.js?'+
+							'mode=auto&uid=wxcafe&button=compact&popout=0';
+					t.parentNode.insertBefore(s, t);
+ 				})();
+				/* ]]> */
+			</script>  <!-- flattr button loader -->
+			<style type="text/css">
+				body {
+					padding-top: 60px;
+					padding-bottom: 40px;
+				}
+				.sidebar-nav {
+					padding: 9px 0;
+				}
+				.tag-1 {
+					font-size: 13pt;
+				}
+				.tag-2 {
+					font-size: 10pt;
+				}
+				.tag-2 {
+					font-size: 8pt;
+				}
+				.tag-4 {
+					font-size: 6pt;
+				}
+			</style>
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/bootstrap-responsive.css" rel="stylesheet">
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/font-awesome.css" rel="stylesheet">
+			<link href="file:///home/wxcafe/code/blog-source/output/theme/css/pygments.css" rel="stylesheet"> 
+			<!-- Le fav and touch icons -->
+			<link rel="shortcut icon" href="file:///home/wxcafe/code/blog-source/output/theme/images/favicon.ico">
+
+			<link href="file:///home/wxcafe/code/blog-source/output/feeds/feed.rss.xml" type="application/atom+xml" rel="alternate" title="Wxcafé RSS Feed" />
+
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="file:///home/wxcafe/code/blog-source/output/index.html">Wxcafé </a>
+					<div class="nav-collapse">
+						<ul class="nav">
+								<li><a href="file:///home/wxcafe/code/blog-source/output/archives.html"><i class="icon-th-list"></i> Archives</a></li>
+								<li><a href="file:///home/wxcafe/code/blog-source/output/pages/about/">A propos</a></li>
+							<li class="divider-vertical"></li>
+							<ul class="nav pull-right">
+							</ul>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span9" id="content">
+<section id="content">
+	<article>
+		<header>
+			<h1>
+				<a href=""
+					rel="bookmark"
+					title="Permalink to Archlinux made simple">Archlinux made simple</a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
+	<span class="label">Date</span>
+	<span class="published" title="2012-10-05T14:48:00+02:00">
+		<i class="icon-calendar"></i> Fri 05 October 2012
+	</span>
+	<br />
+		<span class="label">By</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/author/wxcafe.html"><i class="icon-user"></i>Wxcafe</a>
+		<br />
+	<span class="label">Category</span>
+		<a href="file:///home/wxcafe/code/blog-source/output/category/oses/"><i class="icon-folder-open"></i>OSes</a>
+	<br />
+
+
+
+
+</footer><!-- /.post-info -->				</div>
+                <p>Archlinux est réputée être une distribution Linux très complexe a
+installer et a maintenir.</p>
+<p>Je vais tenter ici de vous convaincre que ce n'est pas le cas, et
+qu'elle peut se monter très intéressante et très instructive a installer
+tout autant qu'a utiliser.</p>
+<p>Il convient tout d'abord de rappeler a quels principes obéit Arch:</p>
+<ol>
+<li>
+<p>Le KISS : Keep It Simple and Stupid, Archlinux tente de faire des
+    programmes simples et utilisables par tous. Avec comme base de
+    simplicité les utilisateurs de LFS... Mais il n'empêche qu'avec un peu
+    de bonne volonté, la configuration n'est pas si compliquée!</p>
+</li>
+<li>
+<p>La philosophie UNIX : chaque programme est prévu pour ne remplir
+    qu'une seule tâche. Bien entendu, cela ne concerne que les programmes
+    conçus pour s’insérer dans la philosophie UNIX, et les installations de
+    dépendances avec le gestionnaire de paquet d'Arch fonctionnent
+    superbement bien.</p>
+</li>
+</ol>
+<p>De plus, posons les bases d'Arch : le gestionnaire de paquets s'appelle
+pacman, et les commandes de base sont :</p>
+<ul>
+<li>
+<p>recherche d'un paquet :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Ss</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>installation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>désinstallation d'un paquet :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>mise a jour de tous les paquets installés :</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">paquet</span>
+</pre></div>
+
+
+</li>
+</ul>
+<p>Archlinux est une distribution dite "rolling release", ce qui signifie
+qu'il n'y a pas de version a proprement dites, et que les paquets se
+mettent a jour en permanence, sans jamais changer la "version" d'Arch.
+Il n'y a d'ailleurs qu'une seule version de l'installeur sur le site,
+puisqu'une version plus ancienne n'aurait aucun sens.</p>
+<p>Arch n'offre pas d'interface graphique par défaut : après avoir installé
+le système, vous n'aurez qu'une invite de commande. Heureusement, je
+vais ici vous guider a travers l'installation d'une interface graphique
+(mate, le fork de gnome 2)</p>
+<p>L'installation d'Arch se fait par le réseau, veillez a avoir une
+connection WiFi ou filaire a proximité avant de suivre ce guide.</p>
+<p>Ce guide utilise SystemV, alors qu'Arch va prochainement passer sous
+systemd. N'ayant pas encore eu le temps d’expérimenter assez avec ce
+dernier, je ferais un tutoriel pour passer votre Arch a systemd bientôt.</p>
+<p>Bon, passons a l'explication de l'installation proprement dite :</p>
+<p>Tout d'abord, téléchargeons l'iso d'arch la plus récente :</p>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//mir.archlinux.fr/iso/2012.09.07/archlinux-2012.09.07-dual.iso</span>
+</pre></div>
+
+
+<p>Ensuite, gravons cette image sur un disque USB :</p>
+<div class="highlight"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="n">archlinux</span><span class="o">-</span><span class="mf">2012.09.07</span><span class="o">-</span><span class="n">dual</span><span class="p">.</span><span class="n">iso</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
+</pre></div>
+
+
+<p>Après reboot de la machine sur l'iso en question et choix de
+l'architecture, nous sommes accueillis par un shell root.</p>
+<p>La première chose a faire est de paramétrer le clavier :</p>
+<div class="highlight"><pre><span class="n">loadkeys</span> <span class="n">fr</span>
+</pre></div>
+
+
+<p>Puis nous pouvons passer a l'installation proprement dite.
+Partitionnement :</p>
+<div class="highlight"><pre><span class="n">cfdisk</span> <span class="err">#</span> <span class="n">cfdisk</span> <span class="n">est</span> <span class="n">suffisamment</span> <span class="n">clair</span> <span class="n">pour</span> <span class="n">ne</span> <span class="n">pas</span> <span class="n">n</span><span class="err">é</span><span class="n">cessiter</span> <span class="n">d</span><span class="err">&#39;</span><span class="n">explications</span>
+</pre></div>
+
+
+<p>formatage des partitions :</p>
+<div class="highlight"><pre><span class="n">mkfs</span><span class="p">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">root</span>
+
+<span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="o">&amp;&amp;</span> <span class="n">mkfs</span><span class="p">.</span><span class="n">btrfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">home</span>
+
+<span class="n">mkswap</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="o">&amp;&amp;</span> <span class="n">swapon</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda3</span> <span class="err">#</span> <span class="n">partition</span> <span class="n">de</span> <span class="n">swap</span>
+</pre></div>
+
+
+<p>Montons les partitions nouvellement créées, puis installons le système :</p>
+<div class="highlight"><pre><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="o">/</span><span class="n">mnt</span>
+
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> <span class="o">&amp;&amp;</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span>
+
+<span class="n">dhclient</span> <span class="n">eth0</span> <span class="err">#</span> <span class="n">si</span> <span class="n">vous</span> <span class="n">utilisez</span> <span class="n">une</span> <span class="n">connection</span> <span class="n">filaire</span><span class="p">,</span> <span class="n">sinon</span> <span class="n">voire</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.archlinux.fr/Wifi#Configuration</span>
+
+<span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">base</span> <span class="n">base</span><span class="o">-</span><span class="n">devel</span>
+
+<span class="n">genfstab</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">mnt</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">fstab</span>
+</pre></div>
+
+
+<p>Allons prendre un café le temps que ça charge, puis installons les
+quelques paquets nécessaires a notre installation et au premier
+démarrage:</p>
+<div class="highlight"><pre><span class="n">pacstrap</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">syslinux</span> <span class="n">btrfs</span><span class="o">-</span><span class="n">progs</span> <span class="n">wireless_tools</span> <span class="n">dhclient</span>
+</pre></div>
+
+
+<p>Maintenant, passons sur notre install toute fraîche d'Arch :</p>
+<div class="highlight"><pre><span class="n">arch</span><span class="o">-</span><span class="n">chroot</span> <span class="o">/</span><span class="n">mnt</span> <span class="n">bash</span>
+</pre></div>
+
+
+<p>configurons les bases :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="n">HOSTNAME</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hostname</span>
+
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">zoneinfo</span><span class="o">/</span><span class="n">Europe</span><span class="o">/</span><span class="n">Paris</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">localtime</span>
+
+<span class="n">date</span> <span class="n">MMJJhhmmAAAA</span>
+
+<span class="n">hwclock</span> <span class="o">--</span><span class="n">systohc</span>
+
+<span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">gen</span> <span class="err">#</span> <span class="n">D</span><span class="err">é</span><span class="n">commentez</span> <span class="n">les</span> <span class="n">lignes</span> <span class="n">correspondant</span> <span class="n">au</span> <span class="n">fran</span><span class="err">ç</span><span class="n">ais</span> <span class="o">:</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> <span class="n">et</span> <span class="n">fr_FR</span><span class="p">.</span><span class="n">ISO</span><span class="o">-</span><span class="mi">8859</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="n">echo</span>  <span class="err">&#39;</span><span class="n">LANG</span><span class="o">=</span><span class="s">&quot;fr_FR.UTF-8&quot;</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">locale</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="n">locale</span><span class="o">-</span><span class="n">gen</span>
+
+<span class="n">mkinitcpio</span> <span class="o">-</span><span class="n">p</span> <span class="n">linux</span>
+</pre></div>
+
+
+<p>Enfin, vérifions que syslinux est correctement configuré :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">syslinux</span><span class="o">/</span><span class="n">syslinux</span><span class="p">.</span><span class="n">cfg</span> <span class="err">#</span> <span class="n">il</span> <span class="n">devrait</span> <span class="n">y</span> <span class="n">avoir</span> <span class="s">&quot;append root=/dev/sda1&quot;</span>
+</pre></div>
+
+
+<p>Si tout est correct, installons syslinux, et paramétrons un mot de passe
+root :</p>
+<div class="highlight"><pre><span class="n">syslinux</span><span class="o">-</span><span class="n">install_update</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span> <span class="o">-</span><span class="n">mia</span>
+
+<span class="n">passwd</span> <span class="n">root</span>
+</pre></div>
+
+
+<p>Et voila, l'installation est terminée! Plus qu'a quitter la session et a
+redémarrer l'ordinateur!</p>
+<div class="highlight"><pre> <span class="n">exit</span>
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> 
+<span class="n">umount</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">reboot</span>
+</pre></div>
+
+
+<p>Fini!</p>
+<p>Prenons une petite pause. La partie suivante de ce tutoriel consister en
+un paramétrage des principaux services nécessaires a l'utilisation d'un
+OS, disons, moyen :</p>
+<ul>
+<li>
+<p>Installation de MATE, le gestionnaire de bureau (voir
+<a href="http://mate-desktop.org/">http://mate-desktop.org/</a>)</p>
+</li>
+<li>
+<p>Installation de sudo et de networkmanager pour faire fonctionner les
+composants essentiels du système sans avoir a tout activer a la main a
+chaque démarrage</p>
+</li>
+<li>
+<p>Installation de SLiM comme gestionnaire de login graphique, pour
+présenter une interface plus accueillante que la console, et
+configuration de celui-ci</p>
+</li>
+<li>
+<p>Installation des principaux logiciels utiles non inclus dans mate ni
+base (yaourt, chromium, thunderbird, etc...).</p>
+</li>
+</ul>
+<p>Ce guide est bien sur optionnel, si vous souhaitez utiliser Arch avec un
+gestionnaire de bureau autre que mate, ou sans, vous pouvez vous arrêter
+ici.</p>
+<p>Bon, reprenons.</p>
+<p>Nous sommes donc sur une demande de mot de passe. Entrez donc le mot de
+passe paramétré plus haut pour le root, puis retapez la commande
+utilisée plus tôt pour vous connecter a internet.</p>
+<p>Il convient d'ajouter le dépôt de MATE pour installer ce dernier, puis
+d'effectuer l'action en question :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">pacman</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ici, ajoutez les lignes suivantes :</p>
+<div class="highlight"><pre><span class="k">[mate]</span>
+<span class="na">Server</span> <span class="o">=</span> <span class="s">http://repo.mate-desktop.org/archlinux/$arch</span>
+</pre></div>
+
+
+<p>Installons maintenant les paquets :</p>
+<div class="highlight"><pre><span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">mate</span> <span class="n">mate</span><span class="o">-</span><span class="n">extras</span> <span class="n">dbus</span> <span class="n">dbus</span><span class="o">-</span><span class="n">core</span> <span class="n">alsa</span> <span class="n">networkmanager</span> <span class="n">sudo</span>
+</pre></div>
+
+
+<p>Ajoutons un compte utilisateur pour utiliser les composants du système
+sans tout crasher a chaque fois :</p>
+<div class="highlight"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">users</span> <span class="o">-</span><span class="n">G</span> <span class="n">wheel</span><span class="p">,</span><span class="n">audio</span><span class="p">,</span><span class="n">optical</span><span class="p">,</span><span class="n">lp</span><span class="p">,</span><span class="n">scanner</span><span class="p">,</span><span class="n">log</span><span class="p">,</span><span class="n">power</span><span class="p">,</span><span class="n">floppy</span><span class="p">,</span><span class="n">storage</span><span class="p">,</span><span class="n">games</span><span class="p">,</span><span class="n">video</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">passwd</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+<span class="n">su</span> <span class="o">*</span><span class="n">votrenom</span><span class="o">*</span>
+</pre></div>
+
+
+<p>Il faut maintenant éditer le fichier \~/.xinitrc pour préciser a X.org
+ce que l'on veut utiliser :</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec ck-launch-session mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span>
+</pre></div>
+
+
+<p>Profitons en pour ajouter les démons système au lancement :</p>
+<div class="highlight"><pre><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Ajoutez donc <code>dbus, alsa. hwclock</code> et <code>networkmanager</code> dans la section
+DAEMONS (entre les parenthèses, après crond normalement)</p>
+<div class="highlight"><pre><span class="n">DAEMONS</span><span class="o">=</span><span class="p">(</span><span class="n">syslog</span><span class="o">-</span><span class="n">ng</span> <span class="n">network</span> <span class="n">crond</span> <span class="n">dbus</span> <span class="n">alsa</span> <span class="n">hwclock</span> <span class="n">networkmanager</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Pour éviter un reboot, il est ici possible de faire un</p>
+<div class="highlight"><pre><span class="n">su</span>
+</pre></div>
+
+
+<p>Puis un</p>
+<div class="highlight"><pre> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">dbus</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">alsa</span> <span class="n">start</span> <span class="o">&amp;&amp;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">networkmanager</span> <span class="n">start</span>
+</pre></div>
+
+
+<p>Sinon, il est possible de juste redémarrer.<br />
+Une fois cela fait, profitez de ce moment pour vous autoriser vous même
+a utiliser sudo. Loggez vous en root, et :</p>
+<div class="highlight"><pre> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+</pre></div>
+
+
+<p>Décommentez la ligne qui commence par # %wheel ALL=(ALL)<br />
+Sauvegardez le fichier, puis, après un <code>su *votrenom*</code>, tentez de faire
+un sudo ls /<br />
+Normalement, vous devriez avoir un listing du dossier /<br />
+Bon, maintenant, pourquoi ne pas tenter de lancer MATE?<br />
+C'est simple comme bonjour :</p>
+<div class="highlight"><pre> <span class="n">startx</span>
+</pre></div>
+
+
+<p>Et PAF! Voila un MATE desktop flambant neuf a configurer!<br />
+Avant de faire ça, retournez sur un TTY (CTRL+ALT+Fx), loggez vous,
+puis installez SLiM (<code>sudo pacman -Syu slim</code>).<br />
+Configurons le:</p>
+<div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;exec dbus-launch mate-session&quot;</span> <span class="o">&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">xinitrc</span> <span class="o">&amp;&amp;</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">slim</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>Éditez la ligne
+"<code>sessions            xfce4,icewm-session,wmaker,blackbox</code>" de facon a
+ce qu'elle ressemble a "<code>sessions            mate-session</code>"<br />
+Puis ajoutez slim dans /etc/rc.conf, dans la section DAEMONS.<br />
+Normalement, tout devrait fonctionner!<br />
+Ah oui, et pour installer thunderbird, firefox, chromium, etc...</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syu</span> <span class="n">chromium</span> <span class="n">thunderbird</span> <span class="n">xchat</span> <span class="n">firefox</span> <span class="n">rhythmbox</span> <span class="n">pidgin</span> <span class="n">transmission</span><span class="o">-</span><span class="n">gtk</span> <span class="n">vlc</span>
+</pre></div>
+
+
+<p>Voila! Et comme dirait <a href="https://twitter.com/spartition">@Spartition</a>, c'est sale, mais qu'est-ce que c'est
+bon!<br />
+A plus~</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
+				</div><!--/span-->
+				<div class="span3 well sidebar-nav" id="sidebar">
+<ul class="nav nav-list">
+
+
+	<!-- Categories links -->
+	<li class="nav-header"><h4><i class="icon-folder-close icon-large"></i> Categories</h4></li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/hacking/">
+					    <i class="icon-folder-open icon-large"></i>Hacking
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/language/">
+					    <i class="icon-folder-open icon-large"></i>Language
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/notes/">
+					    <i class="icon-folder-open icon-large"></i>Notes
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/oses/">
+					    <i class="icon-folder-open icon-large"></i>OSes
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/programmation/">
+					    <i class="icon-folder-open icon-large"></i>Programmation
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/ranting/">
+					    <i class="icon-folder-open icon-large"></i>Ranting
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/teaching/">
+					    <i class="icon-folder-open icon-large"></i>Teaching
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/tutorial/">
+					    <i class="icon-folder-open icon-large"></i>Tutorial
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/tutoriel/">
+					    <i class="icon-folder-open icon-large"></i>Tutoriel
+				</a>
+			</li>
+			<li>
+				<a href="file:///home/wxcafe/code/blog-source/output/category/vidya-games/">
+					    <i class="icon-folder-open icon-large"></i>Vidya Games
+				</a>
+			</li>
+		<hr>
+
+	<!-- Social links -->
+		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
+		<a class="FlattrButton" style="display:none;"
+			title="file:///home/wxcafe/code/blog-source/output"
+			style="padding-top: 10px;"
+			rel="flattr;
+				url:file:///home/wxcafe/code/blog-source/output;
+				title:file:///home/wxcafe/code/blog-source/output;
+				button:compact;
+				popout:0;
+				uid:wxcafe;
+				category:blog;"
+			href="file:///home/wxcafe/code/blog-source/output">flattr</a>
+			<li><a href="https://twitter.com/wxcafe"><i class="icon-twitter icon-large"></i> Twitter</a></li>
+			<li><a href="https://github.com/wxcafe"><i class="icon-github icon-large"></i> Github</a></li>
+			<li><a href="mailto://wxcafe@wxcafe.net"><i class="icon-envelope icon-large"></i> Email</a></li>
+			<li><a href="https://data.wxcafe.net/wxcafe.asc"><i class="icon-key icon-large"></i> Gpg</a></li>
+			<li><a href="finger://wxcafe@wxcafe.net"><i class="icon-terminal icon-large"></i> Finger</a></li>
+			<li><a href="http://leloop.org/where.html"><i class="icon-map-marker icon-large"></i> IRL</a></li>
+
+		<hr>
+
+	<!-- Links -->
+		<li class="nav-header"><h4><i class="icon-external-link"></i> Links</h4></li>
+			<li><a href="https://github.com/wxcafe/blog-source"><i class="icon-code icon-large "></i> Source!</a></li>
+			<li><a href="http://paste.wxcafe.net"><i class="icon-paste icon-large "></i> Zerobin</a></li>
+			<li><a href="http://git.wxcafe.net"><i class="icon-github-sign icon-large "></i> Public Git</a></li>
+		<hr>
+
+	<!--- RSS feed -->
+		<li class="nav-header"><h4><i class="icon-rss"></i> feeds</h4></li>
+		<li><a href="file:///home/wxcafe/code/blog-source/output/feeds/feed.rss.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> RSS</a></li>
+		<li><a href="file:///home/wxcafe/code/blog-source/output/feeds/feed.atom.xml" rel="alternate"><i class="icon-bookmark-empty icon-large"></i> Atom</a></li>
+
+
+</ul>				</div><!--/.well -->
+			</div><!--/row-->
+			<hr>
+			<footer>
+				<address id="about">
+					Proudly powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+					which takes great advantage of <a href="http://python.org">Python</a>.<br />
+					Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/bootstrap2">bootstrap2</a> theme, thanks!
+				</address>
+			</footer>
+		</div><!--/.fluid-container-->
+	</body>
+</html>
