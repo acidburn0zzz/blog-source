@@ -17,17 +17,6 @@
 	<!-- Social links -->
 	{% if SOCIAL %}
 		<li class="nav-header"><h4><i class="icon-exchange"></i> social</h4></li>
-		<a class="FlattrButton" style="display:none;"
-			title="{{ SITEURL }}"
-			style="padding-top: 10px;"
-			rel="flattr;
-				url:{{ SITEURL }};
-				title:{{ SITEURL }};
-				button:compact;
-				popout:0;
-				uid:wxcafe;
-				category:blog;"
-			href="{{ SITEURL }}">flattr</a>
 		{% for name, link, icon in SOCIAL %}
 			<li><a href="{{ link }}"><i class="icon-{{ icon }} icon-large"></i> {{ name }}</a></li>
 		{% endfor %}
