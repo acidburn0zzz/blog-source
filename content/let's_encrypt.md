@@ -4,6 +4,15 @@ Author: Wxcafé
 Category: Tutoriel
 Slug: lets-encrypt-enfin
 
+### Update 2016-09:
+Ça fait un certain temps maintenant (depuis mai 2016, en fait) que le script
+letsencrypt a été renommé `certbot`. Le dépot est donc maintenant
+[https://github.com/certbot/certbot](https://github.com/certbot/certbot), mais
+`letsencrypt-auto` est toujours un lien symbolique vers le bon script, il n'est
+donc pas nécessaire de changer les commandes.
+
+---
+
 Vous avez peut être vu que ce blog, entre autres sites que j'administre, n'est
 disponible depuis quelques jours qu'en HTTPS, et avec un certificat valide. Bon,
 si vous êtes là, vous avez déjà entendu parler de Let's Encrypt, mais pour les
