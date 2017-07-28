@@ -37,6 +37,7 @@ MD_EXTENSIONS = [
 # Social
 SOCIAL = (
         ('twitter', 'https://twitter.com/wxcafe'),
+        ('pencil-square-o', 'https://social.wxcafe.net/@wxcafe'),
         ('github', 'https://github.com/wxcafe'),
         ('envelope', 'mailto://wxcafe@wxcafe.net'),
         ('key', 'https://pub.wxcafe.net/wxcafe.asc'),

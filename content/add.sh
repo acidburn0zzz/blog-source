@@ -13,6 +13,6 @@ echo "Title: $title" >> $filename.md
 echo "Date: $(date -Iminutes)" >> $filename.md
 echo "Author: Wxcafé" >> $filename.md
 echo "Category: " >> $filename.md
-echo "Slug: " >> $filename.md
+echo "Slug: $filename" >> $filename.md
 echo -e '\n'>> $filename.md
 vim +7 $filename.md -s <( echo -n A)
