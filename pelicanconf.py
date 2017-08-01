@@ -29,10 +29,19 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 FEED_ALL_ATOM = None
 
-MD_EXTENSIONS = [
-        'codehilite(linenums=False, guess_lang=True, noclasses=True, pygments_style=monokai)',
-        'smarty',
-        'extra']
+MARKDOWN = {
+        'extension_configs': {
+            'markdown.extensions.codehilite': {
+                'linenums': False,
+                'guess_lang': True,
+                'noclasses': True,
+                'pygments_style': 'monokai'
+            },
+            'markdown.extensions.smarty': {},
+            'markdown.extensions.extra': {},
+        },
+        'output_format': 'html5',
+    }
 
 # Social
 SOCIAL = (
